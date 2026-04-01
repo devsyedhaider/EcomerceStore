@@ -4,12 +4,12 @@ import { indexedDBStorage } from '@/lib/storage';
 import { supabase } from '@/lib/supabase';
 
 interface HeroContent {
+  seasonText: string;
+  accentTitle: string;
   title: string;
   subtitle: string;
   backgroundImage: string;
   buttonText: string;
-  accentTitle: string;
-  seasonText: string;
 }
 
 interface HeroStore {
@@ -89,6 +89,7 @@ export const useHeroStore = create<HeroStore>()(
     }),
     {
       name: 'hero-storage',
+      version: 3, // Bump version to make sure we have everything fresh after some changes
       storage: createJSONStorage(() => indexedDBStorage),
     }
   )

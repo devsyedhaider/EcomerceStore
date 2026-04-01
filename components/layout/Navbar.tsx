@@ -44,10 +44,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-premium py-4 md:py-6 px-6 md:px-12',
-          isScrolled ? 'bg-white border-b border-gray-100' : 'bg-transparent'
-        )}
+        className="fixed top-0 left-0 right-0 z-50 py-4 md:py-6 px-6 md:px-12 bg-white border-b border-gray-100"
       >
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           {/* Left: Mobile Menu & Logo */}

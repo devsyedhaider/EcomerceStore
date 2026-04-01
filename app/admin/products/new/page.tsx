@@ -346,8 +346,8 @@ export default function NewProductPage() {
                                 {isFeatured && <Check className="w-4 h-4 text-zinc-900" />}
                             </div>
                             <div>
-                                <p className="text-xs font-black uppercase tracking-widest text-white">Featured Product</p>
-                                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-tight">Show in home page featured section</p>
+                                <p className="text-xs font-black uppercase tracking-widest text-white">Trending Now</p>
+                                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-tight">Show in home page Trending section</p>
                             </div>
                         </label>
 

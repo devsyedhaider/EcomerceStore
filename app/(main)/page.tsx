@@ -7,7 +7,7 @@ import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
 import { useHeroStore } from '@/store/useHeroStore';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ProductCard from '@/components/product/ProductCard';
 
 export default function Home() {
@@ -15,8 +15,18 @@ export default function Home() {
   const { categories } = useCategoryStore();
   const { hero } = useHeroStore();
   const [mounted, setMounted] = useState(false);
+  const [sliderWidth, setSliderWidth] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && sliderRef.current) {
+      setSliderWidth(sliderRef.current.scrollWidth - sliderRef.current.offsetWidth);
+    }
+  }, [mounted, categories]);
 
   if (!mounted) return null;
 
@@ -27,7 +37,7 @@ export default function Home() {
     <div className="flex flex-col pb-0">
       {/* 1. Full-width Hero Banner */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-white">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 text-premium-heading">
           <img 
             src={hero.backgroundImage} 
             alt="Aura Feet Hero" 
@@ -36,7 +46,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/20" />
         </div>
 
-        <div className="relative z-10 text-center text-white px-6">
+        <div className="relative z-10 text-center text-white px-6 pt-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -49,6 +59,9 @@ export default function Home() {
               {hero.title} <br />
               <span className="font-medium tracking-[0.1em]">{hero.accentTitle}</span>
             </h1>
+            <p className="text-white/70 text-xs md:text-base font-light tracking-[0.15em] max-w-2xl mx-auto mb-12 leading-relaxed uppercase">
+              {hero.subtitle}
+            </p>
             <Link 
               href="/products" 
               className="btn-premium border-white bg-transparent hover:bg-white hover:text-black"
@@ -59,43 +72,76 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Category Sections (Men / Women / New Arrivals) */}
-      <section className="py-24 px-6 md:px-12 bg-white">
-        <div className="max-w-[1800px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-            {categories.slice(0, 3).map((category, index) => (
-              <Link 
-                key={category.id} 
-                href={`/products?category=${category.id}`}
-                className="group relative h-[600px] md:h-[700px] overflow-hidden"
-              >
-                <img 
-                  src={category.image} 
-                  alt={category.name} 
-                  className="w-full h-full object-cover transition-premium group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-premium" />
-                <div className="absolute bottom-12 left-12">
-                  <h3 className="text-3xl font-light text-white uppercase tracking-[0.2em] mb-6">
-                    {category.name}
-                  </h3>
-                  <span className="inline-flex items-center gap-2 text-white text-[10px] uppercase tracking-[0.3em] font-medium group-hover:translate-x-2 transition-premium">
-                    Shop Now <ArrowRight className="w-4 h-4" />
-                  </span>
-                </div>
-              </Link>
-            ))}
+      {/* 2. Professional Category Drag Slider */}
+      <section className="py-24 bg-white overflow-hidden select-none">
+        <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="max-w-2xl">
+              <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">Our Collections</h2>
+            </div>
+            <Link 
+              href="/categories" 
+              className="text-xs uppercase tracking-[0.3em] font-bold flex items-center gap-2 group border-b-2 border-black pb-2"
+            >
+              Discover All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-smooth" />
+            </Link>
+          </div>
+
+          <div className="relative overflow-visible">
+            <motion.div 
+              ref={sliderRef}
+              className="flex gap-16 cursor-grab active:cursor-grabbing"
+              drag="x"
+              dragConstraints={{ right: 0, left: -sliderWidth }}
+              dragElastic={0.1}
+              initial={{ x: 0 }}
+              whileTap={{ cursor: 'grabbing' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 150 }}
+            >
+              {categories.map((category) => (
+                <Link 
+                  key={category.id} 
+                  href={`/products?category=${category.id}`}
+                  className="flex-none group relative w-[300px] md:w-[420px] h-[280px] md:h-[380px] overflow-hidden bg-gray-100"
+                  draggable={false}
+                >
+                  <img 
+                    src={category.image} 
+                    alt={category.name} 
+                    className="w-full h-full object-cover transition-premium group-hover:scale-105"
+                    draggable={false}
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-premium" />
+                  
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/0 group-hover:bg-black/30 backdrop-blur-[0px] group-hover:backdrop-blur-[4px] transition-premium opacity-0 group-hover:opacity-100">
+                    <h3 className="text-xl md:text-3xl font-light text-white uppercase tracking-[0.5em] translate-y-4 group-hover:translate-y-0 transition-premium duration-500">
+                      {category.name}
+                    </h3>
+                    <div className="mt-8 overflow-hidden">
+                       <span className="text-white text-[9px] uppercase tracking-[0.5em] font-bold border border-white px-8 py-3 block translate-y-16 group-hover:translate-y-0 transition-premium duration-700">
+                        Explore
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </motion.div>
+          </div>
+
+          <div className="mt-20 flex justify-center">
+            <Link href="/categories" className="btn-premium px-16 text-[10px]">
+              Explore Complete Collections
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* 3. Featured Products Grid */}
+      {/* 3. Trending Now Grid (Previously Featured) */}
       <section className="py-24 px-6 md:px-12 bg-white border-t border-gray-100">
         <div className="max-w-[1800px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
-              <span className="text-premium-subheading block mb-4">Curated Selection</span>
-              <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">Featured Picks</h2>
+              <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">Trending Now</h2>
             </div>
             <Link href="/products" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
               View All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-premium" />
