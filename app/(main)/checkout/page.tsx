@@ -152,107 +152,168 @@ export default function CheckoutPage() {
         <div>
           <form ref={formRef} onSubmit={handlePlaceOrder} className="space-y-12">
             {step === 1 && (
-              <div className="animate-in slide-in-from-left duration-500">
-                <div className="flex items-center gap-4 mb-10">
-                    <div className="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center shadow-lg">
-                        <User className="w-6 h-6" />
+              <div className="animate-in slide-in-from-left duration-500 space-y-10">
+
+                {/* ── Contact Info ── */}
+                <div>
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="w-10 h-10 bg-black text-white flex items-center justify-center">
+                      <User className="w-5 h-5" />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-black uppercase tracking-tighter leading-none">Contact Info</h2>
-                        <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest mt-1">We'll use this for delivery updates</p>
+                      <h2 className="text-2xl font-light uppercase tracking-[0.2em] leading-none">Contact Info</h2>
+                      <p className="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mt-1">Used for delivery updates</p>
                     </div>
+                  </div>
+
+                  <div className="bg-white border border-zinc-100 p-8 space-y-6">
+                    {/* Name Row */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">First Name</label>
+                        <div className="relative">
+                          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 pointer-events-none" />
+                          <input
+                            required
+                            name="firstName"
+                            value={formData.firstName}
+                            onChange={handleInputChange}
+                            className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                            placeholder="First name"
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">Last Name</label>
+                        <div className="relative">
+                          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 pointer-events-none" />
+                          <input
+                            required
+                            name="lastName"
+                            value={formData.lastName}
+                            onChange={handleInputChange}
+                            className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                            placeholder="Last name"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Email */}
+                    <div className="space-y-2">
+                      <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">Email Address</label>
+                      <div className="relative">
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 pointer-events-none" />
+                        <input
+                          required
+                          type="text"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                          placeholder="name@example.com"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Phone */}
+                    <div className="space-y-2">
+                      <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">Phone Number</label>
+                      <div className="relative">
+                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 pointer-events-none" />
+                        <input
+                          required
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                          placeholder="03XXXXXXXXX"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="bg-white p-8 rounded-[32px] border border-zinc-200 shadow-sm space-y-8 mb-12">
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2 group">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-focus-within:text-black transition-colors">First Name</label>
-                        <div className="relative">
-                            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300" />
-                            <input required name="firstName" value={formData.firstName} onChange={handleInputChange} className="input-field h-14 bg-zinc-50 border-none pl-12 rounded-xl focus:ring-2 focus:ring-black transition-all" placeholder="Enter first name" />
-                        </div>
-                      </div>
-                      <div className="space-y-2 group">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-focus-within:text-black transition-colors">Last Name</label>
-                        <div className="relative">
-                            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300" />
-                            <input required name="lastName" value={formData.lastName} onChange={handleInputChange} className="input-field h-14 bg-zinc-50 border-none pl-12 rounded-xl focus:ring-2 focus:ring-black transition-all" placeholder="Enter last name" />
-                        </div>
-                      </div>
-                      <div className="space-y-2 md:col-span-2 group">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-focus-within:text-black transition-colors">Email Address</label>
-                        <div className="relative">
-                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300" />
-                            <input required type="email" name="email" value={formData.email} onChange={handleInputChange} className="input-field h-14 bg-zinc-50 border-none pl-12 rounded-xl focus:ring-2 focus:ring-black transition-all" placeholder="name@example.com" />
-                        </div>
-                      </div>
-                      <div className="space-y-2 md:col-span-2 group">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-focus-within:text-black transition-colors">Phone Number</label>
-                        <div className="relative">
-                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300" />
-                            <input required type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="input-field h-14 bg-zinc-50 border-none pl-12 rounded-xl focus:ring-2 focus:ring-black transition-all" placeholder="03XXXXXXXXX" />
-                        </div>
-                      </div>
-                   </div>
-                </div>
-
-                <div className="flex items-center gap-4 mb-10">
-                    <div className="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center shadow-lg">
-                        <MapPin className="w-6 h-6" />
+                {/* ── Shipping Address ── */}
+                <div>
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="w-10 h-10 bg-black text-white flex items-center justify-center">
+                      <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-black uppercase tracking-tighter leading-none">Shipping Address</h2>
-                        <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest mt-1">Where should we deliver your shoes?</p>
+                      <h2 className="text-2xl font-light uppercase tracking-[0.2em] leading-none">Shipping Address</h2>
+                      <p className="text-[10px] text-zinc-400 uppercase tracking-[0.2em] mt-1">Where should we deliver?</p>
                     </div>
-                </div>
+                  </div>
 
-                <div className="bg-white p-8 rounded-[32px] border border-zinc-200 shadow-sm space-y-8">
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2 md:col-span-2 group">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-focus-within:text-black transition-colors">Street Address</label>
-                        <div className="relative">
-                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300" />
-                            <input required name="address" value={formData.address} onChange={handleInputChange} className="input-field h-14 bg-zinc-50 border-none pl-12 rounded-xl focus:ring-2 focus:ring-black transition-all" placeholder="House #, Street name, Area" />
-                        </div>
+                  <div className="bg-white border border-zinc-100 p-8 space-y-6">
+                    {/* Street */}
+                    <div className="space-y-2">
+                      <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">Street Address</label>
+                      <div className="relative">
+                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 pointer-events-none" />
+                        <input
+                          required
+                          name="address"
+                          value={formData.address}
+                          onChange={handleInputChange}
+                          className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                          placeholder="House #, Street name, Area"
+                        />
                       </div>
-                      <div className="space-y-2 group">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-focus-within:text-black transition-colors">City</label>
-                        <input required name="city" value={formData.city} onChange={handleInputChange} className="input-field h-14 bg-zinc-50 border-none px-6 rounded-xl focus:ring-2 focus:ring-black transition-all" placeholder="Karachi, Lahore, etc." />
+                    </div>
+
+                    {/* City + Postal */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">City</label>
+                        <input
+                          required
+                          name="city"
+                          value={formData.city}
+                          onChange={handleInputChange}
+                          className="w-full h-12 bg-zinc-50 px-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                          placeholder="Karachi, Lahore, etc."
+                        />
                       </div>
-                      <div className="space-y-2 group">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-focus-within:text-black transition-colors">Postal Code</label>
+                      <div className="space-y-2">
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">
+                          Postal Code <span className="text-zinc-300 ml-1">(5 digits)</span>
+                        </label>
                         <div className="relative">
-                            <input 
-                                required 
-                                name="postalCode" 
-                                value={formData.postalCode} 
-                                onChange={(e) => {
-                                    const val = e.target.value.replace(/\D/g, '').slice(0, 5);
-                                    setFormData(prev => ({ ...prev, postalCode: val }));
-                                }} 
-                                className={cn(
-                                    "input-field h-14 bg-zinc-50 border-none px-6 rounded-xl focus:ring-2 transition-all w-full",
-                                    formData.postalCode.length === 5 ? "focus:ring-green-500 bg-green-50/10" : "focus:ring-black"
-                                )} 
-                                placeholder="75500" 
-                            />
-                            {formData.postalCode.length === 5 && (
-                                <CheckCircle2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500 animate-in zoom-in" />
+                          <input
+                            required
+                            name="postalCode"
+                            value={formData.postalCode}
+                            onChange={(e) => {
+                              const val = e.target.value.replace(/\D/g, '').slice(0, 5);
+                              setFormData(prev => ({ ...prev, postalCode: val }));
+                            }}
+                            className={cn(
+                              "w-full h-12 bg-zinc-50 px-4 pr-10 text-sm outline-none border transition-all placeholder:text-zinc-300",
+                              formData.postalCode.length === 5 ? "border-green-400 bg-green-50/30" : "border-transparent focus:border-black"
                             )}
+                            placeholder="75500"
+                          />
+                          {formData.postalCode.length === 5 && (
+                            <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
+                          )}
                         </div>
-                        <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-tight">Must be a 5-digit code</p>
                       </div>
-                   </div>
+                    </div>
+                  </div>
                 </div>
 
-                <button 
-                  type="button" 
+                {/* Continue Button */}
+                <button
+                  type="button"
                   onClick={handleContinueToPayment}
                   disabled={formData.postalCode.length !== 5}
-                  className="w-full h-16 bg-black text-white rounded-[20px] font-black text-lg hover:bg-zinc-800 transition-all shadow-xl mt-12 uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
+                  className="w-full h-14 bg-black text-white text-xs font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-3 hover:bg-zinc-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed group"
                 >
                   Continue to Payment
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             )}
