@@ -7,6 +7,7 @@ import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
 import { useHeroStore } from '@/store/useHeroStore';
+import { usePromoStore } from '@/store/usePromoStore';
 import { useState, useEffect, useRef } from 'react';
 import ProductCard from '@/components/product/ProductCard';
 
@@ -14,6 +15,7 @@ export default function Home() {
   const { products } = useProductStore();
   const { categories } = useCategoryStore();
   const { hero } = useHeroStore();
+  const { promo } = usePromoStore();
   const [mounted, setMounted] = useState(false);
   const [sliderWidth, setSliderWidth] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -159,20 +161,29 @@ export default function Home() {
       {/* 4. Promotional Banner */}
       <section className="h-[500px] relative overflow-hidden bg-gray-100">
         <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop" 
-            alt="Promotion" 
+          <img
+            src={promo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
+            alt="Promotion"
             className="w-full h-full object-cover opacity-60"
           />
         </div>
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <span className="text-xs uppercase tracking-[0.4em] mb-6">Exclusive Offer</span>
+          <span className="text-xs uppercase tracking-[0.4em] mb-6">{promo.tagline}</span>
           <h2 className="text-4xl md:text-6xl font-light uppercase tracking-[0.2em] mb-10 max-w-2xl leading-tight">
-            Elevate Your Style With <span className="font-medium">Premium Comfort</span>
+            {promo.title1} {promo.titleAccent && <span className="font-medium">{promo.titleAccent}</span>} {promo.title2}
           </h2>
+          {promo.code && (
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-xs uppercase tracking-widest opacity-70">Code:</span>
+              <span className="border border-current px-4 py-2 text-xs tracking-widest font-medium">{promo.code}</span>
+            </div>
+          )}
           <Link href="/products" className="btn-premium">
-            Explore Collection
+            {promo.buttonText}
           </Link>
+          {promo.description && (
+            <p className="mt-4 text-xs uppercase tracking-[0.15em] opacity-50">{promo.description}</p>
+          )}
         </div>
       </section>
 

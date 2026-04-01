@@ -57,8 +57,16 @@ export const useOrderStore = create<OrderStore>()(
             shippingDetails: o.shipping_details,
           }));
           
-          set({ orders: mappedOrders });
-          console.log('✅ Synchronized ' + mappedOrders.length + ' orders from cloud.');
+          // Merge strategy: Keep local-only orders that aren't in the cloud yet
+          const cloudIds = new Set(mappedOrders.map(o => o.id));
+          const localOnly = get().orders.filter(o => !cloudIds.has(o.id));
+          
+          const finalOrders = [...mappedOrders, ...localOnly].sort((a, b) => 
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+          );
+
+          set({ orders: finalOrders });
+          console.log(`✅ Synchronized ${mappedOrders.length} orders from cloud. Kept ${localOnly.length} local-only orders.`);
         } catch (error) {
           console.warn('❌ Unexpected Error fetching orders:', error);
         } finally {
@@ -125,6 +133,7 @@ export const useOrderStore = create<OrderStore>()(
     }),
     {
       name: 'order-storage',
+      version: 2,
       storage: createJSONStorage(() => indexedDBStorage),
     }
   )

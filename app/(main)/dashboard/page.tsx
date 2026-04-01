@@ -6,41 +6,51 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useOrderStore } from '@/store/useOrderStore';
 import { formatPrice } from '@/lib/utils';
-import { Package, User, LogOut, ChevronRight, ShoppingBag, Clock, MapPin } from 'lucide-react';
+import { Package, LogOut, ChevronRight, ShoppingBag, Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 export default function DashboardPage() {
   const { user, logout, isAuthenticated } = useAuthStore();
   const { orders } = useOrderStore();
   const router = useRouter();
-
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (useAuthStore.persist.hasHydrated()) {
-      setIsHydrated(true);
-    } else {
-      const unsub = useAuthStore.persist.onFinishHydration(() => {
-        setIsHydrated(true);
-      });
-      return () => unsub();
-    }
+    // Wait for BOTH stores to finish reading from IndexedDB
+    let authDone = useAuthStore.persist.hasHydrated();
+    let ordersDone = useOrderStore.persist.hasHydrated();
+
+    const tryReady = () => {
+      if (authDone && ordersDone) setIsReady(true);
+    };
+
+    tryReady();
+
+    const unsubA = useAuthStore.persist.onFinishHydration(() => {
+      authDone = true;
+      tryReady();
+    });
+    const unsubO = useOrderStore.persist.onFinishHydration(() => {
+      ordersDone = true;
+      tryReady();
+    });
+
+    return () => { unsubA(); unsubO(); };
   }, []);
 
   useEffect(() => {
-    if (isHydrated && !isAuthenticated) {
+    if (isReady && !isAuthenticated) {
       router.push('/login');
     }
-  }, [isHydrated, isAuthenticated, router]);
+  }, [isReady, isAuthenticated, router]);
 
-  if (!isHydrated || (isAuthenticated && !user)) return null;
-
+  if (!isReady) return null;
   if (!user) return null;
 
+  const currentEmail = user.email?.toLowerCase()?.trim();
   const userOrders = orders.filter(order => {
-    const orderEmail = order.shippingDetails?.email?.toLowerCase();
-    const currentUserEmail = user?.email?.toLowerCase();
-    return orderEmail && currentUserEmail && orderEmail === currentUserEmail;
+    const orderEmail = order.shippingDetails?.email?.toLowerCase()?.trim();
+    return orderEmail && currentEmail && orderEmail === currentEmail;
   });
 
   return (
@@ -50,7 +60,7 @@ export default function DashboardPage() {
         <div className="w-full md:w-80 space-y-8">
             <div className="bg-white rounded-[32px] border border-zinc-100 shadow-xl p-8 flex flex-col items-center text-center">
                 <div className="w-24 h-24 bg-black text-white rounded-full flex items-center justify-center text-3xl font-black mb-4">
-                    {user.name.charAt(0)}
+                    {user.name.charAt(0).toUpperCase()}
                 </div>
                 <h2 className="text-2xl font-black uppercase tracking-tighter">{user.name}</h2>
                 <p className="text-zinc-500 font-medium text-sm mb-6">{user.email}</p>
@@ -83,7 +93,10 @@ export default function DashboardPage() {
         <div className="flex-grow space-y-12">
             <div>
                 <h1 className="text-5xl font-black uppercase tracking-tighter mb-2">MY ORDERS</h1>
-                <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs">Manage your recent purchases and tracking</p>
+                <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs">
+                  Manage your recent purchases and tracking
+                  {userOrders.length > 0 && <span className="ml-3 bg-black text-white px-3 py-1 rounded-full text-[10px]">{userOrders.length} order{userOrders.length > 1 ? 's' : ''}</span>}
+                </p>
             </div>
 
             <div className="space-y-6">
@@ -94,7 +107,7 @@ export default function DashboardPage() {
                                 <div className="flex items-center gap-6">
                                     <div>
                                         <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">Order Placed</p>
-                                        <p className="text-sm font-black">{order.date}</p>
+                                        <p className="text-sm font-black">{new Date(order.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">Total Amount</p>
@@ -102,7 +115,7 @@ export default function DashboardPage() {
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">Ship to</p>
-                                        <p className="text-sm font-black">{order.shippingDetails.city}</p>
+                                        <p className="text-sm font-black">{order.shippingDetails?.city || '—'}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-end">
@@ -138,7 +151,7 @@ export default function DashboardPage() {
                                             <MapPin className="w-4 h-4" /> Shipping Address
                                         </h3>
                                         <p className="text-xs font-medium text-zinc-600 leading-relaxed">
-                                            {order.shippingDetails.address}, {order.shippingDetails.city}, {order.shippingDetails.postalCode}
+                                            {order.shippingDetails?.address}, {order.shippingDetails?.city}, {order.shippingDetails?.postalCode}
                                         </p>
                                     </div>
                                 </div>

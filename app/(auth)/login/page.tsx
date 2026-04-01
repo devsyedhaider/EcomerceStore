@@ -30,7 +30,7 @@ export default function LoginPage() {
             
             login({ 
                 name: 'Admin User', 
-                email: 'admin1234', 
+                email: 'admin@aurafeet.com', 
                 role: 'admin' 
             });
             router.push('/admin');
