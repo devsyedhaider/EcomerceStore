@@ -48,7 +48,7 @@ export const useOrderStore = create<OrderStore>()(
             .order('date', { ascending: false });
 
           if (error) {
-            console.error('❌ Supabase Order Fetch Error:', error.message, error.details);
+            console.warn('❌ Supabase Order Fetch Error:', error.message, error.details);
             return;
           }
           
@@ -60,7 +60,7 @@ export const useOrderStore = create<OrderStore>()(
           set({ orders: mappedOrders });
           console.log('✅ Synchronized ' + mappedOrders.length + ' orders from cloud.');
         } catch (error) {
-          console.error('❌ Unexpected Error fetching orders:', error);
+          console.warn('❌ Unexpected Error fetching orders:', error);
         } finally {
           set({ isLoading: false });
         }
@@ -81,14 +81,14 @@ export const useOrderStore = create<OrderStore>()(
             
             const { error } = await supabase.from('orders').insert([dbOrder]);
             if (error) {
-               console.error('❌ Cloud Save Failed:', error.message);
+               console.warn('❌ Cloud Save Failed:', error.message);
                // We don't throw here so the user isn't stuck, but we log the error
             } else {
                console.log('✅ Order synced to cloud.');
             }
           }
         } catch (error) {
-          console.error('❌ unexpected error adding order:', error);
+          console.warn('❌ unexpected error adding order:', error);
         }
       },
 
@@ -106,14 +106,14 @@ export const useOrderStore = create<OrderStore>()(
               .eq('id', id);
             
             if (error) {
-              console.error('❌ Cloud Status Update Failed:', error.message);
+              console.warn('❌ Cloud Status Update Failed:', error.message);
               // We keep the local update so the user isn't frustrated
             } else {
               console.log('✅ Order status synced to cloud: ' + status);
             }
           }
         } catch (error) {
-          console.error('❌ Unexpected error updating status:', error);
+          console.warn('❌ Unexpected error updating status:', error);
         }
       },
 

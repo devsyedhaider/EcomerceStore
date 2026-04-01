@@ -58,7 +58,7 @@ export const useProductStore = create<ProductStore>()(
             set({ products: mappedData });
           }
         } catch (error) {
-          console.error('Error fetching products:', error);
+          console.warn('Error fetching products:', error);
         } finally {
           set({ isLoading: false });
         }
@@ -79,7 +79,7 @@ export const useProductStore = create<ProductStore>()(
           }
           set((state) => ({ products: [product, ...state.products] }));
         } catch (error) {
-          console.error('Error adding product:', error);
+          console.warn('Error adding product:', error);
         }
       },
 
@@ -96,7 +96,7 @@ export const useProductStore = create<ProductStore>()(
             products: state.products.map((p) => (p.id === id ? { ...p, ...updatedProduct } : p)),
           }));
         } catch (error) {
-          console.error('Error updating product:', error);
+          console.warn('Error updating product:', error);
         }
       },
 
@@ -107,7 +107,7 @@ export const useProductStore = create<ProductStore>()(
           }
           set((state) => ({ products: state.products.filter((p) => p.id !== id) }));
         } catch (error) {
-          console.error('Error deleting product:', error);
+          console.warn('Error deleting product:', error);
         }
       },
     }),

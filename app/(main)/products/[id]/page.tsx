@@ -2,15 +2,16 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ShoppingBag, Heart, Share2, ShieldCheck, Truck, RefreshCw, Star, ArrowLeft, ChevronRight, Check } from 'lucide-react';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
-import { products } from '@/lib/data';
 import { formatPrice, cn } from '@/lib/utils';
 import { useCartStore } from '@/store/useCartStore';
 import ProductCard from '@/components/product/ProductCard';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ProductDetailPage() {
   const { categories } = useCategoryStore();
@@ -19,26 +20,19 @@ export default function ProductDetailPage() {
   const id = params.id as string;
   
   const storeProducts = useProductStore((state) => state.products);
-  const [productsList, setProductsList] = useState(products);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // When store loads (client-side), update local list including new added products
-    if (storeProducts.length > 0) {
-        setProductsList(storeProducts);
-    }
-  }, [storeProducts]);
+  }, []);
 
-  const product = productsList.find((p) => p.id === id);
+  const product = storeProducts.find((p) => p.id === id);
   const categoryName = mounted && product ? (categories.find(c => c.id === product.category)?.name || product.category) : product?.category;
   const addItem = useCartStore((state) => state.addItem);
-
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-  const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
 
   useEffect(() => {
@@ -51,10 +45,10 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="container mx-auto px-4 py-20 text-center">
-        <h1 className="text-3xl font-black mb-4">PRODUCT NOT FOUND</h1>
-        <button onClick={() => router.push('/products')} className="btn-primary">
-          BACK TO SHOP
+      <div className="container mx-auto px-6 py-32 text-center">
+        <h1 className="text-2xl font-light uppercase tracking-[0.2em] mb-8">Product Not Found</h1>
+        <button onClick={() => router.push('/products')} className="btn-premium-outline">
+          Back to Collection
         </button>
       </div>
     );
@@ -66,48 +60,63 @@ export default function ProductDetailPage() {
     setTimeout(() => setIsAdded(false), 2000);
   };
 
-  const handleBuyNow = () => {
-    addItem(product, selectedSize, selectedColor);
-    router.push('/cart');
-  };
-
-  const relatedProducts = productsList
+  const relatedProducts = storeProducts
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
 
   return (
-    <div className="pb-20">
-      <div className="container mx-auto px-4 py-8">
+    <div className="pb-32 bg-white pt-24 md:pt-32">
+      <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-12">
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-500 mb-12">
-          <button onClick={() => router.push('/')} className="hover:text-black transition-colors">Home</button>
+        <nav className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-medium text-gray-light mb-12">
+          <Link href="/" className="hover:text-black transition-premium">Home</Link>
           <ChevronRight className="w-3 h-3" />
-          <button onClick={() => router.push('/products')} className="hover:text-black transition-colors">Products</button>
+          <Link href="/products" className="hover:text-black transition-premium">Collection</Link>
           <ChevronRight className="w-3 h-3" />
           <span className="text-black">{product.name}</span>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Image Gallery */}
-          <div className="flex flex-col gap-6">
-            <div className="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative group">
-              <img
-                src={product.images[selectedImage]}
-                alt={product.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <button className="absolute top-6 right-6 p-3 bg-white shadow-xl rounded-full text-zinc-400 hover:text-accent transition-all transform hover:scale-110">
-                <Heart className="w-6 h-6" />
-              </button>
-            </div>
-            <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24">
+          {/* Left: Image Gallery (Thumbs + Main) */}
+          <div className="lg:col-span-7 flex flex-col md:flex-row gap-6">
+            {/* Thumbnails (Left side on desktop) */}
+            <div className="hidden md:flex flex-col gap-4 order-2 md:order-1">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
                   className={cn(
-                    "aspect-square rounded-xl overflow-hidden border-2 transition-all",
-                    selectedImage === i ? "border-black scale-[0.98]" : "border-transparent hover:border-zinc-200"
+                    "w-20 aspect-[3/4] overflow-hidden border transition-premium",
+                    selectedImage === i ? "border-black" : "border-gray-100 hover:border-gray-300"
+                  )}
+                >
+                  <img src={img} alt={`${product.name} ${i}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+
+            {/* Main Image */}
+            <div className="flex-grow aspect-[3/4] overflow-hidden bg-gray-50 order-1 md:order-2">
+              <motion.img
+                key={selectedImage}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                src={product.images[selectedImage]}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Mobile Thumbnails */}
+            <div className="flex md:hidden gap-4 overflow-x-auto no-scrollbar pb-4 order-3">
+               {product.images.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedImage(i)}
+                  className={cn(
+                    "w-20 aspect-[3/4] flex-shrink-0 overflow-hidden border transition-premium",
+                    selectedImage === i ? "border-black" : "border-gray-100"
                   )}
                 >
                   <img src={img} alt={`${product.name} ${i}`} className="w-full h-full object-cover" />
@@ -116,44 +125,63 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Product Info */}
-          <div className="flex flex-col">
-            <div className="mb-8">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent mb-4">
-                <span className="bg-accent/10 py-1 px-3 rounded-full">{categoryName}</span>
-                {product.isNew && <span>• NEW ARRIVAL</span>}
-              </div>
-              <h1 className="text-5xl font-black tracking-tighter uppercase mb-4 leading-[0.9]">{product.name}</h1>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex items-center bg-zinc-100 px-3 py-1 rounded-full gap-1">
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <span className="text-sm font-black">{product.rating}</span>
+          {/* Right: Product Info */}
+          <div className="lg:col-span-5 flex flex-col pt-4">
+            <div className="mb-10">
+              <span className="text-premium-subheading block mb-4">{categoryName}</span>
+              <h1 className="text-3xl md:text-5xl font-light uppercase tracking-[0.15em] mb-6 leading-tight">
+                {product.name}
+              </h1>
+              <div className="flex items-center gap-6 mb-8">
+                <span className="text-2xl font-light tracking-wider text-black">{formatPrice(product.price)}</span>
+                <div className="h-4 w-px bg-gray-200" />
+                <div className="flex items-center gap-1.5">
+                  <Star className="w-3.5 h-3.5 fill-black text-black" />
+                  <span className="text-xs font-medium uppercase tracking-widest">{product.rating}</span>
+                  <span className="text-[10px] text-gray-light uppercase tracking-widest ml-1">({product.reviews} Reviews)</span>
                 </div>
-                <span className="text-zinc-500 text-sm font-bold">({product.reviews} customer reviews)</span>
               </div>
-              <p className="text-4xl font-black text-black">{formatPrice(product.price)}</p>
             </div>
 
-            <p className="text-zinc-600 leading-relaxed mb-10 text-lg font-medium">
+            <p className="text-gray-dark leading-relaxed mb-12 text-sm uppercase tracking-[0.05em] font-light">
               {product.description}
             </p>
 
             {/* Selectors */}
-            <div className="space-y-10 mb-12">
+            <div className="space-y-12 mb-16">
+              {/* Color Selector */}
+              <div>
+                <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold mb-6">Color: <span className="font-light text-gray-light">{selectedColor}</span></h3>
+                <div className="flex gap-4">
+                  {product.colors.map((color) => (
+                    <button
+                      key={color.name}
+                      onClick={() => setSelectedColor(color.name)}
+                      className={cn(
+                        "w-8 h-8 rounded-full border transition-premium p-0.5",
+                        selectedColor === color.name ? "border-black" : "border-transparent"
+                      )}
+                    >
+                      <div className="w-full h-full rounded-full" style={{ backgroundColor: color.hex }} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Size Selector */}
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-black text-sm uppercase tracking-widest">Select Size (UK)</h3>
-                  <button className="text-xs font-bold text-zinc-500 underline uppercase tracking-widest hover:text-black">Size Guide</button>
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold">Select Size</h3>
+                  <button className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-light border-b border-gray-200 hover:text-black transition-premium">Size Guide</button>
                 </div>
-                <div className="grid grid-cols-5 gap-3">
+                <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
                   {product.sizes.map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={cn(
-                        "h-12 border-2 text-sm font-black rounded-xl transition-all",
-                        selectedSize === size ? "bg-black text-white border-black shadow-lg" : "border-zinc-100 hover:border-black"
+                        "h-12 border text-[10px] uppercase tracking-widest font-medium transition-premium",
+                        selectedSize === size ? "bg-black text-white border-black" : "border-gray-100 hover:border-black text-gray-light"
                       )}
                     >
                       {size}
@@ -161,76 +189,44 @@ export default function ProductDetailPage() {
                   ))}
                 </div>
               </div>
-
-              {/* Color Selector */}
-              <div>
-                <h3 className="font-black text-sm uppercase tracking-widest mb-4">Color: <span className="text-zinc-500">{selectedColor}</span></h3>
-                <div className="flex gap-4">
-                  {product.colors.map((color) => (
-                    <button
-                      key={color.name}
-                      onClick={() => setSelectedColor(color.name)}
-                      className={cn(
-                        "w-10 h-10 rounded-full border-2 transition-all p-0.5",
-                        selectedColor === color.name ? "border-black scale-110 shadow-md" : "border-transparent"
-                      )}
-                    >
-                      <div className="w-full h-full rounded-full border border-zinc-200" style={{ backgroundColor: color.hex }} />
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col gap-4 mb-12">
-              <div className="flex gap-4">
-                  <button 
-                    onClick={handleAddToCart}
-                    className={cn(
-                        "flex-grow h-16 rounded-2xl font-black text-lg transition-all flex items-center justify-center gap-3",
-                        isAdded ? "bg-green-600 text-white" : "bg-black text-white hover:bg-zinc-800 shadow-xl"
-                    )}
-                  >
-                    {isAdded ? (
-                        <><Check className="w-6 h-6" /> ADDED TO CART</>
-                    ) : (
-                        <><ShoppingBag className="w-6 h-6" /> ADD TO CART</>
-                    )}
-                  </button>
-                  <button 
-                    onClick={handleBuyNow}
-                    className="flex-grow h-16 rounded-2xl font-black text-lg border-2 border-black hover:bg-black hover:text-white transition-all shadow-xl"
-                  >
-                    BUY IT NOW
-                  </button>
-              </div>
-              <p className="text-center text-xs font-bold text-zinc-500 flex items-center justify-center gap-2">
-                  <ShieldCheck className="w-4 h-4" /> 100% Guaranteed Transaction
-              </p>
+            <div className="flex flex-col gap-4 mb-20">
+              <button 
+                onClick={handleAddToCart}
+                disabled={isAdded}
+                className={cn(
+                  "btn-premium w-full h-16 text-sm",
+                  isAdded && "bg-gray-200 border-gray-200 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
+                )}
+              >
+                {isAdded ? (
+                  <span className="flex items-center gap-2"><Check className="w-4 h-4" /> Added to Cart</span>
+                ) : (
+                  <span className="flex items-center gap-2"><ShoppingBag className="w-4 h-4" /> Add to Cart</span>
+                )}
+              </button>
+              
+              <button className="btn-premium-outline w-full h-16 text-sm flex items-center justify-center gap-2">
+                <Heart className="w-4 h-4" /> Add to Wishlist
+              </button>
             </div>
 
-            {/* Features List */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-zinc-100">
-                <div className="flex items-center gap-3">
-                    <Truck className="w-5 h-5 text-accent" />
+            {/* Trust Features */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-10 border-t border-gray-100">
+                <div className="flex items-start gap-4">
+                    <Truck className="w-5 h-5 stroke-[1.2]" />
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest">Free Shipping</p>
-                        <p className="text-[10px] text-zinc-500 font-bold uppercase">Over Rs. 5000</p>
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] mb-1">Fast Delivery</p>
+                        <p className="text-[9px] text-gray-light uppercase tracking-[0.1em]">2-4 Working Days</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-3">
-                    <RefreshCw className="w-5 h-5 text-accent" />
+                <div className="flex items-start gap-4">
+                    <RefreshCw className="w-5 h-5 stroke-[1.2]" />
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest">Easy Returns</p>
-                        <p className="text-[10px] text-zinc-500 font-bold uppercase">15 Days Policy</p>
-                    </div>
-                </div>
-                <div className="flex items-center gap-3">
-                    <ShieldCheck className="w-5 h-5 text-accent" />
-                    <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest">Genuine</p>
-                        <p className="text-[10px] text-zinc-500 font-bold uppercase">100% Original</p>
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] mb-1">Returns Policy</p>
+                        <p className="text-[9px] text-gray-light uppercase tracking-[0.1em]">15 Days Easy Returns</p>
                     </div>
                 </div>
             </div>
@@ -239,12 +235,10 @@ export default function ProductDetailPage() {
       </div>
 
       {/* Related Products */}
-      <section className="container mx-auto px-4 mt-32">
-        <div className="flex items-end justify-between mb-12">
-          <div>
-            <h2 className="text-4xl font-black tracking-tighter uppercase">YOU MAY ALSO LIKE</h2>
-            <div className="w-16 h-1 bg-accent mt-2" />
-          </div>
+      <section className="max-w-[1800px] mx-auto px-6 md:px-12 mt-32 border-t border-gray-100 pt-24">
+        <div className="text-center mb-16">
+          <span className="text-premium-subheading block mb-4">Complete the Look</span>
+          <h2 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em]">Related Products</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {relatedProducts.map((p) => (
@@ -255,3 +249,4 @@ export default function ProductDetailPage() {
     </div>
   );
 }
+

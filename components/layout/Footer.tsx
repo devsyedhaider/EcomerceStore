@@ -3,29 +3,36 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
-
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 import { useCategoryStore } from '@/store/useCategoryStore';
 import { useState, useEffect } from 'react';
 
 const footerLinks = [
   {
-    title: 'Customer Service',
+    title: 'Support',
     links: [
       { name: 'Contact Us', href: '/contact' },
+      { name: 'Track Order', href: '/track' },
       { name: 'Shipping Policy', href: '/shipping' },
       { name: 'Return & Exchange', href: '/returns' },
       { name: 'FAQs', href: '/faqs' },
-      { name: 'Store Locator', href: '/stores' },
     ],
   },
   {
-    title: 'About Aura Feet',
+    title: 'The Brand',
     links: [
       { name: 'Our Story', href: '/about' },
       { name: 'Careers', href: '/careers' },
+      { name: 'Store Locator', href: '/stores' },
+      { name: 'Sustainability', href: '/sustainability' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
       { name: 'Terms of Service', href: '/terms' },
       { name: 'Privacy Policy', href: '/privacy' },
+      { name: 'Cookie Policy', href: '/cookies' },
     ],
   },
 ];
@@ -39,46 +46,48 @@ export default function Footer() {
   }, []);
 
   const shoppingLinks = mounted ? categories.map(cat => ({
-    name: `${cat.name} Shoes`,
+    name: cat.name,
     href: `/products?category=${cat.id}`
   })) : [];
+
   return (
-    <footer className="bg-zinc-950 text-white pt-16 pb-8">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+    <footer className="bg-black text-white pt-24 pb-12">
+      <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-16 mb-24">
           {/* Brand & Newsletter */}
-          <div className="flex flex-col gap-6">
-            <Link href="/" className="text-3xl font-black tracking-tighter">
-              AURA FEET
+          <div className="lg:col-span-2 flex flex-col gap-10">
+            <Link href="/" className="text-2xl font-light tracking-[0.3em] uppercase">
+              Aura Feet
             </Link>
-            <p className="text-zinc-400 max-w-xs">
-              Experience ultimate comfort and style with Pakistan's premium footwear brand. Quality that speaks for itself.
-            </p>
-            <div className="flex flex-col gap-4">
-              <h4 className="font-bold text-sm uppercase tracking-widest text-zinc-300">Subscribe to Newsletter</h4>
-              <div className="flex gap-2">
+            <div className="flex flex-col gap-6">
+              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Join our world</h4>
+              <p className="text-[11px] uppercase tracking-[0.1em] text-gray-400 leading-relaxed max-w-xs">
+                Subscribe to receive updates, access to exclusive deals, and more.
+              </p>
+              <div className="flex border-b border-gray-800 pb-2 max-w-sm group focus-within:border-white transition-premium">
                 <input
                   type="email"
-                  placeholder="Your email address"
-                  className="bg-zinc-800 border-none rounded px-4 py-2 w-full focus:ring-1 focus:ring-accent outline-none"
+                  placeholder="EMAIL ADDRESS"
+                  className="bg-transparent border-none p-0 w-full text-[10px] uppercase tracking-[0.2em] focus:ring-0 outline-none placeholder:text-gray-600"
                 />
-                <button className="bg-accent hover:bg-red-700 transition-colors px-4 py-2 rounded font-bold text-sm">
-                  JOIN
+                <button className="p-2 hover:translate-x-1 transition-premium">
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Links */}
-          {footerLinks.map((section) => (
-            <div key={section.title} className="flex flex-col gap-6">
-              <h4 className="font-bold text-sm uppercase tracking-widest text-zinc-300">{section.title}</h4>
-              <ul className="flex flex-col gap-3">
-                {section.links.map((link) => (
+          {/* Links Sections */}
+          <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-12">
+             {/* Shop Section */}
+            <div className="flex flex-col gap-8">
+              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Collections</h4>
+              <ul className="flex flex-col gap-4">
+                {shoppingLinks.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-zinc-400 hover:text-white transition-colors text-sm"
+                      className="text-[11px] uppercase tracking-[0.1em] text-gray-400 hover:text-white transition-premium"
                     >
                       {link.name}
                     </Link>
@@ -86,63 +95,71 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
-          ))}
 
-          {/* Dynamic Shopping Links */}
-          <div className="flex flex-col gap-6">
-            <h4 className="font-bold text-sm uppercase tracking-widest text-zinc-300">Shopping</h4>
-            <ul className="flex flex-col gap-3">
-              {shoppingLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-zinc-400 hover:text-white transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {footerLinks.slice(0, 2).map((section) => (
+              <div key={section.title} className="flex flex-col gap-8">
+                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">{section.title}</h4>
+                <ul className="flex flex-col gap-4">
+                  {section.links.map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
+                        className="text-[11px] uppercase tracking-[0.1em] text-gray-400 hover:text-white transition-premium"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Social & Contact */}
+          <div className="lg:col-span-1 flex flex-col gap-10">
+            <div className="flex flex-col gap-8">
+              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Follow Us</h4>
+              <div className="flex items-center gap-6">
+                <a href="#" className="text-gray-400 hover:text-white transition-premium">
+                  <Facebook className="w-4 h-4 stroke-[1.5]" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white transition-premium">
+                  <Instagram className="w-4 h-4 stroke-[1.5]" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white transition-premium">
+                  <Twitter className="w-4 h-4 stroke-[1.5]" />
+                </a>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400">help@aurafeet.pk</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400">+92 42 111 287 287</p>
+            </div>
           </div>
         </div>
 
-        {/* Contact info & Socials */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 border-t border-zinc-800 mb-8 items-center">
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-zinc-400 hover:text-white transition-colors">
-              <Facebook className="w-5 h-5" />
-            </a>
-            <a href="#" className="text-zinc-400 hover:text-white transition-colors">
-              <Instagram className="w-5 h-5" />
-            </a>
-            <a href="#" className="text-zinc-400 hover:text-white transition-colors">
-              <Twitter className="w-5 h-5" />
-            </a>
-            <a href="#" className="text-zinc-400 hover:text-white transition-colors">
-              <Youtube className="w-5 h-5" />
-            </a>
+        {/* Bottom Bar */}
+        <div className="pt-12 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex items-center gap-8">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-3 opacity-20 contrast-0 invert" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-3 opacity-20 contrast-0 invert" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-5 opacity-20 contrast-0 invert" />
+          </div>
+          
+          <div className="flex gap-8">
+             {footerLinks[2].links.map((link) => (
+                <Link key={link.name} href={link.href} className="text-[9px] uppercase tracking-[0.2em] text-gray-600 hover:text-gray-400 transition-premium">
+                  {link.name}
+                </Link>
+             ))}
           </div>
 
-          <div className="flex flex-col gap-1 items-start md:items-center">
-            <div className="flex items-center gap-2 text-sm text-zinc-400">
-              <Phone className="w-4 h-4" /> +92 300 1234567
-            </div>
-            <div className="flex items-center gap-2 text-sm text-zinc-400">
-              <Mail className="w-4 h-4" /> help@aurafeet.pk
-            </div>
-          </div>
-
-          <div className="flex justify-start md:justify-end items-center gap-4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-4 opacity-50 contrast-0 invert" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4 opacity-50 contrast-0 invert" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6 opacity-50 contrast-0 invert" />
-          </div>
-        </div>
-
-        <div className="text-center text-zinc-500 text-xs">
-          <p>© 2026 Aura Feet Pakistan. Designed with excellence.</p>
+          <p className="text-[9px] uppercase tracking-[0.2em] text-gray-600">
+            © 2026 Aura Feet Pakistan. All Rights Reserved.
+          </p>
         </div>
       </div>
     </footer>
   );
 }
+

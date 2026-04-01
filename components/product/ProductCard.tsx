@@ -2,13 +2,13 @@
 'use client';
 
 import Link from 'next/link';
-import { Heart, ShoppingBag, Star } from 'lucide-react';
+import { Heart, ShoppingBag } from 'lucide-react';
 import { formatPrice, cn } from '@/lib/utils';
 import { useCartStore } from '@/store/useCartStore';
 import { useState, useEffect } from 'react';
-
 import { Product } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductCardProps {
   product: Product;
@@ -33,77 +33,70 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div 
-      className="group relative flex flex-col h-full bg-white rounded-[32px] overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-2 border border-zinc-100/50"
+      className="group relative flex flex-col h-full bg-white transition-premium"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Badge */}
       {product.isNew && (
-        <span className="absolute top-6 left-6 z-10 bg-black text-white text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-xl">
-          New Drop
+        <span className="absolute top-4 left-4 z-10 bg-black text-white text-[10px] font-medium px-3 py-1 uppercase tracking-[0.2em] pointer-events-none">
+          New
         </span>
       )}
 
       {/* Image Container */}
-      <Link href={`/products/${product.id}`} className="block relative aspect-[4/5] overflow-hidden bg-zinc-50">
+      <Link href={`/products/${product.id}`} className="block relative aspect-[3/4] overflow-hidden bg-gray-50 mb-6">
         <img
           src={product.images[0]}
           alt={product.name}
           className={cn(
-            "object-cover w-full h-full transition-transform duration-[1500ms] ease-out",
-            isHovered ? "scale-110" : "scale-100"
+            "object-cover w-full h-full transition-premium duration-1000",
+            isHovered ? "scale-105" : "scale-100"
           )}
         />
         
-        {/* Quick Actions overlay */}
-        <div className={cn(
-          "absolute inset-0 bg-black/10 transition-opacity duration-500",
-          isHovered ? "opacity-100" : "opacity-0"
-        )} />
+        {/* Quick Add Overlay */}
+        <AnimatePresence>
+          {isHovered && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="absolute inset-x-0 bottom-0 p-4 bg-white/90 backdrop-blur-sm"
+            >
+              <button 
+                onClick={handleAddToCart}
+                className="w-full py-3 bg-black text-white text-[10px] uppercase tracking-[0.2em] font-medium transition-premium hover:bg-gray-800"
+              >
+                Add to Cart
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        <div className={cn(
-          "absolute inset-x-6 bottom-6 transition-all duration-500 transform z-20",
-          isHovered ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-        )}>
-          <button 
-            onClick={handleAddToCart}
-            className="w-full bg-white text-black py-4 rounded-2xl flex items-center justify-center gap-2 font-black text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-2xl active:scale-95"
-          >
-            <ShoppingBag className="w-4 h-4" /> Quick Buy
-          </button>
-        </div>
-
-        <button className="absolute top-6 right-6 p-3 bg-white/10 backdrop-blur-md rounded-2xl text-white hover:bg-accent hover:text-white transition-all transform hover:scale-110 border border-white/20 z-20">
-          <Heart className="w-4 h-4" />
+        <button className="absolute top-4 right-4 p-2 text-black hover:text-gray-light transition-premium z-20">
+          <Heart className="w-5 h-5 stroke-[1.2]" />
         </button>
       </Link>
 
       {/* Content */}
-      <div className="flex flex-col flex-grow p-8">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">{categoryName}</span>
-          <div className="flex items-center gap-1.5 bg-zinc-50 px-2 py-1 rounded-full border border-zinc-100">
-            <Star className="w-2.5 h-2.5 fill-accent text-accent" />
-            <span className="text-[10px] font-black text-zinc-700">{product.rating}</span>
-          </div>
-        </div>
-        
-        <Link href={`/products/${product.id}`} className="block text-zinc-900 font-black text-lg group-hover:text-accent transition-colors mb-3 tracking-tighter uppercase italic">
+      <div className="flex flex-col flex-grow text-center px-2">
+        <span className="text-[10px] uppercase tracking-[0.15em] text-gray-light mb-2">{categoryName}</span>
+        <Link href={`/products/${product.id}`} className="block text-black text-sm uppercase tracking-widest font-medium mb-3 hover:text-gray-light transition-premium">
           {product.name}
         </Link>
+        <span className="text-sm font-medium text-black">{formatPrice(product.price)}</span>
         
-        <div className="mt-auto pt-6 border-t border-zinc-100 flex items-center justify-between">
-          <span className="text-xl font-black tracking-tighter text-black">{formatPrice(product.price)}</span>
-          <div className="flex -space-x-1.5">
-            {product.colors.map((color) => (
-              <span 
-                key={color.name}
-                className="w-4 h-4 rounded-full border-2 border-white shadow-sm"
-                style={{ backgroundColor: color.hex }}
-                title={color.name}
-              />
-            ))}
-          </div>
+        {/* Color Indicators (Subtle) */}
+        <div className="flex items-center justify-center gap-2 mt-4 opacity-0 group-hover:opacity-100 transition-premium">
+          {product.colors.map((color) => (
+            <span 
+              key={color.name}
+              className="w-2.5 h-2.5 rounded-full border border-gray-200"
+              style={{ backgroundColor: color.hex }}
+              title={color.name}
+            />
+          ))}
         </div>
       </div>
     </div>

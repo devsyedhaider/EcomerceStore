@@ -39,7 +39,7 @@ export const useCategoryStore = create<CategoryStore>()(
           if (error) throw error;
           if (data && data.length > 0) set({ categories: data });
         } catch (error) {
-          console.error('Error fetching categories:', error);
+          console.warn('Error fetching categories:', error);
         } finally {
           set({ isLoading: false });
         }
@@ -52,7 +52,7 @@ export const useCategoryStore = create<CategoryStore>()(
           }
           set((state) => ({ categories: [...state.categories, category] }));
         } catch (error) {
-          console.error('Error adding category:', error);
+          console.warn('Error adding category:', error);
         }
       },
 

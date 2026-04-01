@@ -24,7 +24,7 @@ const defaultHero: HeroContent = {
   accentTitle: 'YOUR EDGE.',
   title: 'UNLEASH',
   subtitle: 'Experience the fusion of high-performance technology and street-ready aesthetics. Engineered for those who lead, never follow.',
-  backgroundImage: '/hero_shoe_banner_1770014471342.png',
+  backgroundImage: '/hero-aura-feet.png',
   buttonText: 'EXPLORE NOW',
 };
 
@@ -56,7 +56,7 @@ export const useHeroStore = create<HeroStore>()(
             set({ hero: mappedHero });
           }
         } catch (error) {
-          console.error('Error fetching hero:', error);
+          console.warn('Error fetching hero:', error);
         } finally {
           set({ isLoading: false });
         }
@@ -83,7 +83,7 @@ export const useHeroStore = create<HeroStore>()(
             if (error) throw error;
           }
         } catch (error) {
-          console.error('Error syncing hero to cloud:', error);
+          console.warn('Error syncing hero to cloud:', error);
         }
       },
     }),
