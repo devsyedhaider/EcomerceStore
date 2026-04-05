@@ -32,8 +32,8 @@ export default function Home() {
 
   if (!mounted) return null;
 
-  const featuredProducts = products.filter(p => p.isFeatured).slice(0, 4);
-  const newArrivals = products.filter(p => p.isNew).slice(0, 4);
+  const featuredProducts = products.filter(p => p.isFeatured).slice(0, 20);
+  const newArrivals = products.filter(p => p.isNew).slice(0, 20);
 
   return (
     <div className="flex flex-col pb-0">
@@ -127,7 +127,7 @@ export default function Home() {
             <div>
               <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">Trending Now</h2>
             </div>
-            <Link href="/products?isTrending=true" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
+            <Link href="/trending" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
               View All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-premium" />
             </Link>
           </div>
@@ -177,13 +177,13 @@ export default function Home() {
               <span className="text-premium-subheading block mb-4">The Latest Drop</span>
               <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">New Arrivals</h2>
             </div>
-            <Link href="/products?isNew=true" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
+            <Link href="/new-arrivals" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
               View All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-premium" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-            {newArrivals.slice(0, 20).map((product) => (
+            {newArrivals.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
