@@ -47,32 +47,6 @@ export default function DataInitializer() {
           fetchHero()
         ]);
 
-        // Auto-Seed if database is empty
-        const { categories: initialCategories, products: initialProducts } = await import('@/lib/data');
-        
-        // This is a client-side seed check. 
-        // In a real production app, you'd do this via a migration script.
-        // But for development convenience, we check if stores are empty.
-        
-        const currentProducts = useProductStore.getState().products;
-        const currentCategories = useCategoryStore.getState().categories;
-
-        if (currentProducts.length <= 1) { // Only have dummy or 1 product? Seed.
-           console.log('🌱 Seeding initial products to Supabase...');
-           const { addProduct } = useProductStore.getState();
-           for (const p of initialProducts) {
-              await addProduct(p);
-           }
-        }
-
-        if (currentCategories.length <= 1) {
-           console.log('🌱 Seeding initial categories to Supabase...');
-           const { addCategory } = useCategoryStore.getState();
-           for (const c of initialCategories) {
-              await addCategory(c);
-           }
-        }
-
         console.log('✅ Initial cloud data sync complete.');
       } catch (err: any) {
         console.warn('📡 Supabase sync is offline. Realtime sync disabled.');
