@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ShoppingCart, User, Search, Menu, X, ChevronRight, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { ShoppingCart, User, Search, Menu, X, ChevronRight, ChevronLeft, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { useCartStore } from '@/store/useCartStore';
 import { useAuthStore } from '@/store/useAuthStore';
 import { cn } from '@/lib/utils';
@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function Navbar() {
   const { categories } = useCategoryStore();
   const [isOpen, setIsOpen] = useState(false);
+  const [showShopPanel, setShowShopPanel] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const itemCount = useCartStore((state) => state.getItemCount());
   const { user, initialized } = useAuthStore();
@@ -77,8 +78,8 @@ export default function Navbar() {
 
         {/* Desktop & Mobile Navbar - Always Sticky */}
         <nav className={cn(
-            "bg-white/95 backdrop-blur-md px-4 md:px-10 transition-all duration-500 border-none",
-            isScrolled ? "border-b border-zinc-100 h-20" : "h-24"
+            "bg-white px-4 md:px-10 transition-all duration-500",
+            isScrolled ? "h-16 md:h-20" : "h-20 md:h-24"
         )}>
 
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
@@ -145,8 +146,8 @@ export default function Navbar() {
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
-               onClick={() => setIsOpen(false)}
-               className="fixed inset-0 bg-black/80 backdrop-blur-md z-[70]"
+               onClick={() => { setIsOpen(false); setShowShopPanel(false); }}
+               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[70]"
             />
             
             <motion.div
@@ -154,59 +155,122 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 200 }}
-                className="fixed left-0 top-0 bottom-0 w-full max-w-[500px] bg-white z-[80] shadow-[10px_0_60px_rgba(0,0,0,0.05)] flex flex-col border-r border-[#e194b8]/10"
+                className="fixed left-0 top-0 bottom-0 w-[85vw] sm:w-[75vw] md:w-[420px] lg:w-[480px] bg-white z-[80] shadow-2xl flex flex-col overflow-hidden"
             >
               {/* Header inside Sidebar */}
-              <div className="flex items-center justify-between p-10 md:p-12">
+              <div className="flex items-center justify-between px-6 py-5 sm:px-8 sm:py-6 md:px-10 md:py-8 border-b border-zinc-50 flex-shrink-0">
                  <button 
-                  onClick={() => setIsOpen(false)} 
-                  className="w-12 h-12 flex items-center justify-center bg-zinc-50 hover:bg-[#121212] hover:text-white rounded-full transition-all group duration-500"
+                  onClick={() => { setIsOpen(false); setShowShopPanel(false); }} 
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-zinc-50 hover:bg-[#121212] hover:text-white rounded-full transition-all group duration-500"
                 >
-                    <X className="w-5 h-5 stroke-[1.5] group-hover:rotate-90 transition-transform duration-500" />
+                    <X className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5] group-hover:rotate-90 transition-transform duration-500" />
                  </button>
                  <div className="flex flex-col items-end">
-                    <span className="text-[9px] font-black tracking-[0.4em] font-lato text-zinc-300">SINCE 2026</span>
-                    <span className="text-[8px] font-bold tracking-[0.2em] font-lato text-accent mt-0.5">COLLECTION N° 01</span>
+                    <span className="text-[8px] sm:text-[9px] font-black tracking-[0.3em] sm:tracking-[0.4em] font-lato text-zinc-300">SINCE 2026</span>
+                    <span className="text-[7px] sm:text-[8px] font-bold tracking-[0.15em] sm:tracking-[0.2em] font-lato text-accent mt-0.5">COLLECTION N° 01</span>
                  </div>
               </div>
 
               {/* Navigation Links */}
-              <div className="flex flex-col flex-grow px-10 md:px-12 mt-4">
+              <div className="flex flex-col flex-grow px-6 sm:px-8 md:px-10 mt-2 overflow-y-auto">
+
+                {/* 01. Home */}
+                <Link href="/" className="group flex items-center gap-4 sm:gap-6 py-4 sm:py-5 border-b border-zinc-50 transition-all duration-500" onClick={() => { setIsOpen(false); setShowShopPanel(false); }}>
+                  <span className="text-[9px] sm:text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity w-5 sm:w-6">01</span>
+                  <span className="text-sm sm:text-sm md:text-base font-lato font-medium tracking-[0.15em] sm:tracking-[0.2em] sm:tracking-[0.3em] text-[#121212] group-hover:translate-x-2 group-hover:text-accent transition-all duration-500 uppercase">Home</span>
+                </Link>
+
+                {/* 02. Shop All Products — triggers sub-panel */}
+                <button onClick={() => setShowShopPanel(true)} className="group flex items-center gap-4 sm:gap-6 py-4 sm:py-5 border-b border-zinc-50 transition-all duration-500 w-full text-left">
+                  <span className="text-[9px] sm:text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity w-5 sm:w-6">02</span>
+                  <span className="flex-1 text-sm sm:text-sm md:text-base font-lato font-medium tracking-[0.15em] sm:tracking-[0.2em] sm:tracking-[0.3em] text-[#121212] group-hover:translate-x-2 group-hover:text-accent transition-all duration-500 uppercase">Shop All Products</span>
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 group-hover:text-accent group-hover:translate-x-1 transition-all flex-shrink-0" />
+                </button>
+
+                {/* 03–05. Other links */}
                 {[
-                    { name: 'Home', href: '/' },
-                    { name: 'Shop All Products', href: '/products' },
-                    { name: 'New Arrivals', href: '/products?isNew=true' },
-                    { name: 'The Collections', href: '/categories' },
-                    { name: 'Our Craft', href: '#' },
+                  { name: 'New Arrivals', href: '/new-arrivals' },
+                  { name: 'The Collections', href: '/categories' },
+                  { name: 'Trending Products', href: '/trending' },
                 ].map((item, i) => (
-                    <Link
-                        key={i}
-                        href={item.href}
-                        className="group flex items-baseline gap-6 py-5 border-b border-zinc-50 transition-all duration-500"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        <span className="text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity">
-                          0{i + 1}
-                        </span>
-                        <span className="text-lg md:text-xl font-lato font-medium tracking-[0.3em] text-[#121212] group-hover:translate-x-3 group-hover:text-accent transition-all duration-500 uppercase italic-none">
-                            {item.name}
-                        </span>
-                    </Link>
+                  <Link
+                    key={i}
+                    href={item.href}
+                    className="group flex items-center gap-4 sm:gap-6 py-4 sm:py-5 border-b border-zinc-50 transition-all duration-500"
+                    onClick={() => { setIsOpen(false); setShowShopPanel(false); }}
+                  >
+                    <span className="text-[9px] sm:text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity w-5 sm:w-6">0{i + 3}</span>
+                    <span className="text-sm sm:text-sm md:text-base font-lato font-medium tracking-[0.15em] sm:tracking-[0.2em] sm:tracking-[0.3em] text-[#121212] group-hover:translate-x-2 group-hover:text-accent transition-all duration-500 uppercase">{item.name}</span>
+                  </Link>
                 ))}
+
               </div>
 
               {/* Sidebar Bottom Fine Print */}
-              <div className="p-10 md:p-12 border-t border-zinc-50 bg-zinc-50/30">
-                  <div className="flex items-center gap-10 mb-10">
-                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors"><Instagram className="w-5 h-5" /></Link>
-                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors"><Facebook className="w-5 h-5" /></Link>
+              <div className="px-6 py-5 sm:px-8 sm:py-6 md:px-10 md:py-8 border-t border-zinc-50 bg-zinc-50/30 flex-shrink-0">
+                  <div className="flex items-center gap-6 sm:gap-10 mb-5 sm:mb-8">
+                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors"><Instagram className="w-4 h-4 sm:w-5 sm:h-5" /></Link>
+                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors"><Facebook className="w-4 h-4 sm:w-5 sm:h-5" /></Link>
                       <Link href="#" className="text-zinc-400 hover:text-accent transition-colors font-bold text-sm">𝕏</Link>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.3em] font-lato uppercase">© 2026 THE AURIC VAULT</p>
-                    <p className="text-[8px] font-medium text-zinc-300 tracking-[0.2em] font-lato uppercase">Refining the art of high jewelry</p>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.2em] sm:tracking-[0.3em] font-lato uppercase">© 2026 THE AURIC VAULT</p>
+                    <p className="text-[8px] font-medium text-zinc-300 tracking-[0.1em] sm:tracking-[0.2em] font-lato uppercase">Refining the art of high jewelry</p>
                   </div>
               </div>
+
+              {/* Shop Sub-Panel — slides over main sidebar */}
+              <AnimatePresence>
+                {showShopPanel && (
+                  <motion.div
+                    initial={{ x: '100%' }}
+                    animate={{ x: 0 }}
+                    exit={{ x: '100%' }}
+                    transition={{ type: 'spring', damping: 30, stiffness: 250 }}
+                    className="absolute inset-0 bg-white flex flex-col z-10"
+                  >
+                    {/* Sub-panel header */}
+                    <div className="flex items-center gap-3 px-6 py-5 sm:px-8 sm:py-6 md:px-10 border-b border-zinc-100 flex-shrink-0">
+                      <button
+                        onClick={() => setShowShopPanel(false)}
+                        className="flex items-center gap-2 text-zinc-500 hover:text-zinc-900 transition-colors group"
+                      >
+                        <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-bold">Shop</span>
+                      </button>
+                    </div>
+
+                    {/* Sub-panel links */}
+                    <div className="flex flex-col flex-grow px-6 sm:px-8 md:px-10 overflow-y-auto py-2">
+                      {/* All Products */}
+                      <Link
+                        href="/products"
+                        onClick={() => { setIsOpen(false); setShowShopPanel(false); }}
+                        className="group flex items-center justify-between py-4 sm:py-5 border-b border-zinc-50 transition-all duration-300"
+                      >
+                        <span className="text-sm sm:text-base font-lato font-semibold tracking-[0.15em] sm:tracking-[0.2em] text-zinc-900 group-hover:text-accent transition-colors uppercase">All Products</span>
+                      </Link>
+
+                      {/* All Categories */}
+                      {navCategories.map((cat) => (
+                        <Link
+                          key={cat.id}
+                          href={`/products?category=${cat.id}`}
+                          onClick={() => { setIsOpen(false); setShowShopPanel(false); }}
+                          className="group flex items-center justify-between py-4 sm:py-5 border-b border-zinc-50 transition-all duration-300"
+                        >
+                          <span className="text-sm sm:text-base font-lato font-light tracking-[0.1em] sm:tracking-[0.15em] text-zinc-600 group-hover:text-accent transition-colors uppercase">{cat.name}</span>
+                          <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-zinc-300 group-hover:text-accent group-hover:translate-x-1 transition-all flex-shrink-0" />
+                        </Link>
+                      ))}
+
+                      {navCategories.length === 0 && (
+                        <p className="text-[10px] uppercase tracking-[0.15em] text-zinc-300 mt-8 text-center">No categories yet.<br/>Add some in the admin panel.</p>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           </>
         )}
