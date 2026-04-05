@@ -71,55 +71,25 @@ export default function AdminHeaderPage() {
             </div>
 
             <div className="space-y-8">
-              <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Season Reference</label>
-                <input 
-                  value={localHero.seasonText}
-                  onChange={e => setLocalHero({...localHero, seasonText: e.target.value})}
-                  className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light"
-                  placeholder="NEW SEASON 2026"
-                />
-              </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Main Title</label>
+                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Main Heading</label>
                   <input 
                     value={localHero.title}
                     onChange={e => setLocalHero({...localHero, title: e.target.value})}
                     className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light uppercase"
-                    placeholder="UNLEASH"
+                    placeholder="ELEGANCE"
                   />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Accent Title</label>
+                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Accent Heading</label>
                   <input 
                     value={localHero.accentTitle}
                     onChange={e => setLocalHero({...localHero, accentTitle: e.target.value})}
                     className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-medium uppercase"
-                    placeholder="YOUR EDGE"
+                    placeholder="REDEFINED"
                   />
                 </div>
-              </div>
-
-              <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Hero Subtitle</label>
-                <textarea 
-                  value={localHero.subtitle}
-                  onChange={e => setLocalHero({...localHero, subtitle: e.target.value})}
-                  className="w-full min-h-[100px] bg-zinc-50 border-none p-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all resize-none font-light leading-relaxed"
-                  placeholder="Describe the collection ethos..."
-                />
-              </div>
-
-              <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Call to Action Button</label>
-                <input 
-                  value={localHero.buttonText}
-                  onChange={e => setLocalHero({...localHero, buttonText: e.target.value})}
-                  className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-bold uppercase tracking-widest"
-                  placeholder="EXPLORE NOW"
-                />
               </div>
             </div>
           </div>
@@ -185,19 +155,10 @@ export default function AdminHeaderPage() {
             
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 scale-[0.6] origin-center">
                <div className="max-w-2xl text-white">
-                  <span className="text-[10px] md:text-sm uppercase tracking-[0.4em] font-medium mb-6 block">
-                    {localHero.seasonText}
-                  </span>
-                  <h1 className="text-4xl md:text-7xl font-light uppercase tracking-[0.2em] mb-10 leading-tight">
+                  <h1 className="text-4xl md:text-7xl font-light uppercase tracking-[0.2em] mb-10 leading-tight font-lato">
                     {localHero.title} <br />
                     <span className="font-medium tracking-[0.1em]">{localHero.accentTitle}</span>
                   </h1>
-                  <p className="text-white/70 text-[8px] md:text-[10px] font-light tracking-[0.15em] max-w-lg mx-auto mb-10 leading-relaxed uppercase">
-                    {localHero.subtitle}
-                  </p>
-                  <div className="inline-flex items-center justify-center px-10 py-4 bg-transparent border border-white text-[10px] uppercase tracking-[0.2em] font-bold">
-                    {localHero.buttonText}
-                  </div>
                </div>
             </div>
           </div>

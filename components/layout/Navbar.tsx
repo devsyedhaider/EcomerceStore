@@ -44,30 +44,43 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-[60]">
-        {/* Announcement Bar */}
-        <div className="bg-accent text-white py-2.5 overflow-hidden whitespace-nowrap border-b border-white/10 shadow-sm">
-            <div className="inline-block animate-marquee-fast">
-                {announcementItems.map((text, i) => (
-                    <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
-                        {text}
-                    </span>
-                ))}
+      <div className="fixed top-0 left-0 right-0 z-[60] transition-all duration-700">
+        {/* Announcement Bar - Hides on Scroll */}
+        <motion.div 
+            initial={false}
+            animate={{ height: isScrolled ? 0 : 'auto', opacity: isScrolled ? 0 : 1 }}
+            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            className="bg-accent text-white overflow-hidden whitespace-nowrap"
+        >
+            <div className="py-2.5">
+                <div className="inline-block animate-marquee-fast">
+                    {announcementItems.map((text, i) => (
+                        <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
+                            {text}
+                        </span>
+                    ))}
+                </div>
+                <div className="inline-block animate-marquee-fast" aria-hidden="true">
+                    {announcementItems.map((text, i) => (
+                        <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
+                            {text}
+                        </span>
+                    ))}
+                </div>
             </div>
-            <div className="inline-block animate-marquee-fast" aria-hidden="true">
-                {announcementItems.map((text, i) => (
-                    <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
-                        {text}
-                    </span>
-                ))}
-            </div>
-        </div>
+        </motion.div>
 
-        {/* Desktop & Mobile Navbar */}
-        <nav className="bg-white/95 backdrop-blur-md border-b border-zinc-100 py-6 px-4 md:px-10 transition-all">
-          <div className="max-w-[1900px] mx-auto flex items-center justify-between relative">
+        {/* Desktop & Mobile Navbar - Always Sticky */}
+        <nav className={cn(
+            "bg-white/95 backdrop-blur-md h-24 px-4 md:px-10 transition-all duration-500 border-none mt-[-1px]",
+            isScrolled ? "shadow-md h-20" : ""
+        )}>
+
+          <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
+
+
             {/* Left: Mobile Menu Trigger */}
-            <div className="flex-1 flex justify-start">
+            <div className="flex-1 flex justify-start items-center">
               <button
                 className="p-2 hover:bg-zinc-50 rounded-full transition-premium group"
                 onClick={() => setIsOpen(true)}
@@ -77,12 +90,12 @@ export default function Navbar() {
             </div>
 
             {/* Center: Luxury Brand Logo */}
-            <div className="flex-grow flex justify-center py-2">
+            <div className="flex-grow flex justify-center items-center">
                 <Link href="/" className="flex flex-col items-center group">
-                    <span className="text-3xl md:text-4xl font-lato font-black tracking-widest text-[#121212] group-hover:text-accent transition-colors duration-500 leading-tight uppercase">
+                    <span className="text-lg md:text-xl font-lato font-black tracking-[0.2em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-tight uppercase">
                         THE AURIC VAULT
                     </span>
-                    <span className="text-[9px] font-bold tracking-[0.5em] text-accent mt-1 uppercase font-lato opacity-80">Excellence in Craft</span>
+                    <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0.5 uppercase font-lato opacity-80">Excellence in Craft</span>
                 </Link>
             </div>
 
@@ -135,49 +148,59 @@ export default function Navbar() {
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 35, stiffness: 300 }}
-                className="fixed left-0 top-0 bottom-0 w-full max-w-[450px] bg-white z-[80] shadow-[10px_0_40px_rgba(0,0,0,0.1)] flex flex-col pt-16 border-r border-accent/10"
+              transition={{ type: 'spring', damping: 30, stiffness: 200 }}
+                className="fixed left-0 top-0 bottom-0 w-full max-w-[500px] bg-white z-[80] shadow-[10px_0_60px_rgba(0,0,0,0.05)] flex flex-col border-r border-[#e194b8]/10"
             >
-              <div className="flex items-center justify-between px-12 mb-20">
-                 <button onClick={() => setIsOpen(false)} className="p-3 bg-zinc-50 hover:bg-[#121212] hover:text-white rounded-full transition-all group">
-                    <X className="w-7 h-7 stroke-[1.5] group-hover:rotate-90 transition-transform duration-500" />
+              {/* Header inside Sidebar */}
+              <div className="flex items-center justify-between p-10 md:p-12">
+                 <button 
+                  onClick={() => setIsOpen(false)} 
+                  className="w-12 h-12 flex items-center justify-center bg-zinc-50 hover:bg-[#121212] hover:text-white rounded-full transition-all group duration-500"
+                >
+                    <X className="w-5 h-5 stroke-[1.5] group-hover:rotate-90 transition-transform duration-500" />
                  </button>
-                 <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-black tracking-[0.3em] font-lato text-zinc-300">EST. 2026</span>
+                 <div className="flex flex-col items-end">
+                    <span className="text-[9px] font-black tracking-[0.4em] font-lato text-zinc-300">SINCE 2026</span>
+                    <span className="text-[8px] font-bold tracking-[0.2em] font-lato text-accent mt-0.5">COLLECTION N° 01</span>
                  </div>
               </div>
 
-              <div className="flex flex-col flex-grow px-4">
+              {/* Navigation Links */}
+              <div className="flex flex-col flex-grow px-10 md:px-12 mt-4">
                 {[
-                    { name: 'HOME', href: '/' },
-                    { name: 'SHOP ALL', href: '/products', hasArrow: true },
-                    { name: 'NEW ARRIVALS', href: '/products?isNew=true' },
-                    { name: 'BEST SELLERS', href: '/products' },
-                    { name: 'COLLECTIONS', href: '/categories' },
+                    { name: 'Home', href: '/' },
+                    { name: 'Shop All Products', href: '/products' },
+                    { name: 'New Arrivals', href: '/products?isNew=true' },
+                    { name: 'The Collections', href: '/categories' },
+                    { name: 'Our Craft', href: '#' },
                 ].map((item, i) => (
                     <Link
                         key={i}
                         href={item.href}
-                        className="px-10 py-6 text-2xl font-lato font-black text-[#121212] hover:text-accent hover:translate-x-4 transition-all duration-500 flex items-center justify-between group rounded-xl uppercase"
+                        className="group flex items-baseline gap-6 py-5 border-b border-zinc-50 transition-all duration-500"
                         onClick={() => setIsOpen(false)}
                     >
-                        <span className="relative">
-                            {item.name}
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500" />
+                        <span className="text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity">
+                          0{i + 1}
                         </span>
-                        {item.hasArrow && <ChevronRight className="w-5 h-5 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />}
+                        <span className="text-lg md:text-xl font-lato font-medium tracking-[0.3em] text-[#121212] group-hover:translate-x-3 group-hover:text-accent transition-all duration-500 uppercase italic-none">
+                            {item.name}
+                        </span>
                     </Link>
                 ))}
               </div>
 
               {/* Sidebar Bottom Fine Print */}
-              <div className="p-12 border-t border-zinc-100 flex flex-col gap-8">
-                  <div className="flex items-center gap-8 text-zinc-400">
-                      <Link href="#" className="hover:text-accent transition-colors scale-125"><Facebook className="w-5 h-5" /></Link>
-                      <Link href="#" className="hover:text-accent transition-colors scale-125"><Instagram className="w-5 h-5" /></Link>
-                      <Link href="#" className="hover:text-accent transition-colors scale-125 font-bold">X</Link>
+              <div className="p-10 md:p-12 border-t border-zinc-50 bg-zinc-50/30">
+                  <div className="flex items-center gap-10 mb-10">
+                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors"><Instagram className="w-5 h-5" /></Link>
+                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors"><Facebook className="w-5 h-5" /></Link>
+                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors font-bold text-sm">𝕏</Link>
                   </div>
-                  <p className="text-[9px] font-bold text-zinc-400 tracking-[0.2em] font-lato">© 2026 THE AURIC VAULT. ALL RIGHTS RESERVED.</p>
+                  <div className="flex flex-col gap-2">
+                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.3em] font-lato uppercase">© 2026 THE AURIC VAULT</p>
+                    <p className="text-[8px] font-medium text-zinc-300 tracking-[0.2em] font-lato uppercase">Refining the art of high jewelry</p>
+                  </div>
               </div>
             </motion.div>
           </>

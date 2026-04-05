@@ -54,22 +54,10 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
           >
-            <span className="text-xs uppercase tracking-[0.5em] font-bold text-accent mb-8 block font-lato">
-              {hero.seasonText || 'Heritage Collection / 2026'}
-            </span>
             <h1 className="text-6xl md:text-9xl font-black uppercase tracking-[0.15em] mb-12 leading-none font-lato">
               ELEGANCE <br />
               <span className="font-normal tracking-[0.1em] text-accent-light">REDEFINED</span>
             </h1>
-            <p className="text-white/80 text-[10px] md:text-sm font-bold tracking-[0.4em] max-w-3xl mx-auto mb-16 leading-loose uppercase font-lato">
-              Crafting stories in gold and diamonds. <br className="hidden md:block" /> Discover collections that transcend time.
-            </p>
-            <Link 
-              href="/products" 
-              className="btn-primary"
-            >
-              EXPLORE THE COUTURÉ
-            </Link>
           </motion.div>
         </div>
       </section>
