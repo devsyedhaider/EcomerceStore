@@ -53,7 +53,7 @@ export default function LoginPage() {
 
 
   return (
-    <div className="min-h-screen bg-white pt-24 pb-20 px-4">
+    <div className="min-h-screen bg-white pt-16 pb-20 px-4">
       <div className="max-w-[450px] mx-auto text-center">
         {/* Page Title */}
         <h1 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em] mb-16 text-zinc-900">
