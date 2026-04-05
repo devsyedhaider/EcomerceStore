@@ -6,11 +6,14 @@ import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight } from 'lucide-react';
 
 import { useAuthStore } from '@/store/useAuthStore';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function SignupPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const signup = useAuthStore((state) => state.signup);
 
   const [formData, setFormData] = useState({
@@ -22,23 +25,26 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
 
     try {
-      const { error } = await signup(formData.email, formData.password, { 
+      const { error: signupError } = await signup(formData.email, formData.password, { 
         full_name: formData.name,
         phone: formData.phone,
         role: 'customer' // Default role
       });
 
-      if (error) {
-        alert(error.message || 'Error creating account');
+      if (signupError) {
+        setError(signupError.message || 'Error creating account');
         setIsLoading(false);
         return;
       }
 
-      alert('Account created successfully! You can now log in.');
-      router.push('/login');
+      setSuccess('Account created successfully! Redirecting...');
+      setTimeout(() => {
+        router.push('/login');
+      }, 1500);
     } catch (err: any) {
       console.error('Signup error:', err);
       alert('An unexpected error occurred during signup.');
@@ -51,7 +57,7 @@ export default function SignupPage() {
     <div className="min-h-screen bg-white pt-32 pb-20 px-4">
       <div className="max-w-[450px] mx-auto text-center">
         {/* Page Title */}
-        <h1 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em] mb-16 text-zinc-900">
+        <h1 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-16 text-zinc-900 whitespace-nowrap">
           Create account
         </h1>
 
@@ -104,8 +110,32 @@ export default function SignupPage() {
             />
           </div>
 
+          {/* Error Message */}
+          <AnimatePresence>
+            {error && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="bg-red-50 text-[#e11d48] text-[11px] font-bold uppercase tracking-widest py-3 px-4 border border-red-100"
+              >
+                {error}
+              </motion.div>
+            )}
+            {success && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="bg-green-50 text-green-600 text-[11px] font-bold uppercase tracking-widest py-3 px-4 border border-green-100"
+              >
+                {success}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Create button (Centered) */}
-          <div className="pt-10 flex flex-col items-center gap-6">
+          <div className="pt-4 flex flex-col items-center gap-6">
             <button 
                 disabled={isLoading}
                 type="submit" 

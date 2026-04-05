@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const login = useAuthStore((state) => state.login);
 
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -20,12 +22,13 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
     try {
-      const { error } = await login(formData.email, formData.password);
+      const { error: loginError } = await login(formData.email, formData.password);
       
-      if (error) {
-        alert(error.message || 'Invalid login credentials');
+      if (loginError) {
+        setError(loginError.message || 'Invalid login credentials');
         setIsLoading(false);
         return;
       }
@@ -37,7 +40,7 @@ export default function LoginPage() {
         if (user?.role === 'admin') {
           router.push('/admin');
         } else {
-          router.push('/dashboard');
+          router.push('/');
         }
         setIsLoading(false);
       }, 500);
@@ -89,8 +92,22 @@ export default function LoginPage() {
             </button>
           </div>
 
+          {/* Error Message */}
+          <AnimatePresence>
+            {error && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="bg-red-50 text-[#e11d48] text-[11px] font-bold uppercase tracking-widest py-3 px-4 border border-red-100"
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Sign in button (Centered) */}
-          <div className="pt-10 flex flex-col items-center gap-6">
+          <div className="pt-4 flex flex-col items-center gap-6">
             <button 
                 disabled={isLoading}
                 type="submit" 
