@@ -76,14 +76,15 @@ export const useOrderStore = create<OrderStore>()(
             // @ts-ignore
             delete dbOrder.shippingDetails;
             
+            console.log('DEBUG: dbOrder to insert', dbOrder);
             const { error } = await supabase.from('orders').insert([dbOrder]);
             if (error) throw error;
             console.log('✅ Order synced to cloud.');
           }
           set({ orders: [order, ...get().orders] });
-        } catch (error) {
+        } catch (error: any) {
           console.error('❌ Error adding order:', error);
-          alert('Failed to place order. Please check your connection.');
+          alert(`Failed to place order: ${error.message || 'Check your connection or DB settings'}`);
           throw error;
         }
       },
