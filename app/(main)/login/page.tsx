@@ -85,12 +85,7 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Forgot link */}
-          <div className="pt-2">
-            <button type="button" className="text-[11px] font-medium uppercase tracking-[0.1em] text-zinc-500 underline underline-offset-4 hover:text-zinc-800 transition-colors">
-                Forgot your password?
-            </button>
-          </div>
+ 
 
           {/* Error Message */}
           <AnimatePresence>
@@ -107,7 +102,7 @@ export default function LoginPage() {
           </AnimatePresence>
 
           {/* Sign in button (Centered) */}
-          <div className="pt-0 flex flex-col items-center gap-4">
+          <div className="pt-[-12px] flex flex-col items-center gap-4">
             <button 
                 disabled={isLoading}
                 type="submit" 
