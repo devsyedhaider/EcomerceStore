@@ -37,7 +37,7 @@ export const useCategoryStore = create<CategoryStore>()(
             .order('name');
           
           if (error) throw error;
-          if (data && data.length > 0) set({ categories: data });
+          if (data) set({ categories: data });
         } catch (error) {
           console.warn('Error fetching categories:', error);
         } finally {
@@ -48,38 +48,41 @@ export const useCategoryStore = create<CategoryStore>()(
       addCategory: async (category) => {
         try {
           if (supabase) {
-            await supabase.from('categories').insert([category]);
+            const { error } = await supabase.from('categories').insert([category]);
+            if (error) throw error;
           }
           set((state) => ({ categories: [...state.categories, category] }));
         } catch (error) {
-          console.warn('Error adding category:', error);
+          console.warn('📡 Cloud sync for adding category failed. Saved locally only.');
         }
       },
 
       updateCategory: async (id, updatedCategory) => {
         try {
           if (supabase) {
-            await supabase
+            const { error } = await supabase
               .from('categories')
               .update(updatedCategory)
               .eq('id', id);
+            if (error) throw error;
           }
           set((state) => ({
             categories: state.categories.map((c) => (c.id === id ? { ...c, ...updatedCategory } : c)),
           }));
         } catch (error) {
-          console.error('Error updating category:', error);
+          console.warn('📡 Cloud sync for updating category failed. Saved locally only.');
         }
       },
 
       deleteCategory: async (id) => {
         try {
           if (supabase) {
-            await supabase.from('categories').delete().eq('id', id);
+            const { error } = await supabase.from('categories').delete().eq('id', id);
+            if (error) throw error;
           }
           set((state) => ({ categories: state.categories.filter((c) => c.id !== id) }));
         } catch (error) {
-          console.error('Error deleting category:', error);
+          console.warn('📡 Cloud sync for deleting category failed. Saved locally only.');
         }
       },
     }),

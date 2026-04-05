@@ -22,9 +22,9 @@ export default function AdminOrdersPage() {
 
   const filteredOrders = allOrders.filter(order => 
     order.id.toLowerCase().includes(adminSearchTerm.toLowerCase()) ||
-    order.shippingDetails?.email.toLowerCase().includes(adminSearchTerm.toLowerCase()) ||
-    order.shippingDetails?.firstName.toLowerCase().includes(adminSearchTerm.toLowerCase()) ||
-    order.shippingDetails?.lastName.toLowerCase().includes(adminSearchTerm.toLowerCase())
+    order.shippingDetails?.email?.toLowerCase().includes(adminSearchTerm.toLowerCase()) ||
+    order.shippingDetails?.firstName?.toLowerCase().includes(adminSearchTerm.toLowerCase()) ||
+    order.shippingDetails?.lastName?.toLowerCase().includes(adminSearchTerm.toLowerCase())
   );
 
   return (
@@ -76,9 +76,9 @@ export default function AdminOrdersPage() {
                             <td className="px-8 py-6">
                                 <div className="flex flex-col">
                                     <span className="font-bold text-sm text-zinc-900">
-                                        {order.shippingDetails?.firstName} {order.shippingDetails?.lastName}
+                                        {order.shippingDetails?.firstName || 'Guest'} {order.shippingDetails?.lastName || ''}
                                     </span>
-                                    <span className="text-xs text-zinc-500 font-medium">{order.shippingDetails?.email}</span>
+                                    <span className="text-xs text-zinc-500 font-medium">{order.shippingDetails?.email || 'No email'}</span>
                                 </div>
                             </td>
                             <td className="px-8 py-6">

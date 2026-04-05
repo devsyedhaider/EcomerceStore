@@ -210,16 +210,39 @@ export default function Home() {
           <p className="text-gray-400 text-sm uppercase tracking-[0.1em] mb-12 max-w-xl mx-auto">
             Subscribe to receive updates, access to exclusive deals, and more.
           </p>
-          <div className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
+          <form 
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const form = e.target as HTMLFormElement;
+              const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+              const { supabase } = await import('@/lib/supabase');
+              if (!supabase) return;
+              
+              const { error } = await supabase.from('newsletter_subs').insert([{ email }]);
+              if (error) {
+                if (error.code === '23505') {
+                  alert('You are already subscribed!');
+                } else {
+                  alert('Error subscribing. Please try again.');
+                }
+              } else {
+                alert('Thank you for subscribing!');
+                form.reset();
+              }
+            }}
+            className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto"
+          >
             <input 
+              required
+              name="email"
               type="email" 
               placeholder="YOUR EMAIL" 
               className="flex-grow bg-transparent border-b border-gray-700 py-4 px-2 outline-none focus:border-white transition-premium text-sm tracking-widest"
             />
-            <button className="px-12 py-4 bg-white text-black text-xs uppercase tracking-[0.2em] font-medium transition-premium hover:bg-gray-200">
+            <button type="submit" className="px-12 py-4 bg-white text-black text-xs uppercase tracking-[0.2em] font-medium transition-premium hover:bg-gray-200">
               Subscribe
             </button>
-          </div>
+          </form>
         </div>
       </section>
     </div>

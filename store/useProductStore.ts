@@ -48,7 +48,7 @@ export const useProductStore = create<ProductStore>()(
 
           if (error) throw error;
           
-          if (data && data.length > 0) {
+          if (data) {
             const mappedData: Product[] = data.map((p: any) => ({
               ...p,
               isNew: p.is_new,
@@ -75,11 +75,13 @@ export const useProductStore = create<ProductStore>()(
             };
             // @ts-ignore
             delete dbProduct.isNew; delete dbProduct.isFeatured; delete dbProduct.isTopInCategory;
-            await supabase.from('products').insert([dbProduct]);
+            
+            const { error } = await supabase.from('products').insert([dbProduct]);
+            if (error) throw error;
           }
           set((state) => ({ products: [product, ...state.products] }));
         } catch (error) {
-          console.warn('Error adding product:', error);
+          console.warn('📡 Cloud sync for adding product failed. Saved locally only.');
         }
       },
 
@@ -90,24 +92,26 @@ export const useProductStore = create<ProductStore>()(
             if ('isNew' in dbUpdate) { dbUpdate.is_new = dbUpdate.isNew; delete dbUpdate.isNew; }
             if ('isFeatured' in dbUpdate) { dbUpdate.is_featured = dbUpdate.isFeatured; delete dbUpdate.isFeatured; }
             if ('isTopInCategory' in dbUpdate) { dbUpdate.is_top_in_category = dbUpdate.isTopInCategory; delete dbUpdate.isTopInCategory; }
-            await supabase.from('products').update(dbUpdate).eq('id', id);
+            const { error } = await supabase.from('products').update(dbUpdate).eq('id', id);
+            if (error) throw error;
           }
           set((state) => ({
             products: state.products.map((p) => (p.id === id ? { ...p, ...updatedProduct } : p)),
           }));
         } catch (error) {
-          console.warn('Error updating product:', error);
+          console.warn('📡 Cloud sync for updating product failed. Saved locally only.');
         }
       },
 
       deleteProduct: async (id) => {
         try {
           if (supabase) {
-            await supabase.from('products').delete().eq('id', id);
+            const { error } = await supabase.from('products').delete().eq('id', id);
+            if (error) throw error;
           }
           set((state) => ({ products: state.products.filter((p) => p.id !== id) }));
         } catch (error) {
-          console.warn('Error deleting product:', error);
+          console.warn('📡 Cloud sync for deleting product failed. Saved locally only.');
         }
       },
     }),

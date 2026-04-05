@@ -10,39 +10,35 @@ import { Package, LogOut, ChevronRight, ShoppingBag, Clock, MapPin } from 'lucid
 import Link from 'next/link';
 
 export default function DashboardPage() {
-  const { user, logout, isAuthenticated } = useAuthStore();
+  const { user, logout, initialized } = useAuthStore();
   const { orders } = useOrderStore();
   const router = useRouter();
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Wait for BOTH stores to finish reading from IndexedDB
-    let authDone = useAuthStore.persist.hasHydrated();
+    // Wait for OrderStore to finish reading from IndexedDB
     let ordersDone = useOrderStore.persist.hasHydrated();
 
     const tryReady = () => {
-      if (authDone && ordersDone) setIsReady(true);
+      // Auth is ready when initialized is true
+      if (initialized && ordersDone) setIsReady(true);
     };
 
     tryReady();
 
-    const unsubA = useAuthStore.persist.onFinishHydration(() => {
-      authDone = true;
-      tryReady();
-    });
     const unsubO = useOrderStore.persist.onFinishHydration(() => {
       ordersDone = true;
       tryReady();
     });
 
-    return () => { unsubA(); unsubO(); };
-  }, []);
+    return () => { unsubO(); };
+  }, [initialized]);
 
   useEffect(() => {
-    if (isReady && !isAuthenticated) {
+    if (isReady && !user) {
       router.push('/login');
     }
-  }, [isReady, isAuthenticated, router]);
+  }, [isReady, user, router]);
 
   if (!isReady) return null;
   if (!user) return null;
@@ -60,9 +56,9 @@ export default function DashboardPage() {
         <div className="w-full md:w-80 space-y-8">
             <div className="bg-white rounded-[32px] border border-zinc-100 shadow-xl p-8 flex flex-col items-center text-center">
                 <div className="w-24 h-24 bg-black text-white rounded-full flex items-center justify-center text-3xl font-black mb-4">
-                    {user.name.charAt(0).toUpperCase()}
+                    {(user.name || user.email || 'U').charAt(0).toUpperCase()}
                 </div>
-                <h2 className="text-2xl font-black uppercase tracking-tighter">{user.name}</h2>
+                <h2 className="text-2xl font-black uppercase tracking-tighter">{user.name || user.email?.split('@')[0]}</h2>
                 <p className="text-zinc-500 font-medium text-sm mb-6">{user.email}</p>
                 <button 
                     onClick={() => {

@@ -64,16 +64,39 @@ export default function Footer() {
               <p className="text-[11px] uppercase tracking-[0.1em] text-gray-400 leading-relaxed max-w-xs">
                 Subscribe to receive updates, access to exclusive deals, and more.
               </p>
-              <div className="flex border-b border-gray-800 pb-2 max-w-sm group focus-within:border-white transition-premium">
+              <form 
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const form = e.target as HTMLFormElement;
+                  const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+                  const { supabase } = await import('@/lib/supabase');
+                  if (!supabase) return;
+                  
+                  const { error } = await supabase.from('newsletter_subs').insert([{ email }]);
+                  if (error) {
+                    if (error.code === '23505') {
+                      alert('You are already subscribed!');
+                    } else {
+                      alert('Error subscribing. Please try again.');
+                    }
+                  } else {
+                    alert('Thank you for subscribing!');
+                    form.reset();
+                  }
+                }}
+                className="flex border-b border-gray-800 pb-2 max-w-sm group focus-within:border-white transition-premium"
+              >
                 <input
+                  required
+                  name="email"
                   type="email"
                   placeholder="EMAIL ADDRESS"
                   className="bg-transparent border-none p-0 w-full text-[10px] uppercase tracking-[0.2em] focus:ring-0 outline-none placeholder:text-gray-600"
                 />
-                <button className="p-2 hover:translate-x-1 transition-premium">
+                <button type="submit" className="p-2 hover:translate-x-1 transition-premium">
                   <ArrowRight className="w-4 h-4" />
                 </button>
-              </div>
+              </form>
             </div>
           </div>
 

@@ -50,7 +50,7 @@ export default function CheckoutPage() {
           postalCode: lastOrder.shippingDetails.postalCode || '', // Handle legacy orders without postalCode
         }));
       } else {
-        const nameParts = user.name.split(' ');
+        const nameParts = (user.name || '').split(' ');
         const firstName = nameParts[0] || '';
         const lastName = nameParts.slice(1).join(' ') || '';
         

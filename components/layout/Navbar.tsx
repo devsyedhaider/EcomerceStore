@@ -15,21 +15,11 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const itemCount = useCartStore((state) => state.getItemCount());
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, initialized } = useAuthStore();
   const [mounted, setMounted] = useState(false);
-  const [isAuthHydrated, setIsAuthHydrated] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    
-    if (useAuthStore.persist.hasHydrated()) {
-      setIsAuthHydrated(true);
-    } else {
-      const unsub = useAuthStore.persist.onFinishHydration(() => {
-        setIsAuthHydrated(true);
-      });
-      return () => unsub();
-    }
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -39,7 +29,7 @@ export default function Navbar() {
   }, []);
 
   const navCategories = mounted ? categories : [];
-  const showUser = mounted && isAuthHydrated && isAuthenticated;
+  const showUser = mounted && initialized && !!user;
 
   return (
     <>
@@ -83,7 +73,7 @@ export default function Navbar() {
             <Link href={showUser ? "/dashboard" : "/login"} className="p-1 hover:text-gray-light transition-premium">
               {showUser ? (
                 <div className="w-7 h-7 border border-black flex items-center justify-center text-[10px] font-medium uppercase tracking-widest">
-                  {user?.name.charAt(0)}
+                  {user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}
                 </div>
               ) : (
                 <User className="w-5 h-5 stroke-[1.5]" />
@@ -140,7 +130,7 @@ export default function Navbar() {
                 className="text-lg font-medium uppercase tracking-widest flex items-center gap-4"
                 onClick={() => setIsOpen(false)}
               >
-                {showUser ? `Account (${user?.name})` : 'Login / Register'}
+                {showUser ? `Account (${user?.name || user?.email?.split('@')[0]})` : 'Login / Register'}
               </Link>
             </div>
 

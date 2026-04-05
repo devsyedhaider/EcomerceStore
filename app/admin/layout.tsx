@@ -27,34 +27,19 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, isAuthenticated, logout } = useAuthStore();
+  const { user, logout, initialized } = useAuthStore();
   const { adminSearchTerm, setAdminSearchTerm } = useAdminSearchStore();
-  const [isHydrated, setIsHydrated] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Wait for Zustand hydration
-    const unsub = useAuthStore.persist.onFinishHydration(() => {
-      setIsHydrated(true);
-    });
-
-    if (useAuthStore.persist.hasHydrated()) {
-      setIsHydrated(true);
-    }
-
-    return () => unsub();
-  }, []);
-
-  useEffect(() => {
-    // Only check auth after store has hydrated
-    if (isHydrated) {
-      if (!isAuthenticated || user?.role !== 'admin') {
+    if (initialized) {
+      if (!user || user.role !== 'admin') {
         router.push('/login');
       } else {
         setIsReady(true);
       }
     }
-  }, [isHydrated, isAuthenticated, user, router]);
+  }, [initialized, user, router]);
 
   const handleLogout = () => {
     logout();
@@ -143,6 +128,10 @@ export default function AdminLayout({
            </div>
 
            <div className="flex items-center gap-6">
+              <div className="hidden lg:flex items-center gap-2 px-3 py-1 bg-green-50 rounded-full border border-green-100">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-green-700">Cloud Sync Active</span>
+              </div>
               <button className="relative p-2 hover:bg-zinc-100 rounded-full transition-colors">
                  <Bell className="w-5 h-5" />
                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent rounded-full border-2 border-white" />

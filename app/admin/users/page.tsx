@@ -153,7 +153,7 @@ export default function AdminCustomersPage() {
           <div className="bg-white rounded-[32px] border border-zinc-200 p-8">
               <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">Avg. Order Value</p>
               <h3 className="text-3xl font-black">
-                {customers.length > 0 
+                {customers.length > 0 && allOrders.length > 0
                   ? formatPrice(customers.reduce((acc, c) => acc + c.totalSpent, 0) / allOrders.length) 
                   : formatPrice(0)
                 }

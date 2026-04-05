@@ -64,7 +64,7 @@ export default function OrderDetailsPage() {
                     </span>
                 </div>
                 <p className="text-zinc-500 font-medium tracking-tight mt-1">
-                    Placed on {order.date} • {order.items.length} Items
+                    Placed on {new Date(order.date).toLocaleDateString()} • {order.items.length} Items
                 </p>
             </div>
         </div>
@@ -113,7 +113,7 @@ export default function OrderDetailsPage() {
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-0.5">Full Name</p>
-                                    <p className="font-bold">{order.shippingDetails.firstName} {order.shippingDetails.lastName}</p>
+                                    <p className="font-bold">{order.shippingDetails?.firstName || 'Guest'} {order.shippingDetails?.lastName || ''}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -122,7 +122,7 @@ export default function OrderDetailsPage() {
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-0.5">Email Address</p>
-                                    <p className="font-bold">{order.shippingDetails.email}</p>
+                                    <p className="font-bold">{order.shippingDetails?.email || 'No email'}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
@@ -131,7 +131,7 @@ export default function OrderDetailsPage() {
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-0.5">Phone Number</p>
-                                    <p className="font-bold">{order.shippingDetails.phone}</p>
+                                    <p className="font-bold">{order.shippingDetails?.phone || 'N/A'}</p>
                                 </div>
                             </div>
                         </div>
@@ -143,8 +143,8 @@ export default function OrderDetailsPage() {
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-0.5">Shipping Address</p>
-                                    <p className="font-bold leading-relaxed">{order.shippingDetails.address}</p>
-                                    <p className="font-bold mt-1 text-zinc-600 uppercase text-xs">{order.shippingDetails.city}, {order.shippingDetails.postalCode}</p>
+                                    <p className="font-bold leading-relaxed">{order.shippingDetails?.address || 'N/A'}</p>
+                                    <p className="font-bold mt-1 text-zinc-600 uppercase text-xs">{order.shippingDetails?.city || ''}, {order.shippingDetails?.postalCode || ''}</p>
                                 </div>
                             </div>
                         </div>

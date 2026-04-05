@@ -27,7 +27,7 @@ export default function AdminDashboard() {
 
   const stats = useMemo(() => {
     const revenue = allOrders.reduce((acc, order) => acc + order.total, 0);
-    const uniqueCustomers = new Set(allOrders.map(o => o.shippingDetails?.email || 'unknown')).size;
+    const uniqueCustomers = new Set(allOrders.map(o => o.shippingDetails?.email || o.id)).size;
     
     return [
         { label: 'Total Revenue', value: formatPrice(revenue), icon: DollarSign, trend: '+12.5%', isUp: true },
@@ -149,8 +149,8 @@ export default function AdminDashboard() {
                            <tr key={order.id} className="hover:bg-zinc-50 transition-colors cursor-pointer group">
                               <td className="px-6 py-4 text-sm font-black text-zinc-500">#{order.id.slice(0, 8)}</td>
                               <td className="px-6 py-4 text-sm font-medium text-zinc-600">
-                                {order.shippingDetails?.firstName} {order.shippingDetails?.lastName}
-                              </td>
+                                 {order.shippingDetails?.firstName || 'Guest'} {order.shippingDetails?.lastName || ''}
+                               </td>
                               <td className="px-6 py-4">
                                  <span className={cn(
                                     "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest",

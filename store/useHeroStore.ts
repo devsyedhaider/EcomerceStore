@@ -56,7 +56,7 @@ export const useHeroStore = create<HeroStore>()(
             set({ hero: mappedHero });
           }
         } catch (error) {
-          console.warn('Error fetching hero:', error);
+          console.warn('📡 Fetching hero data skipped or failed. Using defaults.');
         } finally {
           set({ isLoading: false });
         }
@@ -83,7 +83,7 @@ export const useHeroStore = create<HeroStore>()(
             if (error) throw error;
           }
         } catch (error) {
-          console.warn('Error syncing hero to cloud:', error);
+          console.warn('📡 Cloud sync for hero failed. Changes saved locally only.');
         }
       },
     }),

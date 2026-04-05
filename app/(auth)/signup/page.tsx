@@ -20,15 +20,31 @@ export default function SignupPage() {
     password: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate signup
-    setTimeout(() => {
-        signup({ name: formData.name, email: formData.email, phone: formData.phone });
-        router.push('/dashboard');
+
+    try {
+      const { error } = await signup(formData.email, formData.password, { 
+        full_name: formData.name,
+        phone: formData.phone,
+        role: 'customer' // Default role
+      });
+
+      if (error) {
+        alert(error.message || 'Error creating account');
         setIsLoading(false);
-    }, 1500);
+        return;
+      }
+
+      alert('Account created successfully! You can now log in.');
+      router.push('/login');
+    } catch (err: any) {
+      console.error('Signup error:', err);
+      alert('An unexpected error occurred during signup.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

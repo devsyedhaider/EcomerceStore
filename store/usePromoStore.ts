@@ -59,7 +59,7 @@ export const usePromoStore = create<PromoStore>()(
             set({ promo: mappedPromo });
           }
         } catch (error) {
-          console.warn('Error fetching promo:', error);
+          console.warn('📡 Fetching promo data skipped or failed. Using defaults.');
         } finally {
           set({ isLoading: false });
         }
@@ -85,7 +85,7 @@ export const usePromoStore = create<PromoStore>()(
             if (error) throw error;
           }
         } catch (error) {
-          console.warn('Error syncing promo to cloud:', error);
+          console.warn('📡 Cloud sync for promo failed. Changes saved locally only.');
         }
       },
     }),

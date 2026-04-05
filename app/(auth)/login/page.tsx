@@ -17,35 +17,35 @@ export default function LoginPage() {
     password: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Admin Credentials Check
-    if (formData.email.trim() === 'admin1234' && formData.password === 'haider04') {
-        setTimeout(() => {
-            // Set admin cookie for middleware
-            document.cookie = "auth_logged_in=true; path=/; max-age=86400"; // 1 day
-            document.cookie = "admin_mode=true; path=/; max-age=86400"; 
-            
-            login({ 
-                name: 'Admin User', 
-                email: 'admin@aurafeet.com', 
-                role: 'admin' 
-            });
-            router.push('/admin');
-            setIsLoading(false);
-        }, 1500);
-        return;
-    }
-
-    // Regular User Login (Simulation)
-    setTimeout(() => {
-        document.cookie = "auth_logged_in=true; path=/; max-age=86400";
-        login({ name: 'Aura User', email: formData.email, role: 'customer' });
-        router.push('/dashboard');
+    try {
+      const { error } = await login(formData.email, formData.password);
+      
+      if (error) {
+        alert(error.message || 'Invalid login credentials');
         setIsLoading(false);
-    }, 1500);
+        return;
+      }
+
+      // Successful login - The store will update and we can redirect
+      // We wait a tiny bit for the state to propagate
+      setTimeout(() => {
+        const user = useAuthStore.getState().user;
+        if (user?.role === 'admin') {
+          router.push('/admin');
+        } else {
+          router.push('/dashboard');
+        }
+        setIsLoading(false);
+      }, 500);
+    } catch (err: any) {
+      console.error('Login error:', err);
+      alert('An unexpected error occurred during login.');
+      setIsLoading(false);
+    }
   };
 
 

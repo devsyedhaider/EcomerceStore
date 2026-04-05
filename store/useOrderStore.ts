@@ -57,27 +57,16 @@ export const useOrderStore = create<OrderStore>()(
             shippingDetails: o.shipping_details,
           }));
           
-          // Merge strategy: Keep local-only orders that aren't in the cloud yet
-          const cloudIds = new Set(mappedOrders.map(o => o.id));
-          const localOnly = get().orders.filter(o => !cloudIds.has(o.id));
-          
-          const finalOrders = [...mappedOrders, ...localOnly].sort((a, b) => 
-            new Date(b.date).getTime() - new Date(a.date).getTime()
-          );
-
-          set({ orders: finalOrders });
-          console.log(`✅ Synchronized ${mappedOrders.length} orders from cloud. Kept ${localOnly.length} local-only orders.`);
+          set({ orders: mappedOrders });
+          console.log(`✅ Synchronized ${mappedOrders.length} orders from cloud.`);
         } catch (error) {
-          console.warn('❌ Unexpected Error fetching orders:', error);
+          console.error('❌ Unexpected Error fetching orders:', error);
         } finally {
           set({ isLoading: false });
         }
       },
 
       addOrder: async (order) => {
-        // 1. Update local state immediately so user sees "Success"
-        set({ orders: [order, ...get().orders] });
-
         try {
           if (supabase) {
             const dbOrder = {
@@ -88,24 +77,18 @@ export const useOrderStore = create<OrderStore>()(
             delete dbOrder.shippingDetails;
             
             const { error } = await supabase.from('orders').insert([dbOrder]);
-            if (error) {
-               console.warn('❌ Cloud Save Failed:', error.message);
-               // We don't throw here so the user isn't stuck, but we log the error
-            } else {
-               console.log('✅ Order synced to cloud.');
-            }
+            if (error) throw error;
+            console.log('✅ Order synced to cloud.');
           }
+          set({ orders: [order, ...get().orders] });
         } catch (error) {
-          console.warn('❌ unexpected error adding order:', error);
+          console.error('❌ Error adding order:', error);
+          alert('Failed to place order. Please check your connection.');
+          throw error;
         }
       },
 
       updateOrder: async (id, status) => {
-        // 1. Update local state immediately for instant feedback
-        set((state) => ({
-          orders: state.orders.map((o) => (o.id === id ? { ...o, status } : o)),
-        }));
-
         try {
           if (supabase) {
             const { error } = await supabase
@@ -113,15 +96,15 @@ export const useOrderStore = create<OrderStore>()(
               .update({ status })
               .eq('id', id);
             
-            if (error) {
-              console.warn('❌ Cloud Status Update Failed:', error.message);
-              // We keep the local update so the user isn't frustrated
-            } else {
-              console.log('✅ Order status synced to cloud: ' + status);
-            }
+            if (error) throw error;
+            console.log('✅ Order status synced to cloud: ' + status);
           }
+          set((state) => ({
+            orders: state.orders.map((o) => (o.id === id ? { ...o, status } : o)),
+          }));
         } catch (error) {
-          console.warn('❌ Unexpected error updating status:', error);
+          console.error('❌ Error updating status:', error);
+          alert('Failed to update order status.');
         }
       },
 
