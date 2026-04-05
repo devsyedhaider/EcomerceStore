@@ -80,7 +80,7 @@ export default function CheckoutPage() {
     
     // Create order object
     const newOrder = {
-      id: `AF-${Math.floor(100000 + Math.random() * 900000)}`,
+      id: `AV-${Math.floor(100000 + Math.random() * 900000)}`,
       date: new Date().toISOString(), // Use ISO string for database compatibility
       items: [...items],
       total: total + shipping,
@@ -115,9 +115,9 @@ export default function CheckoutPage() {
             <CheckCircle2 className="w-12 h-12 text-green-600" />
         </div>
         <h1 className="text-5xl font-black uppercase tracking-tighter mb-4">Order Confirmed!</h1>
-        <p className="text-zinc-500 mb-2 font-black uppercase tracking-widest text-sm">Order ID: #AF-928374</p>
+        <p className="text-zinc-500 mb-2 font-black uppercase tracking-widest text-sm">Order ID: #AV-928374</p>
         <p className="text-zinc-500 mb-12 max-w-md font-medium text-lg leading-relaxed">
-            Thank you for shopping with Aura Feet. Your order has been placed successfully and will be delivered within 2-3 business days.
+            Thank you for shopping with THE AURIC VAULT. Your order has been placed successfully and will be delivered within 2-3 business days.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/" className="btn-primary min-w-[200px]">BACK TO HOME</Link>

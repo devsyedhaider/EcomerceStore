@@ -42,7 +42,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 text-premium-heading">
           <img 
             src={hero.backgroundImage} 
-            alt="Aura Feet Hero" 
+            alt="THE AURIC VAULT Hero" 
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-black/20" />
@@ -50,25 +50,25 @@ export default function Home() {
 
         <div className="relative z-10 text-center text-white px-6 pt-24">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
+            transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
           >
-            <span className="text-xs uppercase tracking-[0.4em] font-medium mb-6 block">
-              {hero.seasonText || 'New Season / 2024'}
+            <span className="text-xs uppercase tracking-[0.5em] font-bold text-accent mb-8 block font-lato">
+              {hero.seasonText || 'Heritage Collection / 2026'}
             </span>
-            <h1 className="text-5xl md:text-8xl font-light uppercase tracking-[0.2em] mb-10 leading-tight">
-              {hero.title} <br />
-              <span className="font-medium tracking-[0.1em]">{hero.accentTitle}</span>
+            <h1 className="text-6xl md:text-9xl font-black uppercase tracking-[0.15em] mb-12 leading-none font-lato">
+              ELEGANCE <br />
+              <span className="font-normal tracking-[0.1em] text-accent-light">REDEFINED</span>
             </h1>
-            <p className="text-white/70 text-xs md:text-base font-light tracking-[0.15em] max-w-2xl mx-auto mb-12 leading-relaxed uppercase">
-              {hero.subtitle}
+            <p className="text-white/80 text-[10px] md:text-sm font-bold tracking-[0.4em] max-w-3xl mx-auto mb-16 leading-loose uppercase font-lato">
+              Crafting stories in gold and diamonds. <br className="hidden md:block" /> Discover collections that transcend time.
             </p>
             <Link 
               href="/products" 
-              className="btn-premium border-white bg-transparent hover:bg-white hover:text-black"
+              className="btn-primary"
             >
-              {hero.buttonText}
+              EXPLORE THE COUTURÉ
             </Link>
           </motion.div>
         </div>

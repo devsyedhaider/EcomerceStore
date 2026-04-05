@@ -58,7 +58,7 @@ export default function LoginPage() {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent opacity-10 blur-3xl -ml-32 -mb-32" />
             
             <div className="relative z-10">
-                <Link href="/" className="text-3xl font-black tracking-tighter">AURA FEET</Link>
+                <Link href="/" className="text-3xl font-black tracking-tighter italic">THE AURIC VAULT</Link>
                 <div className="mt-20">
                     <h2 className="text-6xl font-black tracking-tighter leading-none mb-6 italic">WELCOME <br />BACK.</h2>
                     <p className="text-zinc-400 font-medium max-w-xs text-lg">Log in to your account to access your orders and saved favorites.</p>

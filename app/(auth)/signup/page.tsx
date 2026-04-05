@@ -55,7 +55,7 @@ export default function SignupPage() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent opacity-20 blur-3xl -mr-32 -mt-32" />
             
             <div className="relative z-10">
-                <Link href="/" className="text-3xl font-black tracking-tighter">AURA FEET</Link>
+                <Link href="/" className="text-3xl font-black tracking-tighter italic">THE AURIC VAULT</Link>
                 <div className="mt-20">
                     <h2 className="text-6xl font-black tracking-tighter leading-none mb-6 italic">JOIN THE <br />CLUB.</h2>
                     <p className="text-zinc-400 font-medium max-w-xs text-lg">Create your account to unlock exclusive offers, early access, and more.</p>
@@ -83,7 +83,7 @@ export default function SignupPage() {
         <div className="w-full md:w-1/2 p-12 md:p-16">
             <div className="max-w-md mx-auto">
                 <h1 className="text-4xl font-black tracking-tighter uppercase mb-2">SIGN UP</h1>
-                <p className="text-zinc-500 font-bold mb-8 text-xs uppercase tracking-widest">Start your journey with Aura Feet today.</p>
+                <p className="text-zinc-500 font-bold mb-8 text-xs uppercase tracking-widest">Start your journey with THE AURIC VAULT today.</p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">

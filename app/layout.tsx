@@ -1,15 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Lato } from "next/font/google";
 import "./globals.css";
 import DataInitializer from "@/components/DataInitializer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const lato = Lato({ 
+  subsets: ["latin"], 
+  weight: ["100", "300", "400", "700", "900"],
+  variable: "--font-lato" 
+});
 
 export const metadata: Metadata = {
-  title: "Aura Feet | Premium Footwear Pakistan",
-  description: "Shop the latest premium shoes for men, women, and kids. Experience comfort and style with Aura Feet Pakistan.",
-  keywords: ["shoes", "footwear", "pakistan", "online shopping", "men shoes", "women shoes", "bata", "servis", "premium shoes"],
+  title: "THE AURIC VAULT | Fine Collections",
+  description: "Exquisite designs and handcrafted elegance at THE AURIC VAULT.",
+  keywords: ["jewelry", "luxury", "fine collections", "the auric vault"],
 };
 
 export default function RootLayout({
@@ -19,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen flex flex-col`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${lato.variable} font-lato min-h-screen flex flex-col transition-all duration-300`} suppressHydrationWarning>
         <DataInitializer />
         {children}
       </body>

@@ -56,8 +56,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-16 mb-24">
           {/* Brand & Newsletter */}
           <div className="lg:col-span-2 flex flex-col gap-10">
-            <Link href="/" className="text-2xl font-light tracking-[0.3em] uppercase">
-              Aura Feet
+            <Link href="/" className="group flex flex-col">
+              <span className="text-3xl font-lato font-black tracking-widest uppercase italic group-hover:text-accent transition-colors">
+                THE AURIC VAULT
+              </span>
+              <span className="text-[9px] font-bold tracking-[0.4em] text-zinc-500 mt-1 uppercase font-lato">Excellence in Craft</span>
             </Link>
             <div className="flex flex-col gap-6">
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Join our world</h4>
@@ -84,7 +87,7 @@ export default function Footer() {
                     form.reset();
                   }
                 }}
-                className="flex border-b border-gray-800 pb-2 max-w-sm group focus-within:border-white transition-premium"
+                className="flex border-b border-zinc-800 pb-2 max-w-sm group focus-within:border-gold transition-premium"
               >
                 <input
                   required
@@ -143,26 +146,26 @@ export default function Footer() {
             <div className="flex flex-col gap-8">
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Follow Us</h4>
               <div className="flex items-center gap-6">
-                <a href="#" className="text-gray-400 hover:text-white transition-premium">
+                <a href="#" className="text-zinc-500 hover:text-accent transition-premium">
                   <Facebook className="w-4 h-4 stroke-[1.5]" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-premium">
+                <a href="#" className="text-zinc-500 hover:text-accent transition-premium">
                   <Instagram className="w-4 h-4 stroke-[1.5]" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-premium">
-                  <Twitter className="w-4 h-4 stroke-[1.5]" />
+                <a href="#" className="text-zinc-500 hover:text-accent font-bold">
+                  X
                 </a>
               </div>
             </div>
             <div className="flex flex-col gap-4">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400">help@aurafeet.pk</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400">+92 42 111 287 287</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">help@theauricvault.com</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">+92 42 111 287 287</p>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-12 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-8 text-zinc-600">
           <div className="flex items-center gap-8">
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-3 opacity-20 contrast-0 invert" />
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-3 opacity-20 contrast-0 invert" />
@@ -171,14 +174,14 @@ export default function Footer() {
           
           <div className="flex gap-8">
              {footerLinks[2].links.map((link) => (
-                <Link key={link.name} href={link.href} className="text-[9px] uppercase tracking-[0.2em] text-gray-600 hover:text-gray-400 transition-premium">
+                <Link key={link.name} href={link.href} className="text-[9px] uppercase tracking-[0.2em] hover:text-accent transition-premium">
                   {link.name}
                 </Link>
              ))}
           </div>
 
-          <p className="text-[9px] uppercase tracking-[0.2em] text-gray-600">
-            © 2026 Aura Feet Pakistan. All Rights Reserved.
+          <p className="text-[9px] uppercase tracking-[0.2em]">
+            © 2026 THE AURIC VAULT. All Rights Reserved.
           </p>
         </div>
       </div>
