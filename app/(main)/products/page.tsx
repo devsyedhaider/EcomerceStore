@@ -13,6 +13,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
+  const isNewParam = searchParams.get('isNew') === 'true';
+  const isTrendingParam = searchParams.get('isTrending') === 'true';
+
   const products = useProductStore((state) => state.products);
   const { categories } = useCategoryStore();
   const [mounted, setMounted] = useState(false);
@@ -45,6 +48,10 @@ function ProductsContent() {
   const filteredProducts = useMemo(() => {
     return products
       .filter((p) => {
+        // Filter by params first
+        if (isNewParam && !p.isNew) return false;
+        if (isTrendingParam && !p.isFeatured) return false;
+
         const categoryMatch = selectedCategory === 'all' || 
                             p.category.toLowerCase() === selectedCategory.toLowerCase() ||
                             categories.find(c => c.id === selectedCategory)?.name.toLowerCase() === p.category.toLowerCase();
@@ -54,8 +61,8 @@ function ProductsContent() {
         
         let priceMatch = true;
         if (selectedPriceRange !== 'all') {
-          const [min, max] = selectedPriceRange.split('-').map(Number);
-          priceMatch = p.price >= min && p.price <= max;
+            const [min, max] = selectedPriceRange.split('-').map(Number);
+            priceMatch = p.price >= min && p.price <= max;
         }
 
         return categoryMatch && sizeMatch && priceMatch && searchMatch;
@@ -74,8 +81,8 @@ function ProductsContent() {
     <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-32 pb-12">
       {/* Header */}
       <div className="mb-16">
-        <h1 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-8 text-center">
-          {selectedCategory === 'all' ? 'The Collection' : `${selectedCategory} Collection`}
+        <h1 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-8 text-center text-zinc-900">
+          {isNewParam ? 'New Arrivals' : isTrendingParam ? 'Trending Now' : selectedCategory === 'all' ? 'The Collection' : `${selectedCategory} Collection`}
         </h1>
         
         <div className="flex flex-col md:flex-row items-center justify-between border-y border-gray-100 py-6 gap-6">

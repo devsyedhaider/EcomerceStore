@@ -73,7 +73,7 @@ export default function Navbar() {
         {/* Desktop & Mobile Navbar - Always Sticky */}
         <nav className={cn(
             "bg-white/95 backdrop-blur-md px-4 md:px-10 transition-all duration-500 border-none",
-            isScrolled ? "shadow-md h-16" : "h-20"
+            isScrolled ? "border-b border-zinc-100 h-20" : "h-24"
         )}>
 
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">

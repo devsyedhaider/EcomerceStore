@@ -33,6 +33,7 @@ export default function EditProductPage() {
   const [selectedColors, setSelectedColors] = useState<{ name: string; hex: string }[]>([]);
   const [isTopInCategory, setIsTopInCategory] = useState(false);
   const [isFeatured, setIsFeatured] = useState(false);
+  const [isNew, setIsNew] = useState(false);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -61,6 +62,7 @@ export default function EditProductPage() {
       setSelectedColors(product.colors || []);
       setIsTopInCategory(product.isTopInCategory || false);
       setIsFeatured(product.isFeatured || false);
+      setIsNew(product.isNew || false);
     }
   }, [product]);
 
@@ -125,6 +127,7 @@ export default function EditProductPage() {
         stock: Number(stock),
         isTopInCategory: isTopInCategory,
         isFeatured: isFeatured,
+        isNew: isNew,
     };
 
     try {
@@ -358,6 +361,19 @@ export default function EditProductPage() {
                     </div>
 
                     <div className="pt-4 border-t border-white/10 space-y-6">
+                        <label onClick={() => setIsNew(!isNew)} className="flex items-center gap-3 cursor-pointer group">
+                            <div className={cn(
+                                "w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all",
+                                isNew ? "bg-accent border-accent" : "border-white/10 group-hover:border-white/30"
+                            )}>
+                                {isNew && <Check className="w-4 h-4 text-zinc-900" />}
+                            </div>
+                            <div>
+                                <p className="text-xs font-black uppercase tracking-widest text-white">New Arrival</p>
+                                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-tight">Tag as latest collection item</p>
+                            </div>
+                        </label>
+
                         <label onClick={() => setIsFeatured(!isFeatured)} className="flex items-center gap-3 cursor-pointer group">
                             <div className={cn(
                                 "w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all",
@@ -367,9 +383,10 @@ export default function EditProductPage() {
                             </div>
                             <div>
                                 <p className="text-xs font-black uppercase tracking-widest text-white">Trending Now</p>
-                                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-tight">Show in home page Trending section</p>
+                                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-tight">Show in global Trending section</p>
                             </div>
                         </label>
+
 
                         <label onClick={() => setIsTopInCategory(!isTopInCategory)} className="flex items-center gap-3 cursor-pointer group">
                             <div className={cn(
