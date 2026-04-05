@@ -37,66 +37,55 @@ export default function ProductCard({ product }: ProductCardProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Badge */}
-      {product.isNew && (
-        <span className="absolute top-4 left-4 z-10 bg-black text-white text-[10px] font-medium px-3 py-1 uppercase tracking-[0.2em] pointer-events-none">
-          New
-        </span>
-      )}
+      {/* Status Tags */}
+      <div className="absolute top-4 right-4 z-20">
+        {product.stock === 0 ? (
+          <span className="bg-zinc-800/80 backdrop-blur-sm text-white text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
+            Sold Out
+          </span>
+        ) : (
+          <span className="bg-[#e194b8] text-white text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-[#e194b8]/20">
+            Sale
+          </span>
+        )}
+      </div>
 
       {/* Image Container */}
-      <Link href={`/products/${product.id}`} className="block relative aspect-[3/4] overflow-hidden bg-gray-50 mb-6">
+      <Link href={`/products/${product.id}`} className="block relative aspect-square overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-zinc-50 border border-zinc-100 group mb-4">
         <img
           src={product.images[0]}
           alt={product.name}
           className={cn(
-            "object-cover w-full h-full transition-premium duration-1000",
+            "object-cover w-full h-full transition-transform duration-[1200ms] ease-out",
             isHovered ? "scale-105" : "scale-100"
           )}
         />
         
-        {/* Quick Add Overlay */}
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="absolute inset-x-0 bottom-0 p-4 bg-white/90 backdrop-blur-sm"
-            >
-              <button 
-                onClick={handleAddToCart}
-                className="w-full py-3 bg-black text-white text-[10px] uppercase tracking-[0.2em] font-medium transition-premium hover:bg-gray-800"
-              >
-                Add to Cart
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <button className="absolute top-4 right-4 p-2 text-black hover:text-gray-light transition-premium z-20">
-          <Heart className="w-5 h-5 stroke-[1.2]" />
-        </button>
+        {/* Subtle ID Overlay */}
+        <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-10">
+          <span className="text-white text-[10px] md:text-sm font-medium opacity-80 tracking-widest drop-shadow-sm uppercase">
+            {product.id.startsWith('AV-') ? product.id : `${product.name.split(' ')[0]}-${product.id.slice(0,4)}`}
+          </span>
+        </div>
       </Link>
 
-      {/* Content */}
-      <div className="flex flex-col flex-grow text-center px-2">
-        <span className="text-[10px] uppercase tracking-[0.15em] text-gray-light mb-2">{categoryName}</span>
-        <Link href={`/products/${product.id}`} className="block text-black text-sm uppercase tracking-widest font-medium mb-3 hover:text-gray-light transition-premium">
+      {/* Content Area */}
+      <div className="flex flex-col px-1">
+        <span className="text-[9px] uppercase tracking-[0.2em] text-zinc-400 font-bold mb-1.5">{categoryName}</span>
+        <Link 
+          href={`/products/${product.id}`} 
+          className="text-zinc-900 text-sm md:text-base font-medium leading-snug hover:text-zinc-500 transition-colors mb-2 block line-clamp-2"
+        >
           {product.name}
         </Link>
-        <span className="text-sm font-medium text-black">{formatPrice(product.price)}</span>
         
-        {/* Color Indicators (Subtle) */}
-        <div className="flex items-center justify-center gap-2 mt-4 opacity-0 group-hover:opacity-100 transition-premium">
-          {product.colors.map((color) => (
-            <span 
-              key={color.name}
-              className="w-2.5 h-2.5 rounded-full border border-gray-200"
-              style={{ backgroundColor: color.hex }}
-              title={color.name}
-            />
-          ))}
+        <div className="flex items-center gap-2.5">
+          <span className="text-zinc-400 line-through text-[11px] md:text-sm font-medium">
+            {formatPrice(product.price * 2)}
+          </span>
+          <span className="text-[#e11d48] text-sm md:text-lg font-bold">
+            {formatPrice(product.price)}
+          </span>
         </div>
       </div>
     </div>
