@@ -135,7 +135,7 @@ export default function SignupPage() {
           </AnimatePresence>
 
           {/* Create button (Centered) */}
-          <div className="pt-4 flex flex-col items-center gap-6">
+          <div className="pt-0 flex flex-col items-center gap-4">
             <button 
                 disabled={isLoading}
                 type="submit" 
