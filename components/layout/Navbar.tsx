@@ -72,8 +72,8 @@ export default function Navbar() {
 
         {/* Desktop & Mobile Navbar - Always Sticky */}
         <nav className={cn(
-            "bg-white/95 backdrop-blur-md h-24 px-4 md:px-10 transition-all duration-500 border-none mt-[-1px]",
-            isScrolled ? "shadow-md h-20" : ""
+            "bg-white/95 backdrop-blur-md px-4 md:px-10 transition-all duration-500 border-none",
+            isScrolled ? "shadow-md h-16" : "h-20"
         )}>
 
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
@@ -95,7 +95,7 @@ export default function Navbar() {
                     <span className="text-lg md:text-xl font-lato font-black tracking-[0.2em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-tight uppercase">
                         THE AURIC VAULT
                     </span>
-                    <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0.5 uppercase font-lato opacity-80">Excellence in Craft</span>
+                    <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0 uppercase font-lato opacity-80">Excellence in Craft</span>
                 </Link>
             </div>
 
@@ -206,7 +206,7 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
-      <div className="h-[140px] md:h-[160px]" /> {/* Proper spacer for fixed header */}
+      <div className="h-[110px] md:h-[130px]" /> {/* Proper spacer for fixed header */}
     </>
   );
 }
