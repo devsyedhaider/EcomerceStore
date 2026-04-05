@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { ShoppingCart, User, Search, Menu, X, ChevronRight, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { useCartStore } from '@/store/useCartStore';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -17,6 +18,8 @@ export default function Navbar() {
   const itemCount = useCartStore((state) => state.getItemCount());
   const { user, initialized } = useAuthStore();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
+  const isAuthPage = pathname === '/login' || pathname === '/signup';
 
   useEffect(() => {
     setMounted(true);
@@ -45,30 +48,32 @@ export default function Navbar() {
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-[60] transition-all duration-700">
-        {/* Announcement Bar - Hides on Scroll */}
-        <motion.div 
-            initial={false}
-            animate={{ height: isScrolled ? 0 : 'auto', opacity: isScrolled ? 0 : 1 }}
-            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-            className="bg-accent text-white overflow-hidden whitespace-nowrap"
-        >
-            <div className="py-2.5">
-                <div className="inline-block animate-marquee-fast">
-                    {announcementItems.map((text, i) => (
-                        <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
-                            {text}
-                        </span>
-                    ))}
-                </div>
-                <div className="inline-block animate-marquee-fast" aria-hidden="true">
-                    {announcementItems.map((text, i) => (
-                        <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
-                            {text}
-                        </span>
-                    ))}
-                </div>
-            </div>
-        </motion.div>
+        {/* Announcement Bar - Hides on Scroll or Auth Pages */}
+        {!isAuthPage && (
+          <motion.div 
+              initial={false}
+              animate={{ height: isScrolled ? 0 : 'auto', opacity: isScrolled ? 0 : 1 }}
+              transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+              className="bg-accent text-white overflow-hidden whitespace-nowrap"
+          >
+              <div className="py-2.5">
+                  <div className="inline-block animate-marquee-fast">
+                      {announcementItems.map((text, i) => (
+                          <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
+                              {text}
+                          </span>
+                      ))}
+                  </div>
+                  <div className="inline-block animate-marquee-fast" aria-hidden="true">
+                      {announcementItems.map((text, i) => (
+                          <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
+                              {text}
+                          </span>
+                      ))}
+                  </div>
+              </div>
+          </motion.div>
+        )}
 
         {/* Desktop & Mobile Navbar - Always Sticky */}
         <nav className={cn(
@@ -206,7 +211,10 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
-      <div className="h-[110px] md:h-[130px]" /> {/* Proper spacer for fixed header */}
+      <div className={cn(
+        "transition-all duration-500",
+        isAuthPage ? "h-[100px]" : "h-[110px] md:h-[130px]"
+      )} /> {/* Proper spacer for fixed header */}
     </>
   );
 }

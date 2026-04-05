@@ -62,69 +62,63 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Professional Category Drag Slider */}
-      <section className="py-24 bg-white overflow-hidden select-none">
-        <div className="max-w-[1800px] mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">Our Collections</h2>
-            </div>
-            <Link 
-              href="/categories" 
-              className="text-xs uppercase tracking-[0.3em] font-bold flex items-center gap-2 group border-b-2 border-black pb-2"
-            >
-              Discover All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-smooth" />
+      {/* 2. Boutique Collections Avatar Navigation - Full Screen Centered */}
+      <section className="py-12 bg-white border-b border-zinc-50">
+        <div className="max-w-[1700px] mx-auto px-6 md:px-12">
+          <div className="flex flex-wrap items-start justify-center gap-6 md:gap-14 lg:gap-20">
+            {/* 1. New Arrivals */}
+            <Link href="/products?isNew=true" className="group flex flex-col items-center gap-4">
+              <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
+                <img 
+                  src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=200&auto=format&fit=crop" 
+                  alt="New Arrivals" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">New Arrivals</span>
             </Link>
-          </div>
 
-          <div className="relative overflow-visible">
-            <motion.div 
-              ref={sliderRef}
-              className="flex gap-16 cursor-grab active:cursor-grabbing"
-              drag="x"
-              dragConstraints={{ right: 0, left: -sliderWidth }}
-              dragElastic={0.1}
-              initial={{ x: 0 }}
-              whileTap={{ cursor: 'grabbing' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 150 }}
-            >
-              {categories.map((category) => (
-                <Link 
-                  key={category.id} 
-                  href={`/products?category=${category.id}`}
-                  className="flex-none group relative w-[300px] md:w-[420px] h-[280px] md:h-[380px] overflow-hidden bg-gray-100"
-                  draggable={false}
-                >
+            {/* 2. Best Sellers */}
+            <Link href="/products?isTrending=true" className="group flex flex-col items-center gap-4">
+              <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
+                <img 
+                  src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=200&auto=format&fit=crop" 
+                  alt="Best Sellers" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">Best Sellers</span>
+            </Link>
+
+            {/* 3-6. First 4 Database Categories */}
+            {categories.slice(0, 4).map((category) => (
+              <Link 
+                key={category.id} 
+                href={`/products?category=${category.id}`}
+                className="group flex flex-col items-center gap-4"
+              >
+                <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
                   <img 
                     src={category.image} 
                     alt={category.name} 
-                    className="w-full h-full object-cover transition-premium group-hover:scale-105"
-                    draggable={false}
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-premium" />
-                  
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/0 group-hover:bg-black/30 backdrop-blur-[0px] group-hover:backdrop-blur-[4px] transition-premium opacity-0 group-hover:opacity-100">
-                    <h3 className="text-xl md:text-3xl font-light text-white uppercase tracking-[0.5em] translate-y-4 group-hover:translate-y-0 transition-premium duration-500">
-                      {category.name}
-                    </h3>
-                    <div className="mt-8 overflow-hidden">
-                       <span className="text-white text-[9px] uppercase tracking-[0.5em] font-bold border border-white px-8 py-3 block translate-y-16 group-hover:translate-y-0 transition-premium duration-700">
-                        Explore
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </motion.div>
-          </div>
+                </div>
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">{category.name}</span>
+              </Link>
+            ))}
 
-          <div className="mt-20 flex justify-center">
-            <Link href="/categories" className="btn-premium px-16 text-[10px]">
-              Explore Complete Collections
+            {/* 7. Shop All Avatar */}
+            <Link href="/categories" className="group flex flex-col items-center gap-4">
+              <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full border-2 border-zinc-200 flex items-center justify-center transition-all duration-500 group-hover:bg-zinc-900 group-hover:border-zinc-900 group-hover:scale-105 group-hover:shadow-xl">
+                 <ArrowRight className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 text-zinc-400 group-hover:text-white transition-all group-hover:-rotate-45" />
+              </div>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">Shop all</span>
             </Link>
           </div>
         </div>
       </section>
+
 
       {/* 3. Trending Now Grid (Previously Featured) */}
       <section className="py-24 px-6 md:px-12 bg-white border-t border-gray-100">
@@ -133,13 +127,13 @@ export default function Home() {
             <div>
               <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">Trending Now</h2>
             </div>
-            <Link href="/products" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
+            <Link href="/products?isTrending=true" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
               View All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-premium" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-            {featuredProducts.map((product) => (
+            {featuredProducts.slice(0, 20).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -178,13 +172,18 @@ export default function Home() {
       {/* 5. New Arrivals Grid */}
       <section className="py-24 px-6 md:px-12 bg-white">
         <div className="max-w-[1800px] mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-premium-subheading block mb-4">The Latest Drop</span>
-            <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">New Arrivals</h2>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="text-left md:text-left">
+              <span className="text-premium-subheading block mb-4">The Latest Drop</span>
+              <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">New Arrivals</h2>
+            </div>
+            <Link href="/products?isNew=true" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
+              View All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-premium" />
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-            {newArrivals.map((product) => (
+            {newArrivals.slice(0, 20).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
