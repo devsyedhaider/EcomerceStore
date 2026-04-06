@@ -95,7 +95,7 @@ export default function Navbar() {
                 className="p-2 hover:bg-zinc-50 rounded-full transition-premium group"
                 onClick={() => setIsOpen(true)}
               >
-                <Menu className="w-6 h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
+                <Menu className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
               </button>
             </div>
 
@@ -116,9 +116,9 @@ export default function Navbar() {
                 className="p-2 hover:bg-zinc-50 rounded-full transition-premium group relative"
                 aria-label="Wishlist"
               >
-                <Heart className="w-6 h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
+                <Heart className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
                 {mounted && wishlistCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-accent text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full animate-bounce-subtle">
+                  <span className="absolute -top-1 -right-1 bg-accent text-white text-[8px] font-black w-3.5 h-3.5 flex items-center justify-center rounded-full animate-bounce-subtle">
                     {wishlistCount}
                   </span>
                 )}
@@ -134,7 +134,7 @@ export default function Navbar() {
                     {user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}
                   </div>
                 ) : (
-                  <User className="w-6 h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
+                  <User className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
                 )}
               </Link>
 
@@ -143,9 +143,9 @@ export default function Navbar() {
                 className="p-2 hover:bg-zinc-50 rounded-full transition-premium group relative"
                 aria-label="Shopping Cart"
               >
-                <ShoppingCart className="w-6 h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
+                <ShoppingCart className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
                 {mounted && itemCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-accent text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full animate-bounce-subtle">
+                  <span className="absolute -top-1 -right-1 bg-accent text-white text-[8px] font-black w-3.5 h-3.5 flex items-center justify-center rounded-full animate-bounce-subtle">
                     {itemCount}
                   </span>
                 )}
