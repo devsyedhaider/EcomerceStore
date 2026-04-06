@@ -329,6 +329,41 @@ export default function AdminPromoPage() {
               Changes deploy immediately — this preview matches the exact live website layout.
             </p>
           </div>
+
+          {/* New: Second Cinematic Video Preview */}
+          <div className="space-y-6 pt-12 border-t border-zinc-100">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-zinc-400 flex items-center gap-2">
+                <Layout className="w-4 h-4 text-accent" /> Cinematic Banner Preview
+              </h3>
+            </div>
+
+            <div className="relative min-h-[300px] flex items-center justify-center overflow-hidden bg-black rounded-2xl border border-zinc-100">
+              {localPromo.secondVideoUrl ? (
+                <>
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    key={localPromo.secondVideoUrl}
+                    className="absolute inset-0 w-full h-full object-cover opacity-60"
+                  >
+                    <source src={localPromo.secondVideoUrl} type="video/mp4" />
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+                  <div className="relative z-10 text-center">
+                     <span className="text-[8px] uppercase tracking-[0.5em] text-white/60 mb-2 block">The Art of Creation</span>
+                     <h4 className="text-xl font-light text-white uppercase tracking-[0.2em]">Bespoke Mastery</h4>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center p-12 text-zinc-500 uppercase tracking-widest text-[10px]">
+                  No Cinematic Video Selected
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
