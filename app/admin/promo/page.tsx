@@ -42,7 +42,16 @@ export default function AdminPromoPage() {
       // In a real app, this would upload to Supabase Storage/S3
       const videoBlobUrl = URL.createObjectURL(file);
       setLocalPromo(prev => ({ ...prev, videoUrl: videoBlobUrl }));
-      alert('Video selected. Please note: blobs only persist in this session. For permanent storage, provide a public URL.');
+      alert('Primary Video selected. Please note: blobs only persist in this session. For permanent storage, provide a public URL.');
+    }
+  };
+
+  const handleSecondVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const videoBlobUrl = URL.createObjectURL(file);
+      setLocalPromo(prev => ({ ...prev, secondVideoUrl: videoBlobUrl }));
+      alert('Secondary Cinematic Video selected. Please note: blobs only persist in this session.');
     }
   };
 
@@ -174,6 +183,14 @@ export default function AdminPromoPage() {
                    className="text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 border border-zinc-200 hover:border-black hover:bg-zinc-50 transition-all cursor-pointer flex items-center gap-2"
                  >
                    <ImageIcon className="w-3 h-3" /> Select Promo Video
+                  </label>
+
+                  <input type="file" id="second-video-upload" className="hidden" accept="video/mp4" onChange={handleSecondVideoUpload} />
+                  <label
+                    htmlFor="second-video-upload"
+                    className="text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 border border-zinc-200 hover:border-black hover:bg-zinc-50 transition-all cursor-pointer flex items-center gap-2"
+                  >
+                    <ImageIcon className="w-3 h-3 text-accent" /> Select Second Video
                  </label>
               </div>
             </div>
