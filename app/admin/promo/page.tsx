@@ -35,6 +35,17 @@ export default function AdminPromoPage() {
     }
   };
 
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // For local development/demo, we use public URL or a mock string
+      // In a real app, this would upload to Supabase Storage/S3
+      const videoBlobUrl = URL.createObjectURL(file);
+      setLocalPromo(prev => ({ ...prev, videoUrl: videoBlobUrl }));
+      alert('Video selected. Please note: blobs only persist in this session. For permanent storage, provide a public URL.');
+    }
+  };
+
   const handleSave = async () => {
     setIsSaving(true);
     try {
@@ -91,7 +102,7 @@ export default function AdminPromoPage() {
                     value={localPromo.titleAccent}
                     onChange={e => setLocalPromo({...localPromo, titleAccent: e.target.value})}
                     className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-medium uppercase"
-                    placeholder="20% OFF"
+                    placeholder="10% OFF"
                   />
                 </div>
               </div>
@@ -115,7 +126,7 @@ export default function AdminPromoPage() {
                       value={localPromo.code}
                       onChange={e => setLocalPromo({...localPromo, code: e.target.value})}
                       className="w-full h-12 bg-zinc-50 border-none pl-12 pr-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-bold tracking-widest uppercase"
-                      placeholder="AURAFEET20"
+                      placeholder="elvaediit10"
                     />
                   </div>
                 </div>
@@ -136,7 +147,7 @@ export default function AdminPromoPage() {
                   value={localPromo.description}
                   onChange={e => setLocalPromo({...localPromo, description: e.target.value})}
                   className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light"
-                  placeholder="Valid on all new arrivals"
+                  placeholder="Valid on all new arrivals - Get 10% OFF"
                 />
               </div>
             </div>
@@ -148,13 +159,23 @@ export default function AdminPromoPage() {
                 <ImageIcon className="w-5 h-5 text-zinc-300" />
                 <h2 className="text-lg font-light uppercase tracking-[0.2em]">Visual Asset</h2>
               </div>
-              <input type="file" id="promo-upload" className="hidden" accept="image/*" onChange={handleImageUpload} />
-              <label
-                htmlFor="promo-upload"
-                className="text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-2 border border-zinc-200 hover:border-black transition-all cursor-pointer"
-              >
-                Change Media
-              </label>
+              <div className="flex flex-wrap gap-4">
+                 <input type="file" id="promo-upload" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                 <label
+                   htmlFor="promo-upload"
+                   className="text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 border border-zinc-200 hover:border-black hover:bg-zinc-50 transition-all cursor-pointer flex items-center gap-2"
+                 >
+                   <ImageIcon className="w-3 h-3" /> Change Image File
+                 </label>
+
+                 <input type="file" id="video-upload" className="hidden" accept="video/mp4" onChange={handleVideoUpload} />
+                 <label
+                   htmlFor="video-upload"
+                   className="text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 border border-zinc-200 hover:border-black hover:bg-zinc-50 transition-all cursor-pointer flex items-center gap-2"
+                 >
+                   <ImageIcon className="w-3 h-3" /> Select Promo Video
+                 </label>
+              </div>
             </div>
 
             <div className="space-y-6">

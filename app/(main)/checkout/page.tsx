@@ -75,17 +75,38 @@ export default function CheckoutPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const [promoInput, setPromoInput] = useState('');
+  const [discountPercent, setDiscountPercent] = useState(0);
+  const [promoError, setPromoError] = useState('');
+
+  const discountAmount = total * (discountPercent / 100);
+  const finalTotal = total - discountAmount + shipping;
+
+  const applyPromoCode = () => {
+    if (promoInput.trim().toLowerCase() === 'elvaediit10') {
+      setDiscountPercent(10);
+      setPromoError('');
+    } else {
+      setPromoError('Invalid promo code');
+      setDiscountPercent(0);
+    }
+  };
+
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Create order object
     const newOrder = {
       id: `AV-${Math.floor(100000 + Math.random() * 900000)}`,
-      date: new Date().toISOString(), // Use ISO string for database compatibility
+      date: new Date().toISOString(),
       items: [...items],
-      total: total + shipping,
+      subtotal: total,
+      discount: discountAmount,
+      shipping: shipping,
+      total: finalTotal,
       status: 'Pending' as const,
-      shippingDetails: { ...formData }
+      shippingDetails: { ...formData },
+      promoCode: discountPercent > 0 ? promoInput : null
     };
 
     try {
@@ -387,11 +408,39 @@ export default function CheckoutPage() {
               ))}
             </div>
 
+            <div className="mb-8 p-6 bg-white border border-zinc-100 rounded-2xl">
+               <label className="block text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mb-4">Promo Code</label>
+               <div className="flex gap-2">
+                  <input 
+                    type="text"
+                    value={promoInput}
+                    onChange={(e) => setPromoInput(e.target.value)}
+                    placeholder="Enter code..."
+                    className="flex-grow h-12 bg-zinc-50 px-4 text-xs font-bold uppercase tracking-widest outline-none focus:ring-1 focus:ring-black"
+                  />
+                  <button 
+                    type="button"
+                    onClick={applyPromoCode}
+                    className="h-12 px-6 bg-black text-white text-[10px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-all"
+                  >
+                    Apply
+                  </button>
+               </div>
+               {promoError && <p className="text-[9px] text-red-500 font-bold uppercase mt-2">{promoError}</p>}
+               {discountPercent > 0 && <p className="text-[9px] text-green-600 font-bold uppercase mt-2">✓ 10% Discount Applied</p>}
+            </div>
+
             <div className="space-y-4 pt-6 border-t border-zinc-200">
               <div className="flex justify-between text-sm">
                 <span className="text-zinc-500 font-bold uppercase tracking-widest">Subtotal</span>
                 <span className="font-black">{formatPrice(total)}</span>
               </div>
+              {discountPercent > 0 && (
+                <div className="flex justify-between text-sm text-green-600 font-bold">
+                  <span className="uppercase tracking-widest">Discount (10%)</span>
+                  <span>-{formatPrice(discountAmount)}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm">
                 <span className="text-zinc-500 font-bold uppercase tracking-widest">Shipping</span>
                 <span className="font-black text-green-600">{shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
@@ -399,7 +448,7 @@ export default function CheckoutPage() {
               <div className="h-px bg-zinc-200 mt-2" />
               <div className="flex justify-between text-2xl pt-2">
                 <span className="font-black uppercase tracking-tighter">Total</span>
-                <span className="font-black">{formatPrice(total + shipping)}</span>
+                <span className="font-black">{formatPrice(finalTotal)}</span>
               </div>
             </div>
           </div>
