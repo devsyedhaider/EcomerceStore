@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Heart, ShoppingBag, Eye, Plus } from 'lucide-react';
+import { Heart, ShoppingBag, Eye, Plus, X, Star } from 'lucide-react';
 import { formatPrice, cn } from '@/lib/utils';
 import { useCartStore } from '@/store/useCartStore';
 import { useState, useEffect } from 'react';
@@ -14,9 +14,17 @@ import { useWishlistStore } from '@/store/useWishlistStore';
 
 interface ProductCardProps {
   product: Product;
+  showNewBadge?: boolean;
+  showSaleBadge?: boolean;
+  isWishlistPage?: boolean;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ 
+  product, 
+  showNewBadge = true, 
+  showSaleBadge = true,
+  isWishlistPage = false 
+}: ProductCardProps) {
   const { categories } = useCategoryStore();
   const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -85,23 +93,36 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
 
         {/* Badges Overlay */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-          {product.isNew && (
-            <span className="bg-black/90 backdrop-blur-md text-white text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
+        <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 font-bold uppercase tracking-widest text-[9px]">
+          {mounted && product.isNew && showNewBadge && (
+            <span className="bg-black/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full shadow-lg">
               New Arrival
             </span>
           )}
-          {product.stock > 0 && product.stock <= 5 && (
-            <span className="bg-amber-500/90 backdrop-blur-md text-white text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
+          {mounted && (product.price < 500 || product.isFeatured) && showSaleBadge && (
+             <span className="bg-[#e194b8] text-white px-4 py-1.5 rounded-full shadow-lg shadow-[#e194b8]/20">
+              Sale
+            </span>
+          )}
+          {mounted && product.stock > 0 && product.stock <= 5 && (
+            <span className="bg-amber-500/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full shadow-lg">
               Low Stock
             </span>
           )}
-          {product.price < 500 && (
-             <span className="bg-[#e194b8] text-white text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-[#e194b8]/20">
-              Promo
-            </span>
-          )}
         </div>
+
+        {/* Wishlist Removal Button (Corner) */}
+        {isWishlistPage && (
+          <div className="absolute top-4 right-4 z-10">
+            <button 
+              onClick={handleWishlist}
+              className="w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-md text-black rounded-full shadow-lg hover:bg-rose-500 hover:text-white transition-all cursor-pointer group/remove"
+              title="Remove from Wishlist"
+            >
+              <X className="w-5 h-5 stroke-[1.2] group-hover/remove:rotate-90 transition-transform duration-500" />
+            </button>
+          </div>
+        )}
 
         {/* Status Badge (Bottom Left) */}
         <div className="absolute bottom-4 left-4 z-10">
