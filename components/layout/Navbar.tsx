@@ -86,7 +86,7 @@ export default function Navbar() {
         {/* Main Brand & Actions Bar */}
         <nav className={cn(
             "bg-white/95 backdrop-blur-md px-4 md:px-10 transition-all duration-500 border-none",
-            isScrolled ? "h-16" : "h-20"
+            isScrolled ? "h-20" : "h-24"
         )}>
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
             {/* Left: Mobile Menu Trigger */}
@@ -153,38 +153,6 @@ export default function Navbar() {
             </div>
           </div>
         </nav>
-
-        {/* Second Navbar: Collection Navigation (Desktop Only) */}
-        {!isAuthPage && (
-          <motion.div 
-            initial={false}
-            animate={{ 
-              height: isScrolled ? 48 : 56,
-              opacity: 1
-            }}
-            className="hidden lg:flex bg-white/90 backdrop-blur-md border-t border-zinc-50 items-center justify-center shadow-sm"
-          >
-            <div className="flex items-center gap-12">
-              {[
-                { name: 'Home', href: '/' },
-                { name: 'Shop All', href: '/products' },
-                { name: 'Collections', href: '/categories' },
-                { name: 'New Arrivals', href: '/products?isNew=true' },
-                { name: 'Trending', href: '/trending' },
-                { name: 'Our Craft', href: '#' },
-              ].map((item, i) => (
-                <Link
-                  key={i}
-                  href={item.href}
-                  className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-accent transition-all duration-300 relative group"
-                >
-                  {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full" />
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-        )}
       </div>
 
       {/* Luxury Sidebar Menu */}
@@ -203,34 +171,31 @@ export default function Navbar() {
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 200 }}
-                className="fixed left-0 top-0 bottom-0 w-full max-w-[500px] bg-white z-[80] shadow-[10px_0_60px_rgba(0,0,0,0.05)] flex flex-col border-r border-[#e194b8]/10 overflow-hidden"
+              transition={{ type: 'tween', duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                className="fixed left-0 top-0 bottom-0 w-full max-w-[400px] bg-white z-[80] shadow-2xl flex flex-col overflow-hidden"
             >
-              {/* Header inside Sidebar */}
-              <div className="flex items-center justify-between p-10 md:p-12">
+              {/* Header inside Sidebar - Match Image style (X at top left) */}
+              <div className="flex items-center justify-start p-6">
                  <button 
                   onClick={handleClose} 
-                  className="w-12 h-12 flex items-center justify-center bg-zinc-50 hover:bg-[#121212] hover:text-white rounded-full transition-all group duration-500"
+                  className="p-2 hover:bg-zinc-50 rounded-full transition-all"
                 >
-                    <X className="w-5 h-5 stroke-[1.5] group-hover:rotate-90 transition-transform duration-500" />
+                    <X className="w-8 h-8 stroke-[1]" />
                  </button>
-                 <div className="flex flex-col items-end">
-                    <span className="text-[9px] font-black tracking-[0.4em] font-lato text-zinc-300 uppercase">Est. 2026</span>
-                    <span className="text-[8px] font-bold tracking-[0.2em] font-lato text-accent mt-0.5 uppercase">Aura Feet Selection</span>
-                 </div>
               </div>
 
               <div className="relative flex-grow flex overflow-hidden">
                 {/* Primary Menu */}
                 <motion.div 
-                  className="flex flex-col flex-grow px-10 md:px-12 mt-4 w-full"
+                  className="flex flex-col flex-grow w-full overflow-y-auto"
                   animate={{ x: activeSubMenu === 'shop' ? '-100%' : '0%' }}
-                  transition={{ type: 'spring', damping: 40, stiffness: 300 }}
+                  transition={{ type: 'tween', duration: 0.4 }}
                 >
                   {[
                       { name: 'Home', href: '/' },
                       { name: 'Shop All Products', type: 'trigger', id: 'shop' },
                       { name: 'New Arrivals', href: '/products?isNew=true' },
+                      { name: 'Trending Now', href: '/trending' },
                       { name: 'The Collections', href: '/categories' },
                       { name: 'Our Craft', href: '#' },
                   ].map((item, i) => (
@@ -238,29 +203,21 @@ export default function Navbar() {
                         <button
                           key={i}
                           onClick={() => setActiveSubMenu(item.id || null)}
-                          className="group flex items-baseline justify-between py-5 border-b border-zinc-50 transition-all duration-500 w-full text-left"
+                          className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 transition-colors w-full text-left group"
                         >
-                          <div className="flex items-baseline gap-6">
-                            <span className="text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity">
-                              0{i + 1}
-                            </span>
-                            <span className="text-lg md:text-xl font-lato font-medium tracking-[0.3em] text-[#121212] group-hover:translate-x-3 group-hover:text-accent transition-all duration-500 uppercase">
+                          <span className="text-base font-normal text-zinc-800">
                                 {item.name}
-                            </span>
-                          </div>
-                          <ChevronRight className="w-4 h-4 text-zinc-300 opacity-40" />
+                          </span>
+                          <ChevronRight className="w-4 h-4 text-zinc-400 stroke-[1.5] group-hover:text-black transition-colors" />
                         </button>
                       ) : (
                         <Link
                             key={i}
                             href={item.href || '#'}
-                            className="group flex items-baseline gap-6 py-5 border-b border-zinc-50 transition-all duration-500"
+                            className="flex items-center px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 transition-colors"
                             onClick={handleClose}
                         >
-                            <span className="text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity">
-                              0{i + 1}
-                            </span>
-                            <span className="text-lg md:text-xl font-lato font-medium tracking-[0.3em] text-[#121212] group-hover:translate-x-3 group-hover:text-accent transition-all duration-500 uppercase">
+                            <span className="text-base font-normal text-zinc-800">
                                 {item.name}
                             </span>
                         </Link>
@@ -268,35 +225,28 @@ export default function Navbar() {
                   ))}
                 </motion.div>
 
-                {/* Sub-panel for Categories */}
+                {/* Sub-panel for Categories - Exact Image Match */}
                 <motion.div
-                   className="absolute inset-x-0 inset-y-0 bg-white px-10 md:px-12 w-full h-full"
+                   className="absolute inset-x-0 inset-y-0 bg-white flex flex-col w-full h-full"
                    initial={{ x: '100%' }}
                    animate={{ x: activeSubMenu === 'shop' ? '0%' : '100%' }}
-                   transition={{ type: 'spring', damping: 40, stiffness: 300 }}
+                   transition={{ type: 'tween', duration: 0.4 }}
                 >
                   <button 
                     onClick={() => setActiveSubMenu(null)}
-                    className="flex items-center gap-4 py-8 text-[10px] font-black tracking-[0.2em] text-zinc-400 hover:text-black transition-colors uppercase group"
+                    className="flex items-center gap-4 px-8 py-4 bg-zinc-50 text-zinc-500 hover:text-black transition-colors w-full"
                   >
-                    <div className="w-8 h-8 rounded-full border border-zinc-100 flex items-center justify-center group-hover:border-black transition-colors transform rotate-180">
-                      <ChevronRight className="w-4 h-4" />
-                    </div>
-                    Back to Menu
+                    <ChevronRight className="w-4 h-4 rotate-180 stroke-[2]" />
+                    <span className="text-sm font-medium">Shop</span>
                   </button>
 
-                  <div className="mt-8 space-y-1">
-                    <h3 className="text-[10px] font-black text-accent tracking-[0.4em] mb-10 uppercase">Collections</h3>
-                    
+                  <div className="flex-grow overflow-y-auto w-full">
                     <Link 
                         href="/products" 
                         onClick={handleClose}
-                        className="group flex flex-col py-6 border-b border-zinc-50"
+                        className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50"
                     >
-                      <span className="text-sm font-medium tracking-[0.2em] uppercase text-zinc-900 group-hover:text-accent transition-colors">
-                        View All Collections
-                      </span>
-                      <span className="text-[8px] tracking-widest text-zinc-400 mt-1 uppercase">Complete Masterpieces</span>
+                      <span className="text-base font-normal text-zinc-800">All Products</span>
                     </Link>
 
                     {navCategories.map((cat) => (
@@ -304,12 +254,12 @@ export default function Navbar() {
                         key={cat.id}
                         href={`/products?category=${cat.id}`}
                         onClick={handleClose}
-                        className="group flex flex-col py-6 border-b border-zinc-50"
+                        className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 group"
                       >
-                        <span className="text-sm font-medium tracking-[0.2em] uppercase text-zinc-900 group-hover:text-accent transition-colors">
+                        <span className="text-base font-normal text-zinc-800">
                           {cat.name}
                         </span>
-                        <span className="text-[8px] tracking-widest text-zinc-400 mt-1 uppercase">Limited Edition Series</span>
+                        <ChevronRight className="w-4 h-4 text-zinc-400 stroke-[1.5] group-hover:text-black transition-colors" />
                       </Link>
                     ))}
                   </div>
