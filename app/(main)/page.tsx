@@ -70,13 +70,33 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+            className="flex flex-col items-center"
           >
-            <h1 className="text-4xl md:text-6xl font-light uppercase tracking-[0.25em] mb-8 leading-tight font-lato">
+            <h1 className="text-5xl md:text-8xl font-light uppercase tracking-[0.25em] mb-8 leading-tight font-lato">
               Elegance Redefined
             </h1>
-            <p className="text-sm md:text-base text-zinc-300 font-light tracking-[0.2em] uppercase leading-loose max-w-xl mx-auto">
-              Handcrafted jewelry from Pakistan — where timeless artistry meets modern luxury, designed to tell your story.
-            </p>
+
+            {/* Elegant Divider */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
+              className="flex items-center gap-4 mb-6 origin-center"
+            >
+              <span className="block w-12 h-[1px] bg-gradient-to-r from-transparent to-accent/80" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent opacity-80" />
+              <span className="block w-12 h-[1px] bg-gradient-to-l from-transparent to-accent/80" />
+            </motion.div>
+
+            {/* Subtitle Paragraph */}
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              className="text-base md:text-lg text-white/70 font-normal leading-[2] max-w-lg mx-auto"
+            >
+              {hero.subtitle || 'Handcrafted jewelry from Pakistan — where timeless artistry meets modern luxury, designed to tell your story.'}
+            </motion.p>
           </motion.div>
         </div>
       </section>

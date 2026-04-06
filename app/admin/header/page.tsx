@@ -57,8 +57,8 @@ export default function AdminHeaderPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-12 pb-24">
       <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-light uppercase tracking-[0.3em]">Header Management</h1>
-        <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Design your website's primary visual entrance.</p>
+        <h1 className="text-4xl font-light uppercase tracking-[0.3em]">Hero Content</h1>
+        <p className="text-xs text-zinc-400 font-medium">Edit your homepage hero heading, subtitle, and background image. Changes are reflected live on the storefront.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -90,6 +90,19 @@ export default function AdminHeaderPage() {
                     placeholder="REDEFINED"
                   />
                 </div>
+              </div>
+
+              {/* Subtitle / Paragraph Field */}
+              <div className="space-y-3">
+                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Subtitle / Paragraph</label>
+                <p className="text-[10px] text-zinc-300 font-medium">This text appears below the heading in the hero section on the homepage.</p>
+                <textarea
+                  value={localHero.subtitle}
+                  onChange={e => setLocalHero({...localHero, subtitle: e.target.value})}
+                  rows={3}
+                  className="w-full bg-zinc-50 border-none px-6 py-4 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light resize-none leading-relaxed"
+                  placeholder="Handcrafted jewelry from Pakistan — where timeless artistry meets modern luxury..."
+                />
               </div>
             </div>
           </div>

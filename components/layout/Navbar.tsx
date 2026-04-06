@@ -101,15 +101,11 @@ export default function Navbar() {
 
             {/* Center: Luxury Brand Logo */}
             <div className="flex-grow flex justify-center items-center">
-                <Link href="/" className="flex flex-col items-center group text-center gap-0.5">
-                    <span className="text-2xl md:text-3xl font-lato font-black tracking-[0.35em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-none uppercase">
+                <Link href="/" className="flex flex-col items-center group text-center">
+                    <span className="text-lg md:text-xl font-lato font-black tracking-[0.2em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-tight uppercase">
                         ElvaEdit
                     </span>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="block w-4 h-[1px] bg-accent opacity-60 group-hover:w-6 transition-all duration-500" />
-                      <span className="text-[7px] font-semibold tracking-[0.45em] text-accent uppercase font-lato opacity-70">Boutique Jewellery</span>
-                      <span className="block w-4 h-[1px] bg-accent opacity-60 group-hover:w-6 transition-all duration-500" />
-                    </div>
+                    <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0 uppercase font-lato opacity-80">Boutique Jewellery</span>
                 </Link>
             </div>
 
