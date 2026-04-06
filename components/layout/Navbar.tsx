@@ -95,17 +95,21 @@ export default function Navbar() {
                 className="p-2 hover:bg-zinc-50 rounded-full transition-premium group"
                 onClick={() => setIsOpen(true)}
               >
-                <Menu className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
+                <Menu className="w-6 h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
               </button>
             </div>
 
             {/* Center: Luxury Brand Logo */}
             <div className="flex-grow flex justify-center items-center">
-                <Link href="/" className="flex flex-col items-center group text-center">
-                    <span className="text-lg md:text-xl font-lato font-black tracking-[0.2em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-tight uppercase">
+                <Link href="/" className="flex flex-col items-center group text-center gap-0.5">
+                    <span className="text-2xl md:text-3xl font-lato font-black tracking-[0.35em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-none uppercase">
                         ElvaEdit
                     </span>
-                    <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0 uppercase font-lato opacity-80">Boutique Jewellery</span>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="block w-4 h-[1px] bg-accent opacity-60 group-hover:w-6 transition-all duration-500" />
+                      <span className="text-[7px] font-semibold tracking-[0.45em] text-accent uppercase font-lato opacity-70">Boutique Jewellery</span>
+                      <span className="block w-4 h-[1px] bg-accent opacity-60 group-hover:w-6 transition-all duration-500" />
+                    </div>
                 </Link>
             </div>
 
@@ -116,9 +120,9 @@ export default function Navbar() {
                 className="p-2 hover:bg-zinc-50 rounded-full transition-premium group relative"
                 aria-label="Wishlist"
               >
-                <Heart className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
+                <Heart className="w-6 h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
                 {mounted && wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-accent text-white text-[8px] font-black w-3.5 h-3.5 flex items-center justify-center rounded-full animate-bounce-subtle">
+                  <span className="absolute top-1 right-1 bg-accent text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full animate-bounce-subtle">
                     {wishlistCount}
                   </span>
                 )}
@@ -134,7 +138,7 @@ export default function Navbar() {
                     {user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}
                   </div>
                 ) : (
-                  <User className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
+                  <User className="w-6 h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
                 )}
               </Link>
 
@@ -143,9 +147,9 @@ export default function Navbar() {
                 className="p-2 hover:bg-zinc-50 rounded-full transition-premium group relative"
                 aria-label="Shopping Cart"
               >
-                <ShoppingCart className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
+                <ShoppingCart className="w-6 h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
                 {mounted && itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-accent text-white text-[8px] font-black w-3.5 h-3.5 flex items-center justify-center rounded-full animate-bounce-subtle">
+                  <span className="absolute top-1 right-1 bg-accent text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full animate-bounce-subtle">
                     {itemCount}
                   </span>
                 )}

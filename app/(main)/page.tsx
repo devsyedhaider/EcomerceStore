@@ -54,27 +54,29 @@ export default function Home() {
 
   return (
     <div className="flex flex-col pb-0">
-      {/* 1. Full-width Hero Banner */}
-      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-white">
-        <div className="absolute inset-0 z-0 text-premium-heading">
-          <img 
-            src={hero.backgroundImage} 
-            alt="ElvaEdit Hero" 
-            className="w-full h-full object-cover object-center"
+      {/* 1. Full-width Hero Banner — Clean & Professional */}
+      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-zinc-950">
+        <div className="absolute inset-0 z-0">
+          <img
+            src={hero.backgroundImage}
+            alt="ElvaEdit Boutique"
+            className="w-full h-full object-cover object-center opacity-60"
           />
-          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
         </div>
 
-        <div className="relative z-10 text-center text-white px-6 pt-24">
+        <div className="relative z-10 text-center text-white px-6 max-w-3xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
           >
-            <h1 className="text-6xl md:text-9xl font-black uppercase tracking-[0.15em] mb-12 leading-none font-lato">
-              ELEGANCE <br />
-              <span className="font-normal tracking-[0.1em] text-accent-light">REDEFINED</span>
+            <h1 className="text-4xl md:text-6xl font-light uppercase tracking-[0.25em] mb-8 leading-tight font-lato">
+              Elegance Redefined
             </h1>
+            <p className="text-sm md:text-base text-zinc-300 font-light tracking-[0.2em] uppercase leading-loose max-w-xl mx-auto">
+              Handcrafted jewelry from Pakistan — where timeless artistry meets modern luxury, designed to tell your story.
+            </p>
           </motion.div>
         </div>
       </section>
