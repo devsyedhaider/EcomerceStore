@@ -103,7 +103,7 @@ export default function Navbar() {
             <div className="flex-grow flex justify-center items-center">
                 <Link href="/" className="flex flex-col items-center group text-center">
                     <span className="text-lg md:text-xl font-lato font-black tracking-[0.2em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-tight uppercase">
-                        EDITEVAL
+                        ElvaEdit
                     </span>
                     <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0 uppercase font-lato opacity-80">Boutique Jewellery</span>
                 </Link>
@@ -166,25 +166,22 @@ export default function Navbar() {
                 <ul className="flex items-center justify-center gap-8 md:gap-14 h-12 overflow-x-auto no-scrollbar scroll-smooth">
                    {[
                       { name: 'Home', href: '/' },
-                      { name: 'About us', href: '/#about-us' },
-                      { name: 'Contact us', href: '/contact' },
-                      { name: 'New Arrival', href: '/products?sort=new' },
+                      { name: 'New Arrival', href: '/new-arrivals' },
                       { name: 'Trending', href: '/trending' },
-                      { name: 'Shipped', href: '/account' }
+                      { name: 'Shop All', href: '/products' },
+                      { name: 'About us', href: '/about' },
+                      { name: 'Contact us', href: '/contact' },
+                      { name: 'Shipped', href: '/shipped' }
                    ].map((tab) => (
                       <li key={tab.name}>
                          <Link 
                             href={tab.href}
                             className={cn(
-                               "text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] whitespace-nowrap transition-all duration-500 py-3 block hover:text-accent relative group text-zinc-500",
-                               pathname === tab.href ? "text-black" : ""
+                               "text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] whitespace-nowrap transition-all duration-500 py-3 block hover:text-accent text-zinc-500",
+                               pathname === tab.href ? "text-accent font-black" : ""
                             )}
                          >
                             {tab.name}
-                            <span className={cn(
-                               "absolute bottom-0 left-0 w-full h-[1.5px] bg-accent transition-transform duration-500 origin-right scale-x-0 group-hover:scale-x-100 group-hover:origin-left",
-                               pathname === tab.href ? "scale-x-100 origin-left" : ""
-                            )} />
                          </Link>
                       </li>
                    ))}
@@ -241,10 +238,12 @@ export default function Navbar() {
                   >
                     {[
                         { name: 'Home', href: '/' },
-                        { name: 'Shop All Products', type: 'trigger', id: 'shop' },
-                        { name: 'New Arrivals', href: '/products?isNew=true' },
+                        { name: 'New Arrivals', href: '/new-arrivals' },
                         { name: 'Trending Now', href: '/trending' },
-                        { name: 'The Collections', href: '/categories' },
+                        { name: 'Shop All Products', type: 'trigger', id: 'shop' },
+                        { name: 'About Us', href: '/about' },
+                        { name: 'Contact Us', href: '/contact' },
+                        { name: 'Track Order', href: '/shipped' },
                     ].map((item, i) => (
                         <motion.div
                             key={i}
@@ -354,7 +353,7 @@ export default function Navbar() {
                       <Link href="#" className="text-zinc-400 hover:text-accent transition-colors font-bold text-sm">𝕏</Link>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.3em] font-lato uppercase">© 2026 EDITEVAL</p>
+                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.3em] font-lato uppercase">© 2026 ElvaEdit</p>
                     <p className="text-[8px] font-medium text-zinc-300 tracking-[0.2em] font-lato uppercase">Boutique Jewellery</p>
                   </div>
               </div>

@@ -12,10 +12,10 @@ import { useState, useEffect, useRef } from 'react';
 import ProductCard from '@/components/product/ProductCard';
 
 export default function Home() {
-  const { products } = useProductStore();
-  const { categories } = useCategoryStore();
-  const { hero } = useHeroStore();
-  const { promo } = usePromoStore();
+  const products = useProductStore((state) => state.products);
+  const categories = useCategoryStore((state) => state.categories);
+  const hero = useHeroStore((state) => state.hero);
+  const promo = usePromoStore((state) => state.promo);
   const [mounted, setMounted] = useState(false);
   const [sliderWidth, setSliderWidth] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -59,7 +59,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 text-premium-heading">
           <img 
             src={hero.backgroundImage} 
-            alt="THE AURIC VAULT Hero" 
+            alt="ElvaEdit Hero" 
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-black/20" />
@@ -402,7 +402,7 @@ export default function Home() {
 
               {/* Branding name overlay (Subtle top left) */}
               <div className="absolute top-8 left-8">
-                 <span className="text-[9px] uppercase tracking-[0.3em] text-accent font-bold opacity-80">Editeval</span>
+                 <span className="text-[9px] uppercase tracking-[0.3em] text-accent font-bold opacity-80">ElvaEdit</span>
               </div>
             </motion.div>
 
@@ -426,7 +426,7 @@ export default function Home() {
                 </p>
                 
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
-                  At Editeval, we provide the highest quality jewelry. Every purchase is an experience, not just a transaction.
+                  At ElvaEdit, we provide the highest quality jewelry. Every purchase is an experience, not just a transaction.
                 </p>
               </div>
 
@@ -516,7 +516,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               className="text-[10px] uppercase font-bold tracking-[0.4em] text-accent mb-4"
             >
-              The Editeval Experience
+              The ElvaEdit Experience
             </motion.span>
             <motion.h2 
               initial={{ opacity: 0, y: 10 }}
@@ -540,7 +540,7 @@ export default function Home() {
                 {
                   name: "Aisha Ahmed",
                   location: "Karachi, Pakistan",
-                  review: "Editeval has become my go-to for luxury jewelry. The craftsmanship is exceptional and the customer service was extremely helpful during checkout.",
+                  review: "ElvaEdit has become my go-to for luxury jewelry. The craftsmanship is exceptional and the customer service was extremely helpful during checkout.",
                   stars: 5
                 },
                 {

@@ -7,7 +7,7 @@ import { ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function CategoriesPage() {
-  const { categories } = useCategoryStore();
+  const categories = useCategoryStore((state) => state.categories);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -15,7 +15,7 @@ export default function CategoriesPage() {
   if (!mounted) return null;
 
   return (
-    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-32 pb-24">
+    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-24 pb-24">
       <div className="text-center mb-20">
         <h1 className="text-4xl md:text-6xl font-light uppercase tracking-[0.3em] mb-6">Our Collections</h1>
         <p className="text-[11px] uppercase tracking-[0.2em] text-gray-light max-w-xl mx-auto leading-relaxed">

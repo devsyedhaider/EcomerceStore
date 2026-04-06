@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect, useMemo } from 'react';
 import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag, Truck, ShieldCheck, X } from 'lucide-react';
 import { useCartStore } from '@/store/useCartStore';
 import { formatPrice, cn } from '@/lib/utils';
@@ -10,10 +11,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CartPage() {
   const router = useRouter();
-  const { items, removeItem, updateQuantity, getTotal, getItemCount } = useCartStore();
-  const total = getTotal();
-  const itemCount = getItemCount();
-  const shipping = total > 5000 ? 0 : 250;
+  const items = useCartStore((state) => state.items);
+  const removeItem = useCartStore((state) => state.removeItem);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const getTotal = useCartStore((state) => state.getTotal);
+  const getItemCount = useCartStore((state) => state.getItemCount);
+
+  const total = useMemo(() => getTotal(), [items, getTotal]);
+  const itemCount = useMemo(() => getItemCount(), [items, getItemCount]);
+  const shipping = useMemo(() => total > 5000 ? 0 : 250, [total]);
 
   if (items.length === 0) {
     return (
@@ -33,7 +39,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-32 pb-16">
+    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-24 pb-16">
       <div className="text-center mb-16">
         <h1 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-4">Shopping Bag</h1>
         <p className="text-[10px] text-gray-light uppercase tracking-[0.2em] font-medium">

@@ -66,10 +66,17 @@ export default function CheckoutPage() {
     }
   }, [user, getOrdersByEmail]);
 
-  if (items.length === 0 && step < 3) {
-    router.push('/cart');
-    return null;
-  }
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (items.length === 0 && step < 3) {
+      router.push('/cart');
+    }
+  }, [items.length, step, router]);
+
+  if (!mounted) return null;
+  if (items.length === 0 && step < 3) return null;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -86,7 +93,7 @@ export default function CheckoutPage() {
 
   const applyPromoCode = () => {
     const trimmedInput = promoInput.trim().toLowerCase();
-    const activeCode = (promo.code || 'elvaediit10').toLowerCase();
+    const activeCode = (promo.code || 'elvaedit10').toLowerCase();
     const emailToCheck = formData.email || user?.email || '';
     
     if (!emailToCheck) {
@@ -126,7 +133,7 @@ export default function CheckoutPage() {
     
     // Create order object
     const newOrder = {
-      id: `AV-${Math.floor(100000 + Math.random() * 900000)}`,
+      id: `EE-${Math.floor(100000 + Math.random() * 900000)}`,
       date: new Date().toISOString(),
       items: [...items],
       subtotal: total,
@@ -165,9 +172,9 @@ export default function CheckoutPage() {
             <CheckCircle2 className="w-12 h-12 text-green-600" />
         </div>
         <h1 className="text-5xl font-black uppercase tracking-tighter mb-4">Order Confirmed!</h1>
-        <p className="text-zinc-500 mb-2 font-black uppercase tracking-widest text-sm">Order ID: #AV-928374</p>
+        <p className="text-zinc-500 mb-2 font-black uppercase tracking-widest text-sm">Order ID: #EE-928374</p>
         <p className="text-zinc-500 mb-12 max-w-md font-medium text-lg leading-relaxed">
-            Thank you for shopping with THE AURIC VAULT. Your order has been placed successfully and will be delivered within 2-3 business days.
+            Thank you for shopping with ElvaEdit. Your order has been placed successfully and will be delivered within 2-3 business days.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/" className="btn-primary min-w-[200px]">BACK TO HOME</Link>

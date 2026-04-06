@@ -17,7 +17,7 @@ export default function WishlistPage() {
   if (!mounted) return null;
 
   return (
-    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-32 pb-24">
+    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-24 pb-24">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-zinc-100 pb-10">
         <div>

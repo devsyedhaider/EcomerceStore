@@ -12,9 +12,9 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "THE AURIC VAULT | Fine Collections",
-  description: "Exquisite designs and handcrafted elegance at THE AURIC VAULT.",
-  keywords: ["jewelry", "luxury", "fine collections", "the auric vault"],
+  title: "ElvaEdit | Fine Collections",
+  description: "Exquisite designs and handcrafted elegance at ElvaEdit.",
+  keywords: ["jewelry", "luxury", "fine collections", "ElvaEdit"],
 };
 
 export default function RootLayout({

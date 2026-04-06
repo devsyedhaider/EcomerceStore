@@ -7,16 +7,7 @@ import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, ArrowRight 
 import { useCategoryStore } from '@/store/useCategoryStore';
 import { useState, useEffect } from 'react';
 
-const footerLinks = [
-  {
-    title: 'Legal',
-    links: [
-      { name: 'Terms of Service', href: '/terms' },
-      { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Cookie Policy', href: '/cookies' },
-    ],
-  },
-];
+const footerLinks = [];
 
 export default function Footer() {
   const { categories } = useCategoryStore();
@@ -39,7 +30,7 @@ export default function Footer() {
           <div className="lg:col-span-2 flex flex-col gap-10">
             <Link href="/" className="group flex flex-col">
               <span className="text-3xl font-lato font-black tracking-widest uppercase italic group-hover:text-accent transition-colors">
-                EDITEVAL
+                ElvaEdit
               </span>
               <span className="text-[9px] font-bold tracking-[0.4em] text-zinc-500 mt-1 uppercase font-lato">Boutique Jewellery</span>
             </Link>
@@ -84,62 +75,57 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links Sections - Simplified to only Collections & Legal Info */}
-          <div className="lg:col-span-3 grid grid-cols-2 gap-12">
-             {/* Shop Section */}
-            <div className="flex flex-col gap-8">
-              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Collections</h4>
-              <ul className="flex flex-col gap-4">
-                {shoppingLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-[11px] uppercase tracking-[0.1em] text-gray-400 hover:text-white transition-premium"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Links Sections - Boutique & Shop */}
+          <div className="lg:col-span-2 grid grid-cols-2 gap-12">
+             
+             {/* Brand Column */}
+             <div className="flex flex-col gap-8">
+               <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white underline decoration-accent underline-offset-8 decoration-1">Boutique</h4>
+               <ul className="flex flex-col gap-4">
+                 <li><Link href="/about" className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-bold">About Us</Link></li>
+                 <li><Link href="/contact" className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-bold">Contact Us</Link></li>
+                 <li><Link href="/new-arrivals" className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-bold">New Arrivals</Link></li>
+                 <li><Link href="/products" className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-bold">The Collection</Link></li>
+               </ul>
+             </div>
 
-            {/* Legal Section */}
-            <div className="flex flex-col gap-8">
-              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Policies</h4>
-              <ul className="flex flex-col gap-4">
-                {footerLinks[0].links.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-[11px] uppercase tracking-[0.1em] text-gray-400 hover:text-white transition-premium"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+             {/* Collections Column */}
+             <div className="flex flex-col gap-8">
+               <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white underline decoration-zinc-800 underline-offset-8 decoration-1">Shop</h4>
+               <ul className="flex flex-col gap-4">
+                 {shoppingLinks.slice(0, 5).map((link) => (
+                   <li key={link.name}>
+                     <Link
+                       href={link.href}
+                       className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-zinc-500 hover:text-white transition-all font-bold"
+                     >
+                       {link.name}
+                     </Link>
+                   </li>
+                 ))}
+               </ul>
+             </div>
           </div>
 
-          {/* Social & Contact */}
-          <div className="lg:col-span-1 flex flex-col gap-10">
+          {/* Social Presence */}
+          <div className="lg:col-span-2 flex flex-col gap-10">
             <div className="flex flex-col gap-8">
-              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Follow Us</h4>
-              <div className="flex items-center gap-6">
-                <a href="#" className="text-zinc-500 hover:text-accent transition-premium">
-                  <Facebook className="w-4 h-4 stroke-[1.5]" />
+              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Social Muse</h4>
+              <div className="flex items-center gap-8">
+                <a href="#" className="text-zinc-500 hover:text-accent transition-all">
+                  <Facebook className="w-5 h-5 stroke-[1.5]" />
                 </a>
-                <a href="#" className="text-zinc-500 hover:text-accent transition-premium">
-                  <Instagram className="w-4 h-4 stroke-[1.5]" />
+                <a href="#" className="text-zinc-500 hover:text-accent transition-all">
+                  <Instagram className="w-5 h-5 stroke-[1.5]" />
                 </a>
-                <a href="#" className="text-zinc-500 hover:text-accent font-bold">
-                  X
+                <a href="#" className="text-zinc-500 hover:text-white group flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest group-hover:text-accent">Youtube</span>
                 </a>
               </div>
             </div>
-            <div className="flex flex-col gap-4 opacity-50">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">help@editeval.com</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">+92 42 111 287 287</p>
+            <div className="flex flex-col gap-4">
+                <p className="text-[10px] uppercase tracking-[0.4em] text-zinc-600 font-bold">support@elvaedit.com</p>
+                <p className="text-[11px] uppercase tracking-[0.4em] text-zinc-600 font-bold">+92 300 123 4567</p>
             </div>
           </div>
         </div>
@@ -153,7 +139,7 @@ export default function Footer() {
           </div>
           
           <p className="text-[9px] font-bold uppercase tracking-[0.3em]">
-            © 2026 EDITEVAL. All Rights Reserved.
+            © 2026 ElvaEdit. All Rights Reserved.
           </p>
         </div>
       </div>
