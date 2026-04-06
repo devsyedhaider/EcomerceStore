@@ -18,6 +18,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const itemCount = useCartStore((state) => state.items.reduce((count, item) => count + item.quantity, 0));
   const wishlistCount = useWishlistStore((state) => state.items.length);
+  const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
   const { user, initialized } = useAuthStore();
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
@@ -35,6 +36,11 @@ export default function Navbar() {
 
   const navCategories = mounted ? categories : [];
   const showUser = mounted && initialized && !!user;
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setActiveSubMenu(null);
+  };
 
   const announcementItems = [
     "FREE WORLDWIDE SHIPPING ON ALL ORDERS",
@@ -77,15 +83,12 @@ export default function Navbar() {
           </motion.div>
         )}
 
-        {/* Desktop & Mobile Navbar - Always Sticky */}
+        {/* Main Brand & Actions Bar */}
         <nav className={cn(
             "bg-white/95 backdrop-blur-md px-4 md:px-10 transition-all duration-500 border-none",
-            isScrolled ? "border-b border-zinc-100 h-20" : "h-24"
+            isScrolled ? "h-16" : "h-20"
         )}>
-
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
-
-
             {/* Left: Mobile Menu Trigger */}
             <div className="flex-1 flex justify-start items-center">
               <button
@@ -150,6 +153,38 @@ export default function Navbar() {
             </div>
           </div>
         </nav>
+
+        {/* Second Navbar: Collection Navigation (Desktop Only) */}
+        {!isAuthPage && (
+          <motion.div 
+            initial={false}
+            animate={{ 
+              height: isScrolled ? 48 : 56,
+              opacity: 1
+            }}
+            className="hidden lg:flex bg-white/90 backdrop-blur-md border-t border-zinc-50 items-center justify-center shadow-sm"
+          >
+            <div className="flex items-center gap-12">
+              {[
+                { name: 'Home', href: '/' },
+                { name: 'Shop All', href: '/products' },
+                { name: 'Collections', href: '/categories' },
+                { name: 'New Arrivals', href: '/products?isNew=true' },
+                { name: 'Trending', href: '/trending' },
+                { name: 'Our Craft', href: '#' },
+              ].map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-accent transition-all duration-300 relative group"
+                >
+                  {item.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full" />
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* Luxury Sidebar Menu */}
@@ -169,45 +204,116 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 200 }}
-                className="fixed left-0 top-0 bottom-0 w-full max-w-[500px] bg-white z-[80] shadow-[10px_0_60px_rgba(0,0,0,0.05)] flex flex-col border-r border-[#e194b8]/10"
+                className="fixed left-0 top-0 bottom-0 w-full max-w-[500px] bg-white z-[80] shadow-[10px_0_60px_rgba(0,0,0,0.05)] flex flex-col border-r border-[#e194b8]/10 overflow-hidden"
             >
               {/* Header inside Sidebar */}
               <div className="flex items-center justify-between p-10 md:p-12">
                  <button 
-                  onClick={() => setIsOpen(false)} 
+                  onClick={handleClose} 
                   className="w-12 h-12 flex items-center justify-center bg-zinc-50 hover:bg-[#121212] hover:text-white rounded-full transition-all group duration-500"
                 >
                     <X className="w-5 h-5 stroke-[1.5] group-hover:rotate-90 transition-transform duration-500" />
                  </button>
                  <div className="flex flex-col items-end">
-                    <span className="text-[9px] font-black tracking-[0.4em] font-lato text-zinc-300">SINCE 2026</span>
-                    <span className="text-[8px] font-bold tracking-[0.2em] font-lato text-accent mt-0.5">COLLECTION N° 01</span>
+                    <span className="text-[9px] font-black tracking-[0.4em] font-lato text-zinc-300 uppercase">Est. 2026</span>
+                    <span className="text-[8px] font-bold tracking-[0.2em] font-lato text-accent mt-0.5 uppercase">Aura Feet Selection</span>
                  </div>
               </div>
 
-              {/* Navigation Links */}
-              <div className="flex flex-col flex-grow px-10 md:px-12 mt-4">
-                {[
-                    { name: 'Home', href: '/' },
-                    { name: 'Shop All Products', href: '/products' },
-                    { name: 'New Arrivals', href: '/products?isNew=true' },
-                    { name: 'The Collections', href: '/categories' },
-                    { name: 'Our Craft', href: '#' },
-                ].map((item, i) => (
-                    <Link
-                        key={i}
-                        href={item.href}
-                        className="group flex items-baseline gap-6 py-5 border-b border-zinc-50 transition-all duration-500"
-                        onClick={() => setIsOpen(false)}
+              <div className="relative flex-grow flex overflow-hidden">
+                {/* Primary Menu */}
+                <motion.div 
+                  className="flex flex-col flex-grow px-10 md:px-12 mt-4 w-full"
+                  animate={{ x: activeSubMenu === 'shop' ? '-100%' : '0%' }}
+                  transition={{ type: 'spring', damping: 40, stiffness: 300 }}
+                >
+                  {[
+                      { name: 'Home', href: '/' },
+                      { name: 'Shop All Products', type: 'trigger', id: 'shop' },
+                      { name: 'New Arrivals', href: '/products?isNew=true' },
+                      { name: 'The Collections', href: '/categories' },
+                      { name: 'Our Craft', href: '#' },
+                  ].map((item, i) => (
+                      item.type === 'trigger' ? (
+                        <button
+                          key={i}
+                          onClick={() => setActiveSubMenu(item.id || null)}
+                          className="group flex items-baseline justify-between py-5 border-b border-zinc-50 transition-all duration-500 w-full text-left"
+                        >
+                          <div className="flex items-baseline gap-6">
+                            <span className="text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity">
+                              0{i + 1}
+                            </span>
+                            <span className="text-lg md:text-xl font-lato font-medium tracking-[0.3em] text-[#121212] group-hover:translate-x-3 group-hover:text-accent transition-all duration-500 uppercase">
+                                {item.name}
+                            </span>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-zinc-300 opacity-40" />
+                        </button>
+                      ) : (
+                        <Link
+                            key={i}
+                            href={item.href || '#'}
+                            className="group flex items-baseline gap-6 py-5 border-b border-zinc-50 transition-all duration-500"
+                            onClick={handleClose}
+                        >
+                            <span className="text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity">
+                              0{i + 1}
+                            </span>
+                            <span className="text-lg md:text-xl font-lato font-medium tracking-[0.3em] text-[#121212] group-hover:translate-x-3 group-hover:text-accent transition-all duration-500 uppercase">
+                                {item.name}
+                            </span>
+                        </Link>
+                      )
+                  ))}
+                </motion.div>
+
+                {/* Sub-panel for Categories */}
+                <motion.div
+                   className="absolute inset-x-0 inset-y-0 bg-white px-10 md:px-12 w-full h-full"
+                   initial={{ x: '100%' }}
+                   animate={{ x: activeSubMenu === 'shop' ? '0%' : '100%' }}
+                   transition={{ type: 'spring', damping: 40, stiffness: 300 }}
+                >
+                  <button 
+                    onClick={() => setActiveSubMenu(null)}
+                    className="flex items-center gap-4 py-8 text-[10px] font-black tracking-[0.2em] text-zinc-400 hover:text-black transition-colors uppercase group"
+                  >
+                    <div className="w-8 h-8 rounded-full border border-zinc-100 flex items-center justify-center group-hover:border-black transition-colors transform rotate-180">
+                      <ChevronRight className="w-4 h-4" />
+                    </div>
+                    Back to Menu
+                  </button>
+
+                  <div className="mt-8 space-y-1">
+                    <h3 className="text-[10px] font-black text-accent tracking-[0.4em] mb-10 uppercase">Collections</h3>
+                    
+                    <Link 
+                        href="/products" 
+                        onClick={handleClose}
+                        className="group flex flex-col py-6 border-b border-zinc-50"
                     >
-                        <span className="text-[10px] font-black text-accent tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity">
-                          0{i + 1}
-                        </span>
-                        <span className="text-lg md:text-xl font-lato font-medium tracking-[0.3em] text-[#121212] group-hover:translate-x-3 group-hover:text-accent transition-all duration-500 uppercase italic-none">
-                            {item.name}
-                        </span>
+                      <span className="text-sm font-medium tracking-[0.2em] uppercase text-zinc-900 group-hover:text-accent transition-colors">
+                        View All Collections
+                      </span>
+                      <span className="text-[8px] tracking-widest text-zinc-400 mt-1 uppercase">Complete Masterpieces</span>
                     </Link>
-                ))}
+
+                    {navCategories.map((cat) => (
+                      <Link
+                        key={cat.id}
+                        href={`/products?category=${cat.id}`}
+                        onClick={handleClose}
+                        className="group flex flex-col py-6 border-b border-zinc-50"
+                      >
+                        <span className="text-sm font-medium tracking-[0.2em] uppercase text-zinc-900 group-hover:text-accent transition-colors">
+                          {cat.name}
+                        </span>
+                        <span className="text-[8px] tracking-widest text-zinc-400 mt-1 uppercase">Limited Edition Series</span>
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
               </div>
 
               {/* Sidebar Bottom Fine Print */}

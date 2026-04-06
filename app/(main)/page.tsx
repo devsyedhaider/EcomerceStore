@@ -144,32 +144,86 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Promotional Banner */}
-      <section className="h-[500px] relative overflow-hidden bg-gray-100">
-        <div className="absolute inset-0">
-          <img
-            src={promo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
-            alt="Promotion"
-            className="w-full h-full object-cover opacity-60"
-          />
+      {/* 4. Promotional Banner - Professional Overhaul */}
+      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-zinc-900 py-24">
+        {/* Background Layer: Video or Image */}
+        <div className="absolute inset-0 z-0">
+          {promo.videoUrl ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover opacity-50"
+            >
+              <source src={promo.videoUrl} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src={promo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
+              alt="Promotion Background"
+              className="w-full h-full object-cover opacity-40 scale-105"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-zinc-900/50" />
         </div>
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <span className="text-xs uppercase tracking-[0.4em] mb-6">{promo.tagline}</span>
-          <h2 className="text-4xl md:text-6xl font-light uppercase tracking-[0.2em] mb-10 max-w-2xl leading-tight">
-            {promo.title1} {promo.titleAccent && <span className="font-medium">{promo.titleAccent}</span>} {promo.title2}
-          </h2>
-          {promo.code && (
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-xs uppercase tracking-widest opacity-70">Code:</span>
-              <span className="border border-current px-4 py-2 text-xs tracking-widest font-medium">{promo.code}</span>
+
+        {/* Content Layer */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 text-center text-white">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center"
+          >
+            {/* Tagline */}
+            <div className="mb-6 flex items-center gap-4">
+              <div className="w-8 h-[1px] bg-accent" />
+              <span className="text-[10px] md:text-xs uppercase tracking-[0.5em] font-black text-accent">
+                {promo.tagline}
+              </span>
+              <div className="w-8 h-[1px] bg-accent" />
             </div>
-          )}
-          <Link href="/products" className="btn-premium">
-            {promo.buttonText}
-          </Link>
-          {promo.description && (
-            <p className="mt-4 text-xs uppercase tracking-[0.15em] opacity-50">{promo.description}</p>
-          )}
+
+            {/* Main Heading */}
+            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tight mb-8 leading-[0.9] italic-none">
+              {promo.title1} <br />
+              <span className="text-accent italic-none">{promo.titleAccent}</span> <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">{promo.title2}</span>
+            </h2>
+
+            {/* Description */}
+            <p className="text-sm md:text-base uppercase tracking-[0.2em] font-light text-zinc-400 max-w-xl mb-12 leading-relaxed">
+              {promo.description}
+            </p>
+
+            {/* Promo Code - Glass Card */}
+            {promo.code && (
+              <div className="group mb-12 relative">
+                <div className="absolute -inset-2 bg-gradient-to-r from-accent to-accent-light opacity-20 blur-xl group-hover:opacity-40 transition-opacity" />
+                <div className="relative px-8 py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center gap-1 shadow-2xl">
+                   <span className="text-[8px] uppercase tracking-[0.3em] text-zinc-500 font-bold">Use Code at Checkout</span>
+                   <span className="text-xl md:text-2xl font-black tracking-[0.2em]">{promo.code}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Action Button */}
+            <Link 
+              href="/products" 
+              className="group relative px-12 py-5 bg-white text-black text-xs font-black uppercase tracking-[0.3em] overflow-hidden transition-all duration-500 hover:text-white"
+            >
+              <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+              <span className="relative z-10">{promo.buttonText}</span>
+            </Link>
+          </motion.div>
+        </div>
+        
+        {/* Subtle Bottom Elements */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2 opacity-30">
+           <div className="w-1 h-1 rounded-full bg-white animate-pulse" />
+           <span className="text-[8px] uppercase tracking-widest">Seasonal Collection Vol. 01</span>
         </div>
       </section>
 

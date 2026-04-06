@@ -157,14 +157,27 @@ export default function AdminPromoPage() {
               </label>
             </div>
 
-            <div className="space-y-3">
-              <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Media Source URL</label>
-              <input
-                value={localPromo.backgroundImage}
-                onChange={e => setLocalPromo({...localPromo, backgroundImage: e.target.value})}
-                className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light"
-                placeholder="https://images.unsplash.com/..."
-              />
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Background Image URL</label>
+                <input
+                  value={localPromo.backgroundImage}
+                  onChange={e => setLocalPromo({...localPromo, backgroundImage: e.target.value})}
+                  className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light"
+                  placeholder="https://images.unsplash.com/..."
+                />
+              </div>
+
+              <div className="space-y-3">
+                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Background Video URL (Optional)</label>
+                <input
+                  value={localPromo.videoUrl || ''}
+                  onChange={e => setLocalPromo({...localPromo, videoUrl: e.target.value})}
+                  className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light"
+                  placeholder="https://example.com/video.mp4"
+                />
+                <p className="text-[9px] uppercase tracking-widest text-zinc-400">Direct link to mp4 file recommended for best performance.</p>
+              </div>
             </div>
           </div>
 
@@ -187,34 +200,69 @@ export default function AdminPromoPage() {
             <span className="px-3 py-1 bg-zinc-900 text-white text-[9px] font-bold uppercase tracking-widest">As Seen on Website</span>
           </div>
 
-          {/* Exact replica of the website's promo section */}
-          <div className="relative h-[500px] overflow-hidden bg-gray-100">
-            <div className="absolute inset-0">
-              <img
-                src={localPromo.backgroundImage}
-                alt="Preview"
-                className="w-full h-full object-cover opacity-60"
-              />
+          {/* Exact replica of the website's overhaul promo section */}
+          <div className="relative min-h-[500px] flex items-center justify-center overflow-hidden bg-zinc-900 rounded-2xl border border-zinc-100 p-8">
+            {/* Background Layer: Video or Image */}
+            <div className="absolute inset-0 z-0">
+              {localPromo.videoUrl ? (
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  key={localPromo.videoUrl}
+                  className="w-full h-full object-cover opacity-50"
+                >
+                  <source src={localPromo.videoUrl} type="video/mp4" />
+                </video>
+              ) : (
+                <img
+                  src={localPromo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
+                  alt="Promotion Background"
+                  className="w-full h-full object-cover opacity-40 scale-105"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-zinc-900/50" />
             </div>
-            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-              <span className="text-xs uppercase tracking-[0.4em] mb-6 text-white">{localPromo.tagline}</span>
-              <h2 className="text-3xl md:text-5xl font-light uppercase tracking-[0.2em] mb-10 max-w-2xl leading-tight text-white">
-                {localPromo.title1} {localPromo.titleAccent && <span className="font-medium">{localPromo.titleAccent}</span>} {localPromo.title2}
-              </h2>
-              <div className="flex flex-col items-center gap-4">
+
+            {/* Content Layer */}
+            <div className="relative z-10 w-full text-center text-white">
+               {/* Tagline */}
+                <div className="mb-4 flex items-center justify-center gap-3">
+                  <div className="w-4 h-[1px] bg-accent" />
+                  <span className="text-[8px] uppercase tracking-[0.4em] font-black text-accent">
+                    {localPromo.tagline}
+                  </span>
+                  <div className="w-4 h-[1px] bg-accent" />
+                </div>
+
+                {/* Main Heading */}
+                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-6 leading-[0.9]">
+                  {localPromo.title1} <br />
+                  <span className="text-accent">{localPromo.titleAccent}</span> <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">{localPromo.title2}</span>
+                </h2>
+
+                {/* Description */}
+                <p className="text-[10px] uppercase tracking-[0.2em] font-light text-zinc-400 max-w-sm mx-auto mb-8 leading-relaxed">
+                  {localPromo.description}
+                </p>
+
+                {/* Promo Code - Glass Card */}
                 {localPromo.code && (
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] uppercase tracking-widest text-white/70">Code:</span>
-                    <span className="text-white font-medium border border-white/30 px-4 py-2 text-xs tracking-widest backdrop-blur-sm bg-white/10">{localPromo.code}</span>
+                  <div className="mb-8 inline-block relative">
+                    <div className="relative px-6 py-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl flex flex-col items-center gap-1">
+                       <span className="text-[7px] uppercase tracking-[0.3em] text-zinc-500 font-bold">Coupon Code</span>
+                       <span className="text-lg font-black tracking-[0.2em]">{localPromo.code}</span>
+                    </div>
                   </div>
                 )}
-                <div className="inline-flex items-center justify-center px-10 py-4 bg-black text-white text-xs uppercase tracking-[0.2em] transition-all border border-black">
-                  {localPromo.buttonText}
+                
+                <div className="mt-4">
+                    <div className="px-8 py-3 bg-white text-black text-[10px] font-black uppercase tracking-[0.3em] cursor-default opacity-80">
+                      {localPromo.buttonText}
+                    </div>
                 </div>
-                {localPromo.description && (
-                  <p className="text-white/50 text-[10px] uppercase tracking-widest mt-2">{localPromo.description}</p>
-                )}
-              </div>
             </div>
           </div>
 

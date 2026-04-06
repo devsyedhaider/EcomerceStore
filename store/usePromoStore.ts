@@ -12,6 +12,7 @@ interface PromoContent {
   description: string;
   buttonText: string;
   backgroundImage: string;
+  videoUrl?: string;
 }
 
 interface PromoStore {
@@ -30,6 +31,7 @@ const defaultPromo: PromoContent = {
   description: 'Valid on all new arrivals',
   buttonText: 'CLAIM DISCOUNT',
   backgroundImage: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=100&w=2560&auto=format&fit=crop',
+  videoUrl: '',
 };
 
 export const usePromoStore = create<PromoStore>()(
