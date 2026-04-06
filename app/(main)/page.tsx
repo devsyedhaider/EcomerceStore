@@ -420,6 +420,60 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Cinematic Brand Video Section (New) */}
+      <AnimatePresence>
+        {promo.secondVideoUrl && (
+          <section className="relative h-[600px] md:h-[800px] w-full overflow-hidden bg-black">
+            <motion.div
+              initial={{ opacity: 0, scale: 1.1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
+              viewport={{ once: true }}
+              className="absolute inset-0 z-0"
+            >
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover opacity-80"
+              >
+                <source src={promo.secondVideoUrl} type="video/mp4" />
+              </video>
+              {/* Luxury Vignette & Grain */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
+            </motion.div>
+
+            {/* Subtle Text Over Video */}
+            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="text-[10px] md:text-xs uppercase tracking-[0.6em] text-white/60 mb-6"
+              >
+                The Art of Creation
+              </motion.span>
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 1 }}
+                className="text-4xl md:text-6xl font-light text-white uppercase tracking-[0.2em] mb-4"
+              >
+                Bespoke Mastery
+              </motion.h2>
+              <motion.div 
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="w-24 h-[1px] bg-accent origin-center"
+              />
+            </div>
+          </section>
+        )}
+      </AnimatePresence>
+
       {/* 7. Testimonials Section - Auto Sliding Premium Experience */}
       <section className="py-24 md:py-32 bg-zinc-50 overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">

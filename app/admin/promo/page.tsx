@@ -199,6 +199,23 @@ export default function AdminPromoPage() {
                 />
                 <p className="text-[9px] uppercase tracking-widest text-zinc-400">Direct link to mp4 file recommended for best performance.</p>
               </div>
+
+              <div className="pt-6 border-t border-zinc-50">
+                <div className="flex items-center gap-4 mb-6">
+                  <Layout className="w-5 h-5 text-zinc-300" />
+                  <h2 className="text-lg font-light uppercase tracking-[0.2em]">Secondary Cinematic Video</h2>
+                </div>
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Hero Video URL (Below About Us)</label>
+                  <input
+                    value={localPromo.secondVideoUrl || ''}
+                    onChange={e => setLocalPromo({...localPromo, secondVideoUrl: e.target.value})}
+                    className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light"
+                    placeholder="https://example.com/brand-video.mp4"
+                  />
+                  <p className="text-[8px] uppercase tracking-widest text-zinc-400 opacity-60">This video plays automatically below the 'About Us' section without text or buttons.</p>
+                </div>
+              </div>
             </div>
           </div>
 

@@ -13,6 +13,7 @@ interface PromoContent {
   buttonText: string;
   backgroundImage: string;
   videoUrl?: string;
+  secondVideoUrl?: string;
 }
 
 interface PromoStore {
@@ -32,6 +33,7 @@ const defaultPromo: PromoContent = {
   buttonText: 'CLAIM DISCOUNT',
   backgroundImage: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=100&w=2560&auto=format&fit=crop',
   videoUrl: '',
+  secondVideoUrl: 'https://static.videezy.com/system/resources/previews/000/012/612/original/Jewelry_1.mp4', // Premium default
 };
 
 export const usePromoStore = create<PromoStore>()(
@@ -57,6 +59,7 @@ export const usePromoStore = create<PromoStore>()(
               titleAccent: data.title_accent,
               buttonText: data.button_text,
               backgroundImage: data.background_image,
+              secondVideoUrl: data.second_video_url,
             };
             set({ promo: mappedPromo });
           }
@@ -79,6 +82,7 @@ export const usePromoStore = create<PromoStore>()(
             if (content.titleAccent) { dbUpdate.title_accent = content.titleAccent; delete dbUpdate.titleAccent; }
             if (content.buttonText) { dbUpdate.button_text = content.buttonText; delete dbUpdate.buttonText; }
             if (content.backgroundImage) { dbUpdate.background_image = content.backgroundImage; delete dbUpdate.backgroundImage; }
+            if (content.secondVideoUrl) { dbUpdate.second_video_url = content.secondVideoUrl; delete dbUpdate.secondVideoUrl; }
 
             const { error } = await supabase
               .from('promo_settings')
