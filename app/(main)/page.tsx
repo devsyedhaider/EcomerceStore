@@ -124,57 +124,76 @@ export default function Home() {
       {/* 2. Boutique Collections Avatar Navigation - Full Screen Centered */}
       <section className="py-12 bg-white border-b border-zinc-50">
         <div className="max-w-[1700px] mx-auto px-6 md:px-12">
-          <div className="flex flex-wrap items-start justify-center gap-6 md:gap-14 lg:gap-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, staggerChildren: 0.1 }}
+            viewport={{ once: true }}
+            className="flex flex-wrap items-start justify-center gap-6 md:gap-14 lg:gap-20"
+          >
             {/* 1. New Arrivals */}
-            <Link href="/products?isNew=true" className="group flex flex-col items-center gap-4">
-              <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
-                <img 
-                  src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=200&auto=format&fit=crop" 
-                  alt="New Arrivals" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">New Arrivals</span>
-            </Link>
-
-            {/* 2. Best Sellers */}
-            <Link href="/products?isTrending=true" className="group flex flex-col items-center gap-4">
-              <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
-                <img 
-                  src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=200&auto=format&fit=crop" 
-                  alt="Best Sellers" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">Best Sellers</span>
-            </Link>
-
-            {/* 3-6. First 4 Database Categories */}
-            {categories.slice(0, 4).map((category) => (
-              <Link 
-                key={category.id} 
-                href={`/products?category=${category.id}`}
-                className="group flex flex-col items-center gap-4"
-              >
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
+              <Link href="/products?isNew=true" className="group flex flex-col items-center gap-4">
                 <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
                   <img 
-                    src={category.image} 
-                    alt={category.name} 
+                    src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=200&auto=format&fit=crop" 
+                    alt="New Arrivals" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">{category.name}</span>
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">New Arrivals</span>
               </Link>
+            </motion.div>
+
+            {/* 2. Best Sellers */}
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} viewport={{ once: true }}>
+              <Link href="/products?isTrending=true" className="group flex flex-col items-center gap-4">
+                <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
+                  <img 
+                    src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=200&auto=format&fit=crop" 
+                    alt="Best Sellers" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">Best Sellers</span>
+              </Link>
+            </motion.div>
+
+            {/* 3-6. First 4 Database Categories */}
+            {categories.slice(0, 4).map((category, idx) => (
+              <motion.div 
+                key={category.id} 
+                initial={{ opacity: 0, scale: 0.8 }} 
+                whileInView={{ opacity: 1, scale: 1 }} 
+                transition={{ delay: (idx + 2) * 0.1 }} 
+                viewport={{ once: true }}
+              >
+                <Link 
+                  href={`/products?category=${category.id}`}
+                  className="group flex flex-col items-center gap-4"
+                >
+                  <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
+                    <img 
+                      src={category.image} 
+                      alt={category.name} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">{category.name}</span>
+                </Link>
+              </motion.div>
             ))}
 
             {/* 7. Shop All Avatar */}
-            <Link href="/categories" className="group flex flex-col items-center gap-4">
-              <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full border-2 border-zinc-200 flex items-center justify-center transition-all duration-500 group-hover:bg-zinc-900 group-hover:border-zinc-900 group-hover:scale-105 group-hover:shadow-xl">
-                 <ArrowRight className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 text-zinc-400 group-hover:text-white transition-all group-hover:-rotate-45" />
-              </div>
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">Shop all</span>
-            </Link>
-          </div>
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6 }} viewport={{ once: true }}>
+              <Link href="/categories" className="group flex flex-col items-center gap-4">
+                <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full border-2 border-zinc-200 flex items-center justify-center transition-all duration-500 group-hover:bg-zinc-900 group-hover:border-zinc-900 group-hover:scale-105 group-hover:shadow-xl">
+                   <ArrowRight className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 text-zinc-400 group-hover:text-white transition-all group-hover:-rotate-45" />
+                </div>
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">Shop all</span>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -192,12 +211,19 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12 md:gap-x-10 md:gap-y-20">
-            {featuredProducts.slice(0, 20).map((product) => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                showNewBadge={false} 
-              />
+            {featuredProducts.slice(0, 20).map((product, idx) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: (idx % 4) * 0.1, duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <ProductCard 
+                  product={product} 
+                  showNewBadge={false} 
+                />
+              </motion.div>
             ))}
           </div>
         </div>
@@ -307,12 +333,19 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12 md:gap-x-10 md:gap-y-20">
-            {newArrivals.map((product) => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                showSaleBadge={false} 
-              />
+            {newArrivals.map((product, idx) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: (idx % 4) * 0.1, duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <ProductCard 
+                  product={product} 
+                  showSaleBadge={false} 
+                />
+              </motion.div>
             ))}
           </div>
         </div>

@@ -78,10 +78,10 @@ function ProductsContent() {
   if (!mounted) return null;
 
   return (
-    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-32 pb-12">
+    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-20 pb-12">
       {/* Header */}
-      <div className="mb-16">
-        <h1 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-8 text-center text-zinc-900">
+      <div className="mb-10">
+        <h1 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-6 text-center text-zinc-900">
           {isNewParam ? 'New Arrivals' : isTrendingParam ? 'Trending Now' : selectedCategory === 'all' ? 'The Collection' : `${selectedCategory} Collection`}
         </h1>
         

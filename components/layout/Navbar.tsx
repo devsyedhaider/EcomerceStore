@@ -64,7 +64,7 @@ export default function Navbar() {
               transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
               className="bg-accent text-white overflow-hidden whitespace-nowrap"
           >
-              <div className="py-2.5">
+              <div className="py-1.5">
                   <div className="inline-block animate-marquee-fast">
                       {announcementItems.map((text, i) => (
                           <span key={i} className="text-[10px] font-bold tracking-[0.3em] uppercase mx-12 font-lato">
@@ -86,7 +86,7 @@ export default function Navbar() {
         {/* Main Brand & Actions Bar */}
         <nav className={cn(
             "bg-white/95 backdrop-blur-md px-4 md:px-10 transition-all duration-500 border-none",
-            isScrolled ? "h-20" : "h-24"
+            isScrolled ? "h-16" : "h-20"
         )}>
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
             {/* Left: Mobile Menu Trigger */}
@@ -101,11 +101,11 @@ export default function Navbar() {
 
             {/* Center: Luxury Brand Logo */}
             <div className="flex-grow flex justify-center items-center">
-                <Link href="/" className="flex flex-col items-center group">
+                <Link href="/" className="flex flex-col items-center group text-center">
                     <span className="text-lg md:text-xl font-lato font-black tracking-[0.2em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-tight uppercase">
-                        THE AURIC VAULT
+                        EDITEVAL
                     </span>
-                    <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0 uppercase font-lato opacity-80">Excellence in Craft</span>
+                    <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0 uppercase font-lato opacity-80">Boutique Jewellery</span>
                 </Link>
             </div>
 
@@ -315,8 +315,8 @@ export default function Navbar() {
                       <Link href="#" className="text-zinc-400 hover:text-accent transition-colors font-bold text-sm">𝕏</Link>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.3em] font-lato uppercase">© 2026 THE AURIC VAULT</p>
-                    <p className="text-[8px] font-medium text-zinc-300 tracking-[0.2em] font-lato uppercase">Refining the art of high jewelry</p>
+                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.3em] font-lato uppercase">© 2026 EDITEVAL</p>
+                    <p className="text-[8px] font-medium text-zinc-300 tracking-[0.2em] font-lato uppercase">Boutique Jewellery</p>
                   </div>
               </div>
             </motion.div>
@@ -325,7 +325,7 @@ export default function Navbar() {
       </AnimatePresence>
       <div className={cn(
         "transition-all duration-500",
-        isAuthPage ? "h-[100px]" : "h-[110px] md:h-[130px]"
+        isAuthPage ? "h-[80px]" : "h-[90px] md:h-[110px]"
       )} /> {/* Proper spacer for fixed header */}
     </>
   );

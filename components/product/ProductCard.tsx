@@ -67,8 +67,9 @@ export default function ProductCard({
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="group relative flex flex-col h-full bg-white rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] cursor-pointer"
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      className="group relative flex flex-col h-full bg-white rounded-3xl overflow-hidden transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] cursor-pointer border border-zinc-50"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
@@ -80,8 +81,9 @@ export default function ProductCard({
           src={product.images[0]}
           alt={product.name}
           className={cn(
-            "object-cover w-full h-full transition-all duration-1000 ease-out-expo absolute inset-0",
-            isHovered && product.images[1] ? "opacity-0 scale-110" : "opacity-100 scale-100"
+            "object-cover w-full h-full transition-all duration-[1200ms] ease-[0.4, 0, 0.2, 1] absolute inset-0",
+            isHovered && product.images[1] ? "opacity-0 scale-110" : "opacity-100 scale-100",
+            isHovered && !product.images[1] ? "scale-110" : ""
           )}
         />
         
@@ -91,11 +93,49 @@ export default function ProductCard({
             src={product.images[1]}
             alt={`${product.name} alternate view`}
             className={cn(
-              "object-cover w-full h-full transition-all duration-1000 ease-out-expo absolute inset-0",
-              isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
+              "object-cover w-full h-full transition-all duration-[1200ms] ease-[0.4, 0, 0.2, 1] absolute inset-0",
+              isHovered ? "opacity-100 scale-110" : "opacity-0 scale-100"
             )}
           />
         )}
+
+        {/* Action Buttons with Staggered Entrance */}
+        <div className={cn(
+          "absolute inset-0 flex items-center justify-center gap-3 transition-all duration-700 z-20",
+          isHovered ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}>
+          <motion.button 
+            animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+            transition={{ delay: 0.05, duration: 0.4 }}
+            onClick={handleAddToCart}
+            className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+          >
+            <ShoppingBag size={20} strokeWidth={1.2} />
+          </motion.button>
+          <motion.div 
+            animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+            transition={{ delay: 0.1, duration: 0.4 }}
+            onClick={(e) => {
+               e.preventDefault();
+               e.stopPropagation();
+               router.push(`/products/${product.id}`);
+            }}
+            className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+          >
+            <Eye size={20} strokeWidth={1.2} />
+          </motion.div>
+          <motion.button 
+            animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+            transition={{ delay: 0.15, duration: 0.4 }}
+            onClick={handleWishlist}
+            className={cn(
+              "w-12 h-12 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer",
+              isWishlisted ? "bg-rose-500 text-white" : "bg-white text-black hover:bg-rose-500 hover:text-white"
+            )}
+          >
+            <Heart size={20} strokeWidth={1.2} fill={isWishlisted ? "currentColor" : "none"} />
+          </motion.button>
+        </div>
 
         {/* Badges Overlay */}
         <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 font-bold uppercase tracking-widest text-[9px]">
@@ -109,27 +149,9 @@ export default function ProductCard({
               Sale
             </span>
           )}
-          {mounted && product.stock > 0 && product.stock <= 5 && (
-            <span className="bg-amber-500/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full shadow-lg">
-              Low Stock
-            </span>
-          )}
         </div>
 
-        {/* Wishlist Removal Button (Corner) */}
-        {isWishlistPage && (
-          <div className="absolute top-4 right-4 z-30">
-            <button 
-              onClick={handleWishlist}
-              className="w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-md text-black rounded-full shadow-lg hover:bg-rose-500 hover:text-white transition-all cursor-pointer group/remove"
-              title="Remove from Wishlist"
-            >
-              <X className="w-5 h-5 stroke-[1.2] group-hover/remove:rotate-90 transition-transform duration-500" />
-            </button>
-          </div>
-        )}
-
-        {/* Status Badge (Bottom Left) */}
+        {/* Status Badge */}
         <div className="absolute bottom-4 left-4 z-10">
           {product.stock === 0 ? (
             <span className="bg-zinc-800/80 backdrop-blur-sm text-white text-[10px] font-bold px-4 py-2 rounded-xl uppercase tracking-widest">
@@ -141,41 +163,6 @@ export default function ProductCard({
               <span className="text-zinc-600 text-[10px] font-bold uppercase tracking-wide">In Stock</span>
             </div>
           )}
-        </div>
-
-        {/* Floating Actions */}
-        <div className={cn(
-          "absolute inset-0 flex items-center justify-center gap-3 transition-all duration-500 z-20",
-          isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
-        )}>
-          <button 
-            onClick={handleAddToCart}
-            className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
-            title="Quick Add"
-          >
-            <ShoppingBag size={20} strokeWidth={1.5} />
-          </button>
-          <div 
-            onClick={(e) => {
-               e.preventDefault();
-               e.stopPropagation();
-               router.push(`/products/${product.id}`);
-            }}
-            className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
-            title="View Details"
-          >
-            <Eye size={20} strokeWidth={1.5} />
-          </div>
-          <button 
-            onClick={handleWishlist}
-            className={cn(
-              "w-12 h-12 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer",
-              isWishlisted ? "bg-rose-500 text-white" : "bg-white text-black hover:bg-rose-500 hover:text-white"
-            )}
-            title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
-          >
-            <Heart size={20} strokeWidth={1.5} fill={isWishlisted ? "currentColor" : "none"} />
-          </button>
         </div>
       </div>
 
@@ -193,7 +180,6 @@ export default function ProductCard({
                   )} 
                 />
              ))}
-             <span className="text-zinc-400 text-[9px] font-bold ml-1">{productRating}</span>
           </div>
         </div>
 
@@ -221,7 +207,7 @@ export default function ProductCard({
             className="group/btn flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-accent transition-colors duration-300 cursor-pointer"
           >
             Add
-            <div className="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover/btn:bg-black group-hover/btn:text-white group-hover/btn:border-black transition-all">
+            <div className="w-8 h-8 rounded-full border border-zinc-100 flex items-center justify-center group-hover/btn:bg-black group-hover/btn:text-white group-hover/btn:border-black transition-all duration-500 group-hover/btn:scale-110">
               <Plus size={14} />
             </div>
           </button>
