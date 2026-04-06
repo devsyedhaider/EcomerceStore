@@ -153,6 +153,45 @@ export default function Navbar() {
             </div>
           </div>
         </nav>
+
+        {/* 2nd Navbar: High-Impact Responsive Category Tabs */}
+        {!isAuthPage && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="bg-white/80 backdrop-blur-xl border-t border-zinc-50 shadow-sm"
+          >
+             <div className="max-w-7xl mx-auto px-4 md:px-0">
+                <ul className="flex items-center justify-center gap-8 md:gap-14 h-12 overflow-x-auto no-scrollbar scroll-smooth">
+                   {[
+                      { name: 'Home', href: '/' },
+                      { name: 'About us', href: '/#about-us' },
+                      { name: 'Contact us', href: '/contact' },
+                      { name: 'New Arrival', href: '/products?sort=new' },
+                      { name: 'Trending', href: '/trending' },
+                      { name: 'Shipped', href: '/account' }
+                   ].map((tab) => (
+                      <li key={tab.name}>
+                         <Link 
+                            href={tab.href}
+                            className={cn(
+                               "text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] whitespace-nowrap transition-all duration-500 py-3 block hover:text-accent relative group text-zinc-500",
+                               pathname === tab.href ? "text-black" : ""
+                            )}
+                         >
+                            {tab.name}
+                            <span className={cn(
+                               "absolute bottom-0 left-0 w-full h-[1.5px] bg-accent transition-transform duration-500 origin-right scale-x-0 group-hover:scale-x-100 group-hover:origin-left",
+                               pathname === tab.href ? "scale-x-100 origin-left" : ""
+                            )} />
+                         </Link>
+                      </li>
+                   ))}
+                </ul>
+             </div>
+          </motion.div>
+        )}
       </div>
 
       {/* Luxury Sidebar Menu */}

@@ -463,11 +463,15 @@ export default function Home() {
                 muted
                 loop
                 playsInline
-                onCanPlay={(e) => e.currentTarget.play()}
-                onLoadedMetadata={(e) => e.currentTarget.play()}
+                onCanPlay={(e) => {
+                  e.currentTarget.play();
+                }}
+                onPlaying={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                }}
                 key={promo.secondVideoUrl}
                 src={promo.secondVideoUrl}
-                className="absolute inset-0 w-full h-full object-cover opacity-80"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0"
               />
               {/* Luxury Vignette & Grain */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />

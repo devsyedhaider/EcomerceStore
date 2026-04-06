@@ -35,7 +35,7 @@ const defaultPromo: PromoContent = {
   buttonText: 'CLAIM DISCOUNT',
   backgroundImage: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=100&w=2560&auto=format&fit=crop',
   videoUrl: '',
-  secondVideoUrl: 'https://player.vimeo.com/external/494252666.sd.mp4?s=7b01980a370e51381e0586e246c4f03932857e4e&profile_id=164&oauth2_token_id=57447761', // High-performance CDN default
+  secondVideoUrl: 'https://player.vimeo.com/external/340032049.sd.mp4?s=6a575e92706e2c31e9c9339327855013ed2d8333&profile_id=164&oauth2_token_id=57447761', // High-performance Diamond Move
 };
 
 export const usePromoStore = create<PromoStore>()(
