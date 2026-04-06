@@ -76,7 +76,7 @@ export default function CartPage() {
                       </div>
                       <button 
                         onClick={() => removeItem(item.id, item.size, item.color)}
-                        className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] font-bold text-gray-300 hover:text-black transition-premium mt-6"
+                        className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] font-bold text-gray-300 hover:text-black transition-premium mt-6 cursor-pointer"
                       >
                         <X className="w-3 h-3" /> Remove
                       </button>
@@ -91,14 +91,14 @@ export default function CartPage() {
                     <div className="flex items-center border border-gray-100 h-10 px-2">
                         <button 
                           onClick={() => updateQuantity(item.id, item.size, item.color, Math.max(1, item.quantity - 1))}
-                          className="p-1 hover:text-gray-light transition-premium"
+                          className="p-1 hover:text-gray-light transition-premium cursor-pointer"
                         >
                             <Minus className="w-3 h-3" />
                         </button>
                         <span className="w-8 text-center text-[11px] font-medium">{item.quantity}</span>
                         <button 
                           onClick={() => updateQuantity(item.id, item.size, item.color, item.quantity + 1)}
-                          className="p-1 hover:text-gray-light transition-premium"
+                          className="p-1 hover:text-gray-light transition-premium cursor-pointer"
                         >
                             <Plus className="w-3 h-3" />
                         </button>
@@ -150,7 +150,7 @@ export default function CartPage() {
                   <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Estimated Total</span>
                   <span className="text-lg font-light tracking-wider">{formatPrice(total + shipping)}</span>
                 </div>
-                <p className="text-[8px] text-gray- light uppercase tracking-[0.1em] mt-2 italic">
+                <p className="text-[8px] text-gray-light uppercase tracking-[0.1em] mt-2 italic">
                   Tax included. Shipping calculated at checkout.
                 </p>
               </div>
@@ -158,10 +158,11 @@ export default function CartPage() {
 
             <button 
                 onClick={() => router.push('/checkout')}
-                className="btn-premium w-full h-16 text-[11px]"
+                className="btn-premium w-full h-16 text-[11px] cursor-pointer"
             >
                 Checkout Now
             </button>
+
 
             <div className="mt-10 space-y-6 pt-10 border-t border-gray-50">
                 <div className="flex items-start gap-4">

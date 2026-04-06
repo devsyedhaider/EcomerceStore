@@ -12,6 +12,7 @@ import { formatPrice, cn } from '@/lib/utils';
 import { useCartStore } from '@/store/useCartStore';
 import ProductCard from '@/components/product/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useWishlistStore } from '@/store/useWishlistStore';
 
 export default function ProductDetailPage() {
   const { categories } = useCategoryStore();
@@ -28,7 +29,10 @@ export default function ProductDetailPage() {
 
   const product = storeProducts.find((p) => p.id === id);
   const categoryName = mounted && product ? (categories.find(c => c.id === product.category)?.name || product.category) : product?.category;
+  
   const addItem = useCartStore((state) => state.addItem);
+  const { toggleItem, isInWishlist } = useWishlistStore();
+  const isWishlisted = mounted && product ? isInWishlist(product.id) : false;
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
@@ -38,8 +42,8 @@ export default function ProductDetailPage() {
   useEffect(() => {
     if (product) {
       setSelectedImage(0);
-      setSelectedSize(product.sizes[0]);
-      setSelectedColor(product.colors[0].name);
+      setSelectedSize(product.sizes.length > 0 ? product.sizes[0] : 'One Size');
+      setSelectedColor(product.colors.length > 0 ? product.colors[0].name : 'Default');
     }
   }, [product]);
 
@@ -47,7 +51,7 @@ export default function ProductDetailPage() {
     return (
       <div className="container mx-auto px-6 py-32 text-center">
         <h1 className="text-2xl font-light uppercase tracking-[0.2em] mb-8">Product Not Found</h1>
-        <button onClick={() => router.push('/products')} className="btn-premium-outline">
+        <button onClick={() => router.push('/products')} className="btn-premium-outline cursor-pointer">
           Back to Collection
         </button>
       </div>
@@ -55,14 +59,20 @@ export default function ProductDetailPage() {
   }
 
   const handleAddToCart = () => {
-    addItem(product, selectedSize, selectedColor);
+    addItem(product, selectedSize || 'One Size', selectedColor || 'Default');
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
+  };
+
+  const handleWishlist = () => {
+    toggleItem(product);
   };
 
   const relatedProducts = storeProducts
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
+
+  const productRating = product.rating || 4.5;
 
   return (
     <div className="pb-32 bg-white pt-24 md:pt-32">
@@ -86,7 +96,7 @@ export default function ProductDetailPage() {
                   key={i}
                   onClick={() => setSelectedImage(i)}
                   className={cn(
-                    "w-20 aspect-[3/4] overflow-hidden border transition-premium",
+                    "w-20 aspect-[3/4] overflow-hidden border transition-premium cursor-pointer",
                     selectedImage === i ? "border-black" : "border-gray-100 hover:border-gray-300"
                   )}
                 >
@@ -115,7 +125,7 @@ export default function ProductDetailPage() {
                   key={i}
                   onClick={() => setSelectedImage(i)}
                   className={cn(
-                    "w-20 aspect-[3/4] flex-shrink-0 overflow-hidden border transition-premium",
+                    "w-20 aspect-[3/4] flex-shrink-0 overflow-hidden border transition-premium cursor-pointer",
                     selectedImage === i ? "border-black" : "border-gray-100"
                   )}
                 >
@@ -137,8 +147,8 @@ export default function ProductDetailPage() {
                 <div className="h-4 w-px bg-gray-200" />
                 <div className="flex items-center gap-1.5">
                   <Star className="w-3.5 h-3.5 fill-black text-black" />
-                  <span className="text-xs font-medium uppercase tracking-widest">{product.rating}</span>
-                  <span className="text-[10px] text-gray-light uppercase tracking-widest ml-1">({product.reviews} Reviews)</span>
+                  <span className="text-xs font-medium uppercase tracking-widest">{productRating}</span>
+                  <span className="text-[10px] text-gray-light uppercase tracking-widest ml-1">({product.reviews || 0} Reviews)</span>
                 </div>
               </div>
             </div>
@@ -158,7 +168,7 @@ export default function ProductDetailPage() {
                       key={color.name}
                       onClick={() => setSelectedColor(color.name)}
                       className={cn(
-                        "w-8 h-8 rounded-full border transition-premium p-0.5",
+                        "w-8 h-8 rounded-full border transition-premium p-0.5 cursor-pointer",
                         selectedColor === color.name ? "border-black" : "border-transparent"
                       )}
                     >
@@ -172,7 +182,7 @@ export default function ProductDetailPage() {
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold">Select Size</h3>
-                  <button className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-light border-b border-gray-200 hover:text-black transition-premium">Size Guide</button>
+                  <button className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-light border-b border-gray-200 hover:text-black transition-premium cursor-pointer">Size Guide</button>
                 </div>
                 <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
                   {product.sizes.map((size) => (
@@ -180,7 +190,7 @@ export default function ProductDetailPage() {
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={cn(
-                        "h-12 border text-[10px] uppercase tracking-widest font-medium transition-premium",
+                        "h-12 border text-[10px] uppercase tracking-widest font-medium transition-premium cursor-pointer",
                         selectedSize === size ? "bg-black text-white border-black" : "border-gray-100 hover:border-black text-gray-light"
                       )}
                     >
@@ -197,8 +207,8 @@ export default function ProductDetailPage() {
                 onClick={handleAddToCart}
                 disabled={isAdded}
                 className={cn(
-                  "btn-premium w-full h-16 text-sm",
-                  isAdded && "bg-gray-200 border-gray-200 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
+                  "btn-premium w-full h-16 text-sm cursor-pointer",
+                  isAdded && "bg-gray-200 border-gray-200 text-gray-500 hover:bg-gray-200 hover:text-gray-500 cursor-default"
                 )}
               >
                 {isAdded ? (
@@ -208,8 +218,15 @@ export default function ProductDetailPage() {
                 )}
               </button>
               
-              <button className="btn-premium-outline w-full h-16 text-sm flex items-center justify-center gap-2">
-                <Heart className="w-4 h-4" /> Add to Wishlist
+              <button 
+                onClick={handleWishlist}
+                className={cn(
+                  "btn-premium-outline w-full h-16 text-sm flex items-center justify-center gap-2 cursor-pointer transition-all duration-300",
+                  isWishlisted ? "bg-rose-50 text-rose-500 border-rose-100" : ""
+                )}
+              >
+                <Heart className={cn("w-4 h-4", isWishlisted && "fill-rose-500")} /> 
+                {isWishlisted ? "In Wishlist" : "Add to Wishlist"}
               </button>
             </div>
 

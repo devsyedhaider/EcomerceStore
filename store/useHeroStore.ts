@@ -24,7 +24,7 @@ const defaultHero: HeroContent = {
   accentTitle: 'YOUR EDGE.',
   title: 'UNLEASH',
   subtitle: 'Experience the fusion of high-performance technology and street-ready aesthetics. Engineered for those who lead, never follow.',
-  backgroundImage: '/hero-aura-feet.png',
+  backgroundImage: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=100&w=2560&auto=format&fit=crop',
   buttonText: 'EXPLORE NOW',
 };
 

@@ -29,7 +29,7 @@ const defaultPromo: PromoContent = {
   code: 'AURAFEET20',
   description: 'Valid on all new arrivals',
   buttonText: 'CLAIM DISCOUNT',
-  backgroundImage: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop',
+  backgroundImage: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=100&w=2560&auto=format&fit=crop',
 };
 
 export const usePromoStore = create<PromoStore>()(
