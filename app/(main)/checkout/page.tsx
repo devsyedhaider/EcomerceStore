@@ -10,6 +10,7 @@ import { formatPrice, cn } from '@/lib/utils';
 
 import { useAuthStore } from '@/store/useAuthStore';
 import { useOrderStore } from '@/store/useOrderStore';
+import { usePromoStore } from '@/store/usePromoStore';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -75,6 +76,7 @@ export default function CheckoutPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const { promo } = usePromoStore();
   const [promoInput, setPromoInput] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoError, setPromoError] = useState('');
@@ -83,7 +85,8 @@ export default function CheckoutPage() {
   const finalTotal = total - discountAmount + shipping;
 
   const applyPromoCode = () => {
-    const trimmedCode = promoInput.trim().toLowerCase();
+    const trimmedInput = promoInput.trim().toLowerCase();
+    const activeCode = (promo.code || 'elvaediit10').toLowerCase();
     const emailToCheck = formData.email || user?.email || '';
     
     if (!emailToCheck) {
@@ -91,7 +94,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    if (trimmedCode === 'elvaediit10') {
+    if (trimmedInput === activeCode) {
       const userOrders = getOrdersByEmail(emailToCheck);
       if (userOrders.length > 0) {
         setPromoError('This code is only valid for your first order');
@@ -109,10 +112,14 @@ export default function CheckoutPage() {
   // Reset discount if email changes to ensure valid first-timer status
   useEffect(() => {
     if (discountPercent > 0) {
-        setDiscountPercent(0);
-        setPromoError('Email changed. Please re-apply promo code.');
+        // Only reset if the email being checked actually changes
+        const currentEmail = formData.email || user?.email || '';
+        if (!currentEmail) {
+            setDiscountPercent(0);
+            setPromoError('Please re-enter your email');
+        }
     }
-  }, [formData.email]);
+  }, [formData.email, user?.email]);
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
