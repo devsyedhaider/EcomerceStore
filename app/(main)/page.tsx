@@ -73,7 +73,8 @@ export default function Home() {
             className="flex flex-col items-center"
           >
             <h1 className="text-5xl md:text-8xl font-light uppercase tracking-[0.25em] mb-8 leading-tight font-lato">
-              Elegance Redefined
+              {hero.title || 'Elegance'}{' '}
+              <span className="font-medium">{hero.accentTitle || 'Redefined'}</span>
             </h1>
 
             {/* Elegant Divider */}
