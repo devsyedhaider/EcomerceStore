@@ -19,6 +19,8 @@ interface PromoContent {
 interface PromoStore {
   promo: PromoContent;
   isLoading: boolean;
+  isSyncing: boolean;
+  lastSync: Date | null;
   fetchPromo: () => Promise<void>;
   updatePromo: (content: Partial<PromoContent>) => Promise<void>;
 }
@@ -41,6 +43,8 @@ export const usePromoStore = create<PromoStore>()(
     (set) => ({
       promo: defaultPromo,
       isLoading: false,
+      isSyncing: false,
+      lastSync: null,
 
       fetchPromo: async () => {
         if (!supabase) return;
@@ -56,12 +60,12 @@ export const usePromoStore = create<PromoStore>()(
           if (data) {
             const mappedPromo = {
               ...data,
-              titleAccent: data.title_accent,
-              buttonText: data.button_text,
-              backgroundImage: data.background_image || defaultPromo.backgroundImage,
-              secondVideoUrl: data.second_video_url || defaultPromo.secondVideoUrl,
+              titleAccent: data.title_accent ?? data.titleAccent,
+              buttonText: data.button_text ?? data.buttonText,
+              backgroundImage: data.background_image || data.backgroundImage || defaultPromo.backgroundImage,
+              secondVideoUrl: data.second_video_url || data.secondVideoUrl || defaultPromo.secondVideoUrl,
             };
-            set({ promo: mappedPromo });
+            set({ promo: mappedPromo, lastSync: new Date() });
           }
         } catch (error) {
           console.warn('📡 Fetching promo data skipped or failed. Using defaults.');
@@ -74,24 +78,31 @@ export const usePromoStore = create<PromoStore>()(
         // Update local state immediately
         set((state) => ({
           promo: { ...state.promo, ...content },
+          isSyncing: true,
         }));
 
         try {
           if (supabase) {
             const dbUpdate: any = { ...content };
-            if (content.titleAccent) { dbUpdate.title_accent = content.titleAccent; delete dbUpdate.titleAccent; }
-            if (content.buttonText) { dbUpdate.button_text = content.buttonText; delete dbUpdate.buttonText; }
-            if (content.backgroundImage) { dbUpdate.background_image = content.backgroundImage; delete dbUpdate.backgroundImage; }
-            if (content.secondVideoUrl) { dbUpdate.second_video_url = content.secondVideoUrl; delete dbUpdate.secondVideoUrl; }
+            
+            // Correct mapping for snake_case columns
+            if (content.titleAccent !== undefined) { dbUpdate.title_accent = content.titleAccent; delete dbUpdate.titleAccent; }
+            if (content.buttonText !== undefined) { dbUpdate.button_text = content.buttonText; delete dbUpdate.buttonText; }
+            if (content.backgroundImage !== undefined) { dbUpdate.background_image = content.backgroundImage; delete dbUpdate.backgroundImage; }
+            if (content.videoUrl !== undefined) { dbUpdate.video_url = content.videoUrl; delete dbUpdate.videoUrl; }
+            if (content.secondVideoUrl !== undefined) { dbUpdate.second_video_url = content.secondVideoUrl; delete dbUpdate.secondVideoUrl; }
 
             const { error } = await supabase
               .from('promo_settings')
               .upsert({ id: 1, ...dbUpdate });
             
             if (error) throw error;
+            set({ lastSync: new Date() });
           }
         } catch (error) {
           console.warn('📡 Cloud sync for promo failed. Changes saved locally only.');
+        } finally {
+          set({ isSyncing: false });
         }
       },
     }),
