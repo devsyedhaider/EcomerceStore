@@ -187,45 +187,61 @@ export default function Navbar() {
               <div className="relative flex-grow flex overflow-hidden">
                 {/* Primary Menu */}
                 <motion.div 
-                  className="flex flex-col flex-grow w-full overflow-y-auto"
+                  className="flex flex-col flex-grow w-full overflow-y-auto custom-scrollbar"
                   animate={{ x: activeSubMenu === 'shop' ? '-100%' : '0%' }}
                   transition={{ type: 'tween', duration: 0.4 }}
                 >
-                  {[
-                      { name: 'Home', href: '/' },
-                      { name: 'Shop All Products', type: 'trigger', id: 'shop' },
-                      { name: 'New Arrivals', href: '/products?isNew=true' },
-                      { name: 'Trending Now', href: '/trending' },
-                      { name: 'The Collections', href: '/categories' },
-                      { name: 'Our Craft', href: '#' },
-                  ].map((item, i) => (
-                      item.type === 'trigger' ? (
-                        <button
-                          key={i}
-                          onClick={() => setActiveSubMenu(item.id || null)}
-                          className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 transition-colors w-full text-left group"
-                        >
-                          <span className="text-base font-normal text-zinc-800">
-                                {item.name}
-                          </span>
-                          <ChevronRight className="w-4 h-4 text-zinc-400 stroke-[1.5] group-hover:text-black transition-colors" />
-                        </button>
-                      ) : (
-                        <Link
+                  <motion.div 
+                    initial="closed"
+                    animate="open"
+                    variants={{
+                        open: { transition: { staggerChildren: 0.05, delayChildren: 0.2 } },
+                        closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+                    }}
+                    className="flex flex-col"
+                  >
+                    {[
+                        { name: 'Home', href: '/' },
+                        { name: 'Shop All Products', type: 'trigger', id: 'shop' },
+                        { name: 'New Arrivals', href: '/products?isNew=true' },
+                        { name: 'Trending Now', href: '/trending' },
+                        { name: 'The Collections', href: '/categories' },
+                    ].map((item, i) => (
+                        <motion.div
                             key={i}
-                            href={item.href || '#'}
-                            className="flex items-center px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 transition-colors"
-                            onClick={handleClose}
+                            variants={{
+                                open: { opacity: 1, x: 0 },
+                                closed: { opacity: 0, x: -20 }
+                            }}
+                            className="border-b border-zinc-50"
                         >
-                            <span className="text-base font-normal text-zinc-800">
-                                {item.name}
-                            </span>
-                        </Link>
-                      )
-                  ))}
+                            {item.type === 'trigger' ? (
+                                <button
+                                    onClick={() => setActiveSubMenu(item.id || null)}
+                                    className="flex items-center justify-between px-8 py-7 hover:bg-zinc-50 transition-all duration-500 w-full text-left group"
+                                >
+                                    <span className="text-base font-normal text-zinc-900 group-hover:pl-4 transition-all duration-500">
+                                        {item.name}
+                                    </span>
+                                    <ChevronRight className="w-4 h-4 text-zinc-400 stroke-[1.5] group-hover:text-black transition-colors" />
+                                </button>
+                            ) : (
+                                <Link
+                                    href={item.href || '#'}
+                                    className="flex items-center px-8 py-7 hover:bg-zinc-50 transition-all duration-500 group"
+                                    onClick={handleClose}
+                                >
+                                    <span className="text-base font-normal text-zinc-900 group-hover:pl-4 transition-all duration-500">
+                                        {item.name}
+                                    </span>
+                                </Link>
+                            )}
+                        </motion.div>
+                    ))}
+                  </motion.div>
                 </motion.div>
 
-                {/* Sub-panel for Categories - Exact Image Match */}
+                {/* Sub-panel for Categories - Staggered entrance */}
                 <motion.div
                    className="absolute inset-x-0 inset-y-0 bg-white flex flex-col w-full h-full"
                    initial={{ x: '100%' }}
@@ -234,35 +250,49 @@ export default function Navbar() {
                 >
                   <button 
                     onClick={() => setActiveSubMenu(null)}
-                    className="flex items-center gap-4 px-8 py-4 bg-zinc-50 text-zinc-500 hover:text-black transition-colors w-full"
+                    className="flex items-center gap-4 px-8 py-5 bg-zinc-50 text-zinc-500 hover:text-black transition-colors w-full border-b border-zinc-100"
                   >
                     <ChevronRight className="w-4 h-4 rotate-180 stroke-[2]" />
                     <span className="text-sm font-medium">Shop</span>
                   </button>
 
-                  <div className="flex-grow overflow-y-auto w-full">
-                    <Link 
-                        href="/products" 
-                        onClick={handleClose}
-                        className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50"
-                    >
-                      <span className="text-base font-normal text-zinc-800">All Products</span>
-                    </Link>
+                  <motion.div 
+                    initial={false}
+                    animate={activeSubMenu === 'shop' ? "open" : "closed"}
+                    variants={{
+                        open: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
+                        closed: { transition: { staggerChildren: 0.05 } }
+                    }}
+                    className="flex-grow overflow-y-auto w-full custom-scrollbar"
+                  >
+                    <motion.div variants={{ open: { opacity: 1, y: 0 }, closed: { opacity: 0, y: 10 } }}>
+                        <Link 
+                            href="/products" 
+                            onClick={handleClose}
+                            className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 group"
+                        >
+                        <span className="text-base font-normal text-zinc-900 group-hover:pl-4 transition-all duration-500">All Products</span>
+                        </Link>
+                    </motion.div>
 
                     {navCategories.map((cat) => (
-                      <Link
+                      <motion.div 
                         key={cat.id}
-                        href={`/products?category=${cat.id}`}
-                        onClick={handleClose}
-                        className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 group"
+                        variants={{ open: { opacity: 1, y: 0 }, closed: { opacity: 0, y: 10 } }}
                       >
-                        <span className="text-base font-normal text-zinc-800">
-                          {cat.name}
-                        </span>
-                        <ChevronRight className="w-4 h-4 text-zinc-400 stroke-[1.5] group-hover:text-black transition-colors" />
-                      </Link>
+                        <Link
+                            href={`/products?category=${cat.id}`}
+                            onClick={handleClose}
+                            className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 group"
+                        >
+                            <span className="text-base font-normal text-zinc-900 group-hover:pl-4 transition-all duration-500">
+                            {cat.name}
+                            </span>
+                            <ChevronRight className="w-4 h-4 text-zinc-400 stroke-[1.5] group-hover:text-black transition-colors" />
+                        </Link>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </motion.div>
               </div>
 
