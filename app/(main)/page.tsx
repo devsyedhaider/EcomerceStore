@@ -443,22 +443,31 @@ export default function Home() {
       {/* Cinematic Brand Video Section (New) */}
       <AnimatePresence>
         {promo.secondVideoUrl && (
-          <section className="relative h-[600px] md:h-[800px] w-full overflow-hidden bg-black">
+          <section className="relative h-[600px] md:h-[800px] w-full overflow-hidden bg-zinc-950">
             <motion.div
               initial={{ opacity: 0, scale: 1.1 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
               viewport={{ once: false }}
-              className="absolute inset-0 z-0"
+              className="absolute inset-0 z-0 bg-zinc-950"
             >
+              {/* Luxury Static Fallback/Poster */}
+              <img 
+                src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=100&w=2560&auto=format&fit=crop" 
+                alt="Jewelry Backdrop" 
+                className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105"
+              />
+              
               <video
                 autoPlay
                 muted
                 loop
                 playsInline
+                onCanPlay={(e) => e.currentTarget.play()}
+                onLoadedMetadata={(e) => e.currentTarget.play()}
                 key={promo.secondVideoUrl}
                 src={promo.secondVideoUrl}
-                className="w-full h-full object-cover opacity-80"
+                className="absolute inset-0 w-full h-full object-cover opacity-80"
               />
               {/* Luxury Vignette & Grain */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
