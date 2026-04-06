@@ -9,25 +9,6 @@ import { useState, useEffect } from 'react';
 
 const footerLinks = [
   {
-    title: 'Support',
-    links: [
-      { name: 'Contact Us', href: '/contact' },
-      { name: 'Track Order', href: '/track' },
-      { name: 'Shipping Policy', href: '/shipping' },
-      { name: 'Return & Exchange', href: '/returns' },
-      { name: 'FAQs', href: '/faqs' },
-    ],
-  },
-  {
-    title: 'The Brand',
-    links: [
-      { name: 'Our Story', href: '/about' },
-      { name: 'Careers', href: '/careers' },
-      { name: 'Store Locator', href: '/stores' },
-      { name: 'Sustainability', href: '/sustainability' },
-    ],
-  },
-  {
     title: 'Legal',
     links: [
       { name: 'Terms of Service', href: '/terms' },
@@ -58,9 +39,9 @@ export default function Footer() {
           <div className="lg:col-span-2 flex flex-col gap-10">
             <Link href="/" className="group flex flex-col">
               <span className="text-3xl font-lato font-black tracking-widest uppercase italic group-hover:text-accent transition-colors">
-                THE AURIC VAULT
+                EDITEVAL
               </span>
-              <span className="text-[9px] font-bold tracking-[0.4em] text-zinc-500 mt-1 uppercase font-lato">Excellence in Craft</span>
+              <span className="text-[9px] font-bold tracking-[0.4em] text-zinc-500 mt-1 uppercase font-lato">Boutique Jewellery</span>
             </Link>
             <div className="flex flex-col gap-6">
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Join our world</h4>
@@ -87,7 +68,7 @@ export default function Footer() {
                     form.reset();
                   }
                 }}
-                className="flex border-b border-zinc-800 pb-2 max-w-sm group focus-within:border-gold transition-premium"
+                className="flex border-b border-zinc-800 pb-2 max-w-sm group focus-within:border-accent transition-premium"
               >
                 <input
                   required
@@ -103,8 +84,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links Sections */}
-          <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-12">
+          {/* Links Sections - Simplified to only Collections & Legal Info */}
+          <div className="lg:col-span-3 grid grid-cols-2 gap-12">
              {/* Shop Section */}
             <div className="flex flex-col gap-8">
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Collections</h4>
@@ -122,23 +103,22 @@ export default function Footer() {
               </ul>
             </div>
 
-            {footerLinks.slice(0, 2).map((section) => (
-              <div key={section.title} className="flex flex-col gap-8">
-                <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">{section.title}</h4>
-                <ul className="flex flex-col gap-4">
-                  {section.links.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className="text-[11px] uppercase tracking-[0.1em] text-gray-400 hover:text-white transition-premium"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {/* Legal Section */}
+            <div className="flex flex-col gap-8">
+              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Policies</h4>
+              <ul className="flex flex-col gap-4">
+                {footerLinks[0].links.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-[11px] uppercase tracking-[0.1em] text-gray-400 hover:text-white transition-premium"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Social & Contact */}
@@ -157,8 +137,8 @@ export default function Footer() {
                 </a>
               </div>
             </div>
-            <div className="flex flex-col gap-4">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">help@theauricvault.com</p>
+            <div className="flex flex-col gap-4 opacity-50">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">help@editeval.com</p>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">+92 42 111 287 287</p>
             </div>
           </div>
@@ -172,16 +152,8 @@ export default function Footer() {
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-5 opacity-20 contrast-0 invert" />
           </div>
           
-          <div className="flex gap-8">
-             {footerLinks[2].links.map((link) => (
-                <Link key={link.name} href={link.href} className="text-[9px] uppercase tracking-[0.2em] hover:text-accent transition-premium">
-                  {link.name}
-                </Link>
-             ))}
-          </div>
-
-          <p className="text-[9px] uppercase tracking-[0.2em]">
-            © 2026 THE AURIC VAULT. All Rights Reserved.
+          <p className="text-[9px] font-bold uppercase tracking-[0.3em]">
+            © 2026 EDITEVAL. All Rights Reserved.
           </p>
         </div>
       </div>

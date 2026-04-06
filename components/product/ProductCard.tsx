@@ -181,11 +181,19 @@ export default function ProductCard({
 
       {/* Content Area */}
       <div className="flex flex-col p-6 flex-grow" onClick={(e) => e.stopPropagation()}>
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex justify-between items-center mb-3">
           <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-bold">{categoryName}</span>
-          <div className="flex items-center gap-1">
-            <span className="text-amber-400 text-xs text-[10px] font-bold">★</span>
-            <span className="text-zinc-500 text-[10px] font-medium">{productRating}</span>
+          <div className="flex items-center gap-0.5">
+             {[...Array(5)].map((_, i) => (
+                <Star 
+                  key={i} 
+                  className={cn(
+                    "w-2.5 h-2.5", 
+                    i < Math.floor(productRating) ? "fill-amber-400 text-amber-400" : "text-zinc-200"
+                  )} 
+                />
+             ))}
+             <span className="text-zinc-400 text-[9px] font-bold ml-1">{productRating}</span>
           </div>
         </div>
 

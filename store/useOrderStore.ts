@@ -18,9 +18,13 @@ export interface Order {
   id: string;
   date: string;
   items: CartItem[];
+  subtotal: number;
+  discount: number;
+  shipping: number;
   total: number;
   status: 'Pending' | 'Shipped' | 'Delivered' | 'Cancelled';
   shippingDetails: ShippingDetails;
+  promoCode?: string | null;
 }
 
 interface OrderStore {

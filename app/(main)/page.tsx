@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ChevronRight, CheckCircle2, Star, Quote } from 'lucide-react';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
 import { useHeroStore } from '@/store/useHeroStore';
@@ -20,6 +20,7 @@ export default function Home() {
   const [sliderWidth, setSliderWidth] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [showPromoModal, setShowPromoModal] = useState(false);
 
   const handleClaimDiscount = () => {
@@ -38,6 +39,13 @@ export default function Home() {
       setSliderWidth(sliderRef.current.scrollWidth - sliderRef.current.offsetWidth);
     }
   }, [mounted, categories]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % 3);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   if (!mounted) return null;
 
@@ -238,7 +246,7 @@ export default function Home() {
             </div>
 
             {/* Main Heading */}
-            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tight mb-8 leading-[0.9] italic-none">
+            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-[0.05em] mb-12 leading-[1.1] italic-none">
               {promo.title1} <br />
               <span className="text-accent italic-none">{promo.titleAccent}</span> <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">{promo.title2}</span>
@@ -310,7 +318,174 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Newsletter Section */}
+      {/* 6. About Section - Exact UI Match with Mockup */}
+      <section className="py-24 md:py-32 bg-[#F9F9F9]">
+        <div className="max-w-[1100px] mx-auto px-6 md:px-0 bg-white shadow-sm border border-zinc-50 overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-12 items-stretch">
+            {/* Left: Cinematic Image - Now even narrower (4/12 columns) */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="relative md:col-span-4 min-h-[420px] bg-zinc-100 overflow-hidden group"
+            >
+              <img 
+                src="/images/about/brand-story.png"
+                alt="Editeval Craftsmanship"
+                className="w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/5" />
+              
+              {/* Pink Brand Insignia (Matches your accent color) */}
+              <div className="absolute bottom-8 left-8 flex flex-col items-center">
+                 <div className="relative flex flex-col items-center gap-1">
+                    <div className="w-12 h-12 border border-accent/40 rounded-full flex items-center justify-center backdrop-blur-sm">
+                       <span className="text-xl font-light text-accent tracking-tighter">GB</span>
+                    </div>
+                    <div className="w-8 h-[1px] bg-accent/40" />
+                 </div>
+              </div>
+
+              {/* Branding name overlay (Subtle top left) */}
+              <div className="absolute top-8 left-8">
+                 <span className="text-[9px] uppercase tracking-[0.3em] text-accent font-bold opacity-80">Editeval</span>
+              </div>
+            </motion.div>
+
+            {/* Right: Narrative Content - Wider (8/12 columns) with Unified Font Sizes */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="md:col-span-8 flex flex-col justify-center p-10 md:p-14 lg:p-20"
+            >
+              <h2 className="text-3xl md:text-4xl font-normal text-zinc-900 mb-8 font-sans tracking-tight">About us</h2>
+              
+              <div className="space-y-6 max-w-lg">
+                <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
+                  ElvaEdit is a Pakistan based jewellery brand which was founded in 2026. Committed to create trendy, luxury and timeless pieces at an affordable price without compromising the quality or sustainability.
+                </p>
+                
+                <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
+                  We’ve got something to suit everyone. Each of our pieces has its own personality – just like our customers.
+                </p>
+                
+                <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
+                  At Editeval, we provide the highest quality jewelry. Every purchase is an experience, not just a transaction.
+                </p>
+              </div>
+
+              <div className="mt-12">
+                <Link href="/products" className="inline-block px-10 py-3.5 border border-accent/40 text-[10px] font-bold uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-white transition-all duration-700">
+                  Shop Now
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Testimonials Section - Auto Sliding Premium Experience */}
+      <section className="py-24 md:py-32 bg-zinc-50 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <div className="flex flex-col items-center text-center mb-20">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-[10px] uppercase font-bold tracking-[0.4em] text-accent mb-4"
+            >
+              The Editeval Experience
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em] text-zinc-900"
+            >
+              What Our Community Says
+            </motion.h2>
+          </div>
+
+          <div className="relative max-w-4xl mx-auto min-h-[400px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {[
+                {
+                  name: "Sarah Masood",
+                  location: "Lahore, Pakistan",
+                  review: "The quality of the ring is absolutely stunning. It feels so premium and looks even better in person compared to the pictures. My new favorite shop!",
+                  stars: 5
+                },
+                {
+                  name: "Aisha Ahmed",
+                  location: "Karachi, Pakistan",
+                  review: "Editeval has become my go-to for luxury jewelry. The craftsmanship is exceptional and the customer service was extremely helpful during checkout.",
+                  stars: 5
+                },
+                {
+                  name: "Zainab Rashid",
+                  location: "Islamabad, Pakistan",
+                  review: "I bought the frozen collection pieces and I'm obsessed. The aesthetic is so unique. Highly recommend for anyone looking for statement pieces!",
+                  stars: 5
+                }
+              ].map((testimonial, i) => i === activeTestimonial && (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 1.05, y: -20 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  className="bg-white p-12 md:p-20 border border-zinc-100 border-t-accent shadow-premium relative flex flex-col items-center text-center cursor-pointer group"
+                >
+                  <div className="absolute top-10 right-10 opacity-5">
+                     <Quote className="w-20 h-20 text-accent -rotate-12" />
+                  </div>
+                  
+                  <div className="flex gap-1 mb-10">
+                    {[...Array(testimonial.stars)].map((_, index) => (
+                      <Star key={index} className="w-4 h-4 fill-accent text-accent" />
+                    ))}
+                  </div>
+
+                  <p className="text-xl md:text-2xl lg:text-3xl text-zinc-700 font-light leading-relaxed italic mb-14 opacity-90 max-w-3xl">
+                    "{testimonial.review}"
+                  </p>
+
+                  <div className="flex flex-col items-center">
+                    <div className="w-10 h-[1px] bg-accent/30 mb-6" />
+                    <span className="text-[14px] font-black uppercase tracking-[0.3em] text-zinc-900">{testimonial.name}</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-bold mt-2">{testimonial.location}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+            {/* Pagination Dots */}
+            <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 flex gap-3">
+               {[0, 1, 2].map((i) => (
+                 <button 
+                  key={i}
+                  onClick={() => setActiveTestimonial(i)}
+                  className={`w-2 h-2 rounded-full transition-all duration-500 ${i === activeTestimonial ? 'w-8 bg-accent' : 'bg-zinc-200 hover:bg-zinc-300'}`}
+                 />
+               ))}
+            </div>
+          </div>
+          
+          <div className="mt-40 flex justify-center opacity-30">
+             <div className="flex items-center gap-10">
+                <span className="text-[10px] uppercase tracking-[0.3em] font-medium">Bespoke Design</span>
+                <div className="w-1 h-1 rounded-full bg-accent" />
+                <span className="text-[10px] uppercase tracking-[0.3em] font-medium">Verified Reviews</span>
+                <div className="w-1 h-1 rounded-full bg-accent" />
+                <span className="text-[10px] uppercase tracking-[0.3em] font-medium">Premium Craft</span>
+             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Newsletter Section */}
       <section className="py-32 px-6 bg-black text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-8">Join the Community</h2>
