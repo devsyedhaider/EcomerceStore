@@ -83,14 +83,36 @@ export default function CheckoutPage() {
   const finalTotal = total - discountAmount + shipping;
 
   const applyPromoCode = () => {
-    if (promoInput.trim().toLowerCase() === 'elvaediit10') {
-      setDiscountPercent(10);
-      setPromoError('');
+    const trimmedCode = promoInput.trim().toLowerCase();
+    const emailToCheck = formData.email || user?.email || '';
+    
+    if (!emailToCheck) {
+      setPromoError('Please enter your email first to validate the offer');
+      return;
+    }
+
+    if (trimmedCode === 'elvaediit10') {
+      const userOrders = getOrdersByEmail(emailToCheck);
+      if (userOrders.length > 0) {
+        setPromoError('This code is only valid for your first order');
+        setDiscountPercent(0);
+      } else {
+        setDiscountPercent(10);
+        setPromoError('');
+      }
     } else {
       setPromoError('Invalid promo code');
       setDiscountPercent(0);
     }
   };
+
+  // Reset discount if email changes to ensure valid first-timer status
+  useEffect(() => {
+    if (discountPercent > 0) {
+        setDiscountPercent(0);
+        setPromoError('Email changed. Please re-apply promo code.');
+    }
+  }, [formData.email]);
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -408,26 +430,26 @@ export default function CheckoutPage() {
               ))}
             </div>
 
-            <div className="mb-8 p-6 bg-white border border-zinc-100 rounded-2xl">
-               <label className="block text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mb-4">Promo Code</label>
+            <div className="mb-8 p-6 bg-white border border-zinc-100 rounded-2xl shadow-sm">
+               <label className="block text-[10px] font-black uppercase tracking-[0.4em] text-accent mb-4">Apply Token</label>
                <div className="flex gap-2">
                   <input 
                     type="text"
                     value={promoInput}
                     onChange={(e) => setPromoInput(e.target.value)}
-                    placeholder="Enter code..."
-                    className="flex-grow h-12 bg-zinc-50 px-4 text-xs font-bold uppercase tracking-widest outline-none focus:ring-1 focus:ring-black"
+                    placeholder="PASTE TOKEN HERE..."
+                    className="flex-grow h-12 bg-zinc-50 px-4 text-xs font-bold uppercase tracking-[0.2em] outline-none focus:ring-1 focus:ring-accent/30 transition-all border border-zinc-50 focus:border-accent/20"
                   />
                   <button 
                     type="button"
                     onClick={applyPromoCode}
-                    className="h-12 px-6 bg-black text-white text-[10px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-all"
+                    className="h-12 px-6 bg-[#121212] text-accent text-[10px] font-black uppercase tracking-[0.3em] hover:bg-accent hover:text-white transition-all duration-500 shadow-lg"
                   >
-                    Apply
+                    Apply Token
                   </button>
                </div>
-               {promoError && <p className="text-[9px] text-red-500 font-bold uppercase mt-2">{promoError}</p>}
-               {discountPercent > 0 && <p className="text-[9px] text-green-600 font-bold uppercase mt-2">✓ 10% Discount Applied</p>}
+               {promoError && <p className="text-[9px] text-red-500 font-bold uppercase tracking-widest mt-2 px-1">{promoError}</p>}
+               {discountPercent > 0 && <p className="text-[9px] text-green-600 font-bold uppercase tracking-widest mt-2 px-1 animate-in slide-in-from-top-1">✓ 10% First Order Discount Applied</p>}
             </div>
 
             <div className="space-y-4 pt-6 border-t border-zinc-200">

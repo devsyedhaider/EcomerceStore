@@ -210,30 +210,38 @@ export default function Navbar() {
                         <motion.div
                             key={i}
                             variants={{
-                                open: { opacity: 1, x: 0 },
-                                closed: { opacity: 0, x: -20 }
+                                open: { opacity: 1, y: 0 },
+                                closed: { opacity: 0, y: 20 }
                             }}
                             className="border-b border-zinc-50"
                         >
                             {item.type === 'trigger' ? (
                                 <button
                                     onClick={() => setActiveSubMenu(item.id || null)}
-                                    className="flex items-center justify-between px-8 py-7 hover:bg-zinc-50 transition-all duration-500 w-full text-left group"
+                                    className="flex items-center justify-between px-8 py-8 w-full text-left group overflow-hidden"
                                 >
-                                    <span className="text-base font-normal text-zinc-900 group-hover:pl-4 transition-all duration-500">
-                                        {item.name}
-                                    </span>
-                                    <ChevronRight className="w-4 h-4 text-zinc-400 stroke-[1.5] group-hover:text-black transition-colors" />
+                                    <div className="flex items-center gap-6">
+                                       <span className="text-[10px] font-black text-accent tracking-widest">0{i + 1}</span>
+                                       <span className="text-lg font-light uppercase tracking-[0.15em] text-zinc-900 group-hover:tracking-[0.25em] group-hover:text-accent transition-all duration-700">
+                                          {item.name}
+                                       </span>
+                                    </div>
+                                    <div className="relative w-6 h-6 flex items-center justify-center">
+                                       <ChevronRight className="w-4 h-4 text-zinc-300 stroke-[1] group-hover:translate-x-2 transition-all duration-700" />
+                                    </div>
                                 </button>
                             ) : (
                                 <Link
                                     href={item.href || '#'}
-                                    className="flex items-center px-8 py-7 hover:bg-zinc-50 transition-all duration-500 group"
+                                    className="flex items-center px-8 py-8 w-full group overflow-hidden"
                                     onClick={handleClose}
                                 >
-                                    <span className="text-base font-normal text-zinc-900 group-hover:pl-4 transition-all duration-500">
-                                        {item.name}
-                                    </span>
+                                    <div className="flex items-center gap-6">
+                                       <span className="text-[10px] font-black text-accent tracking-widest">0{i + 1}</span>
+                                       <span className="text-lg font-light uppercase tracking-[0.15em] text-zinc-900 group-hover:tracking-[0.25em] group-hover:text-accent transition-all duration-700">
+                                          {item.name}
+                                       </span>
+                                    </div>
                                 </Link>
                             )}
                         </motion.div>
@@ -275,7 +283,7 @@ export default function Navbar() {
                         </Link>
                     </motion.div>
 
-                    {navCategories.map((cat) => (
+                    {navCategories.map((cat, i) => (
                       <motion.div 
                         key={cat.id}
                         variants={{ open: { opacity: 1, y: 0 }, closed: { opacity: 0, y: 10 } }}
@@ -283,12 +291,15 @@ export default function Navbar() {
                         <Link
                             href={`/products?category=${cat.id}`}
                             onClick={handleClose}
-                            className="flex items-center justify-between px-8 py-6 border-b border-zinc-50 hover:bg-zinc-50 group"
+                            className="flex items-center justify-between px-8 py-7 border-b border-zinc-50 hover:bg-zinc-50 group transition-all duration-500"
                         >
-                            <span className="text-base font-normal text-zinc-900 group-hover:pl-4 transition-all duration-500">
-                            {cat.name}
-                            </span>
-                            <ChevronRight className="w-4 h-4 text-zinc-400 stroke-[1.5] group-hover:text-black transition-colors" />
+                            <div className="flex items-center gap-6">
+                               <span className="text-[10px] font-black text-accent tracking-widest">0{i + 1}</span>
+                               <span className="text-lg font-light uppercase tracking-[0.15em] text-zinc-900 group-hover:tracking-[0.25em] group-hover:text-accent transition-all duration-700">
+                                  {cat.name}
+                               </span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-zinc-300 stroke-[1] group-hover:translate-x-2 transition-all duration-700" />
                         </Link>
                       </motion.div>
                     ))}

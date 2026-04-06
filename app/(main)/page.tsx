@@ -2,8 +2,8 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
 import { useHeroStore } from '@/store/useHeroStore';
@@ -19,6 +19,15 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [sliderWidth, setSliderWidth] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  const [showPromoModal, setShowPromoModal] = useState(false);
+
+  const handleClaimDiscount = () => {
+    if (promo.code) {
+      navigator.clipboard.writeText(promo.code);
+      setShowPromoModal(true);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -61,6 +70,48 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Promo Success Modal */}
+      <AnimatePresence>
+        {mounted && showPromoModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowPromoModal(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative w-full max-w-sm bg-white p-12 text-center"
+            >
+              <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-8">
+                 <CheckCircle2 className="w-10 h-10 text-accent animate-bounce-subtle" />
+              </div>
+              <h3 className="text-2xl font-black uppercase tracking-tighter mb-4 text-zinc-900">Code Copied!</h3>
+              <p className="text-zinc-500 text-sm font-medium uppercase tracking-widest mb-10 leading-relaxed">
+                Use code <span className="text-black font-black">{promo.code}</span> at checkout to get <span className="text-accent underline">10% OFF</span> your first order.
+              </p>
+              <Link 
+                href="/products" 
+                className="w-full h-14 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center hover:bg-zinc-800 transition-all"
+                onClick={() => setShowPromoModal(false)}
+              >
+                GO TO PRODUCTS
+              </Link>
+              <button 
+                onClick={() => setShowPromoModal(false)}
+                className="mt-6 text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-300 hover:text-black transition-colors"
+              >
+                Close
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* 2. Boutique Collections Avatar Navigation - Full Screen Centered */}
       <section className="py-12 bg-white border-b border-zinc-50">
@@ -198,25 +249,32 @@ export default function Home() {
               {promo.description}
             </p>
 
-            {/* Promo Code - Glass Card */}
+            {/* Promo Code - Integrated Typography */}
             {promo.code && (
-              <div className="group mb-12 relative">
-                <div className="absolute -inset-2 bg-gradient-to-r from-accent to-accent-light opacity-20 blur-xl group-hover:opacity-40 transition-opacity" />
-                <div className="relative px-8 py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center gap-1 shadow-2xl">
-                   <span className="text-[8px] uppercase tracking-[0.3em] text-zinc-500 font-bold">Use Code at Checkout</span>
-                   <span className="text-xl md:text-2xl font-black tracking-[0.2em]">{promo.code}</span>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="mb-12 flex flex-col items-center"
+              >
+                <div className="flex flex-col items-center gap-2 group cursor-default">
+                   <span className="text-[10px] uppercase tracking-[0.4em] text-accent font-black opacity-60">Exclusive Access Code</span>
+                   <div className="relative">
+                      <span className="text-3xl md:text-5xl font-black tracking-[0.3em] font-lato">{promo.code}</span>
+                      <div className="absolute -bottom-4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent to-transparent opacity-50" />
+                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Action Button */}
-            <Link 
-              href="/products" 
+            <button 
+              onClick={handleClaimDiscount}
               className="group relative px-12 py-5 bg-white text-black text-xs font-black uppercase tracking-[0.3em] overflow-hidden transition-all duration-500 hover:text-white"
             >
               <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               <span className="relative z-10">{promo.buttonText}</span>
-            </Link>
+            </button>
           </motion.div>
         </div>
         
