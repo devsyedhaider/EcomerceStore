@@ -457,10 +457,9 @@ export default function Home() {
                 loop
                 playsInline
                 key={promo.secondVideoUrl}
+                src={promo.secondVideoUrl}
                 className="w-full h-full object-cover opacity-80"
-              >
-                <source src={promo.secondVideoUrl} type="video/mp4" />
-              </video>
+              />
               {/* Luxury Vignette & Grain */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none" />

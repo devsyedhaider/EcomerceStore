@@ -347,10 +347,9 @@ export default function AdminPromoPage() {
                     loop
                     playsInline
                     key={localPromo.secondVideoUrl}
+                    src={localPromo.secondVideoUrl}
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
-                  >
-                    <source src={localPromo.secondVideoUrl} type="video/mp4" />
-                  </video>
+                  />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
                   <div className="relative z-10 text-center">
                      <span className="text-[8px] uppercase tracking-[0.5em] text-white/60 mb-2 block">The Art of Creation</span>
