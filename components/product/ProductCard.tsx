@@ -4,6 +4,7 @@
 import Link from 'next/link';
 import { Heart, ShoppingBag, Eye, Plus, X, Star } from 'lucide-react';
 import { formatPrice, cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/store/useCartStore';
 import { useState, useEffect } from 'react';
 import { Product } from '@/store/useProductStore';
@@ -25,6 +26,7 @@ export default function ProductCard({
   showSaleBadge = true,
   isWishlistPage = false 
 }: ProductCardProps) {
+  const router = useRouter();
   const { categories } = useCategoryStore();
   const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -39,7 +41,6 @@ export default function ProductCard({
 
   const categoryName = mounted ? (categories.find(c => c.id === product.category)?.name || product.category) : product.category;
   
-  // Default rating to 4.5 if not provided
   const productRating = product.rating || 4.5;
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -58,6 +59,10 @@ export default function ProductCard({
     toggleItem(product);
   };
 
+  const handleCardClick = () => {
+    router.push(`/products/${product.id}`);
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -66,7 +71,7 @@ export default function ProductCard({
       className="group relative flex flex-col h-full bg-white rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => window.location.href = `/products/${product.id}`}
+      onClick={handleCardClick}
     >
       {/* Image Container */}
       <div className="block relative aspect-[4/5] overflow-hidden bg-[#F8F8F8]">
@@ -113,7 +118,7 @@ export default function ProductCard({
 
         {/* Wishlist Removal Button (Corner) */}
         {isWishlistPage && (
-          <div className="absolute top-4 right-4 z-10">
+          <div className="absolute top-4 right-4 z-30">
             <button 
               onClick={handleWishlist}
               className="w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-md text-black rounded-full shadow-lg hover:bg-rose-500 hover:text-white transition-all cursor-pointer group/remove"
@@ -154,7 +159,7 @@ export default function ProductCard({
             onClick={(e) => {
                e.preventDefault();
                e.stopPropagation();
-               window.location.href = `/products/${product.id}`;
+               router.push(`/products/${product.id}`);
             }}
             className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
             title="View Details"
