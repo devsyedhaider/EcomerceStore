@@ -58,8 +58,8 @@ export const usePromoStore = create<PromoStore>()(
               ...data,
               titleAccent: data.title_accent,
               buttonText: data.button_text,
-              backgroundImage: data.background_image,
-              secondVideoUrl: data.second_video_url,
+              backgroundImage: data.background_image || defaultPromo.backgroundImage,
+              secondVideoUrl: data.second_video_url || defaultPromo.secondVideoUrl,
             };
             set({ promo: mappedPromo });
           }

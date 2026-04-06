@@ -128,11 +128,11 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, staggerChildren: 0.1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             className="flex flex-wrap items-start justify-center gap-6 md:gap-14 lg:gap-20"
           >
             {/* 1. New Arrivals */}
-            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: false }}>
               <Link href="/products?isNew=true" className="group flex flex-col items-center gap-4">
                 <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
                   <img 
@@ -146,7 +146,7 @@ export default function Home() {
             </motion.div>
 
             {/* 2. Best Sellers */}
-            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} viewport={{ once: true }}>
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} viewport={{ once: false }}>
               <Link href="/products?isTrending=true" className="group flex flex-col items-center gap-4">
                 <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
                   <img 
@@ -166,7 +166,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.8 }} 
                 whileInView={{ opacity: 1, scale: 1 }} 
                 transition={{ delay: (idx + 2) * 0.1 }} 
-                viewport={{ once: true }}
+                viewport={{ once: false }}
               >
                 <Link 
                   href={`/products?category=${category.id}`}
@@ -185,7 +185,7 @@ export default function Home() {
             ))}
 
             {/* 7. Shop All Avatar */}
-            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6 }} viewport={{ once: true }}>
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6 }} viewport={{ once: false }}>
               <Link href="/categories" className="group flex flex-col items-center gap-4">
                 <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full border-2 border-zinc-200 flex items-center justify-center transition-all duration-500 group-hover:bg-zinc-900 group-hover:border-zinc-900 group-hover:scale-105 group-hover:shadow-xl">
                    <ArrowRight className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 text-zinc-400 group-hover:text-white transition-all group-hover:-rotate-45" />
@@ -217,7 +217,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: (idx % 4) * 0.1, duration: 0.6 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
               >
                 <ProductCard 
                   product={product} 
@@ -259,36 +259,53 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             className="flex flex-col items-center"
           >
             {/* Tagline */}
-            <div className="mb-6 flex items-center gap-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="mb-6 flex items-center gap-4"
+            >
               <div className="w-8 h-[1px] bg-accent" />
               <span className="text-[10px] md:text-xs uppercase tracking-[0.5em] font-black text-accent">
                 {promo.tagline}
               </span>
               <div className="w-8 h-[1px] bg-accent" />
-            </div>
+            </motion.div>
 
             {/* Main Heading */}
-            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-[0.05em] mb-12 leading-[1.1] italic-none">
-              {promo.title1} <br />
-              <span className="text-accent italic-none">{promo.titleAccent}</span> <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">{promo.title2}</span>
-            </h2>
+            <div className="overflow-hidden mb-12">
+              <motion.h2 
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 1, ease: [0.4, 0, 0.2, 1] }}
+                className="text-5xl md:text-8xl font-black uppercase tracking-[0.05em] leading-[1.1] text-center"
+              >
+                {promo.title1} <br />
+                <span className="text-accent italic-none">{promo.titleAccent}</span> <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">{promo.title2}</span>
+              </motion.h2>
+            </div>
 
             {/* Description */}
-            <p className="text-sm md:text-base uppercase tracking-[0.2em] font-light text-zinc-400 max-w-xl mb-12 leading-relaxed">
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 1 }}
+              className="text-sm md:text-base uppercase tracking-[0.2em] font-light text-zinc-400 max-w-xl mb-12 leading-relaxed"
+            >
               {promo.description}
-            </p>
+            </motion.p>
 
             {/* Promo Code - Integrated Typography */}
             {promo.code && (
               <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
                 className="mb-12 flex flex-col items-center"
               >
                 <div className="flex flex-col items-center gap-2 group cursor-default">
@@ -302,13 +319,16 @@ export default function Home() {
             )}
 
             {/* Action Button */}
-            <button 
+            <motion.button 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.5 }}
               onClick={handleClaimDiscount}
               className="group relative px-12 py-5 bg-white text-black text-xs font-black uppercase tracking-[0.3em] overflow-hidden transition-all duration-500 hover:text-white"
             >
               <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               <span className="relative z-10">{promo.buttonText}</span>
-            </button>
+            </motion.button>
           </motion.div>
         </div>
         
@@ -339,7 +359,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: (idx % 4) * 0.1, duration: 0.6 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
               >
                 <ProductCard 
                   product={product} 
@@ -360,7 +380,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               className="relative md:col-span-4 min-h-[420px] bg-zinc-100 overflow-hidden group"
             >
               <img 
@@ -391,7 +411,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               className="md:col-span-8 flex flex-col justify-center p-10 md:p-14 lg:p-20"
             >
               <h2 className="text-3xl md:text-4xl font-normal text-zinc-900 mb-8 font-sans tracking-tight">About us</h2>
@@ -428,7 +448,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 1.1 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               className="absolute inset-0 z-0"
             >
               <video
@@ -436,6 +456,7 @@ export default function Home() {
                 muted
                 loop
                 playsInline
+                key={promo.secondVideoUrl}
                 className="w-full h-full object-cover opacity-80"
               >
                 <source src={promo.secondVideoUrl} type="video/mp4" />
