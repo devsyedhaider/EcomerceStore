@@ -38,11 +38,8 @@ export default function AdminPromoPage() {
   const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // For local development/demo, we use public URL or a mock string
-      // In a real app, this would upload to Supabase Storage/S3
       const videoBlobUrl = URL.createObjectURL(file);
       setLocalPromo(prev => ({ ...prev, videoUrl: videoBlobUrl }));
-      alert('Primary Video selected. Please note: blobs only persist in this session. For permanent storage, provide a public URL.');
     }
   };
 
@@ -51,7 +48,6 @@ export default function AdminPromoPage() {
     if (file) {
       const videoBlobUrl = URL.createObjectURL(file);
       setLocalPromo(prev => ({ ...prev, secondVideoUrl: videoBlobUrl }));
-      alert('Secondary Cinematic Video selected. Please note: blobs only persist in this session.');
     }
   };
 
@@ -265,11 +261,11 @@ export default function AdminPromoPage() {
                   muted
                   loop
                   playsInline
+                  onLoadedData={(e) => e.currentTarget.play()}
                   key={localPromo.videoUrl}
+                  src={localPromo.videoUrl}
                   className="w-full h-full object-cover opacity-50"
-                >
-                  <source src={localPromo.videoUrl} type="video/mp4" />
-                </video>
+                />
               ) : (
                 <img
                   src={localPromo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
@@ -346,6 +342,7 @@ export default function AdminPromoPage() {
                     muted
                     loop
                     playsInline
+                    onLoadedData={(e) => e.currentTarget.play()}
                     key={localPromo.secondVideoUrl}
                     src={localPromo.secondVideoUrl}
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
