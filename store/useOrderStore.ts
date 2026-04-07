@@ -59,6 +59,7 @@ export const useOrderStore = create<OrderStore>()(
           const mappedOrders = (data || []).map((o: any) => ({
             ...o,
             shippingDetails: o.shipping_details,
+            promoCode: o.promo_code,
           }));
           
           set({ orders: mappedOrders });
@@ -76,10 +77,13 @@ export const useOrderStore = create<OrderStore>()(
             const dbOrder = {
               ...order,
               shipping_details: order.shippingDetails,
+              promo_code: order.promoCode,
             };
             // @ts-ignore
             delete dbOrder.shippingDetails;
-            
+            // @ts-ignore
+            delete dbOrder.promoCode;
+                        
             console.log('DEBUG: dbOrder to insert', dbOrder);
             const { error } = await supabase.from('orders').insert([dbOrder]);
             if (error) throw error;

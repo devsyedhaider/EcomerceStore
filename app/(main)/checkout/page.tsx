@@ -17,8 +17,8 @@ export default function CheckoutPage() {
   const { items, getTotal, clearCart } = useCartStore();
   const { addOrder, getOrdersByEmail } = useOrderStore();
   const { user } = useAuthStore();
-  const total = getTotal();
-  const shipping = total > 5000 ? 0 : 250;
+  const total = typeof getTotal === 'function' ? getTotal() : 0;
+  const shipping = (total || 0) > 5000 ? 0 : 250;
   
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -70,26 +70,27 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     setMounted(true);
-    if (items.length === 0 && step < 3) {
+    if (items.length === 0 && (step < 3)) {
       router.push('/cart');
     }
   }, [items.length, step, router]);
-
-  if (!mounted) return null;
-  if (items.length === 0 && step < 3) return null;
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
 
   const { promo } = usePromoStore();
   const [promoInput, setPromoInput] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoError, setPromoError] = useState('');
 
-  const discountAmount = total * (discountPercent / 100);
-  const finalTotal = total - discountAmount + shipping;
+  // Reset discount if email changes to ensure valid first-timer status
+  useEffect(() => {
+    if (discountPercent > 0) {
+        // Only reset if the email being checked actually changes
+        const currentEmail = formData.email || user?.email || '';
+        if (!currentEmail) {
+            setDiscountPercent(0);
+            setPromoError('Please re-enter your email');
+        }
+    }
+  }, [formData.email, user?.email, discountPercent]);
 
   const applyPromoCode = () => {
     const trimmedInput = promoInput.trim().toLowerCase();
@@ -116,17 +117,16 @@ export default function CheckoutPage() {
     }
   };
 
-  // Reset discount if email changes to ensure valid first-timer status
-  useEffect(() => {
-    if (discountPercent > 0) {
-        // Only reset if the email being checked actually changes
-        const currentEmail = formData.email || user?.email || '';
-        if (!currentEmail) {
-            setDiscountPercent(0);
-            setPromoError('Please re-enter your email');
-        }
-    }
-  }, [formData.email, user?.email]);
+  if (!mounted) return null;
+  if (items.length === 0 && step < 3) return null;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const discountAmount = total * (discountPercent / 100);
+  const finalTotal = total - discountAmount + shipping;
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -430,18 +430,21 @@ export default function CheckoutPage() {
             <h3 className="text-2xl font-black uppercase tracking-tighter mb-8">YOUR ORDER</h3>
             
             <div className="max-h-[400px] overflow-auto no-scrollbar space-y-6 mb-8 pr-4">
-              {items.map((item) => (
+              {(items || []).map((item) => {
+                if (!item) return null;
+                return (
                 <div key={`${item.id}-${item.size}-${item.color}`} className="flex gap-6 pb-6 border-b border-zinc-200 last:border-0 last:pb-0">
                   <div className="w-20 h-20 bg-zinc-200 rounded-xl overflow-hidden flex-shrink-0">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <img src={item.image || ''} alt={item.name || 'Product'} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-grow">
-                    <h4 className="font-black text-sm uppercase tracking-tight">{item.name}</h4>
-                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-1">QTY: {item.quantity} • SZ: {item.size}</p>
-                    <p className="font-black text-sm mt-2">{formatPrice(item.price * item.quantity)}</p>
+                    <h4 className="font-black text-sm uppercase tracking-tight">{item.name || 'Product'}</h4>
+                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-1">QTY: {item.quantity || 0} • SZ: {item.size || 'N/A'}</p>
+                    <p className="font-black text-sm mt-2">{formatPrice((item.price || 0) * (item.quantity || 0))}</p>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="mb-8 p-6 bg-white border border-zinc-100 rounded-2xl shadow-sm">
