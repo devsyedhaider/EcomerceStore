@@ -16,9 +16,9 @@ export default function ContactPage() {
         <div className="max-w-[1400px] mx-auto text-center">
            <motion.span 
               initial={{ opacity: 0, letterSpacing: '0.1em' }}
-              animate={{ opacity: 1, letterSpacing: '0.5em' }}
+              animate={{ opacity: 1, letterSpacing: '0.3em' }}
               transition={{ duration: 1.5 }}
-              className="text-[10px] md:text-xs font-black uppercase text-accent mb-8 block font-lato"
+              className="text-[9px] md:text-xs font-black uppercase text-accent mb-6 md:mb-8 block font-lato tracking-[0.3em] md:tracking-[0.5em]"
            >
               The ElvaEdit Concierge
            </motion.span>
@@ -26,9 +26,9 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="text-5xl md:text-8xl font-light uppercase tracking-tight leading-[0.9] text-zinc-900 mb-12 font-lato"
+              className="text-3xl sm:text-4xl md:text-8xl font-light uppercase tracking-tighter sm:tracking-tight leading-[1.1] md:leading-[0.9] text-zinc-900 mb-8 md:mb-12 font-lato"
            >
-              Elegance in <br /> <span className="font-italic-none italic-none text-accent">Communication</span>
+              Elegance in <br className="hidden md:block" /> <span className="font-italic-none italic-none text-accent">Communication</span>
            </motion.h1>
            <motion.p 
               initial={{ opacity: 0 }}

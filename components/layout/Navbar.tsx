@@ -171,7 +171,7 @@ export default function Navbar() {
                       { name: 'Shop All', href: '/products' },
                       { name: 'About us', href: '/about' },
                       { name: 'Contact us', href: '/contact' },
-                      { name: 'Our Collections', href: '/products' }
+                      { name: 'Our Collection', href: '/categories' }
                    ].map((tab) => (
                       <li key={tab.name}>
                          <Link 
@@ -243,7 +243,7 @@ export default function Navbar() {
                         { name: 'Shop All Products', type: 'trigger', id: 'shop' },
                         { name: 'About Us', href: '/about' },
                         { name: 'Contact Us', href: '/contact' },
-                        { name: 'Our Collections', href: '/products' },
+                        { name: 'Our Collection', href: '/categories' },
                         { name: 'Shipped', href: '/shipped' },
                     ].map((item, i) => (
                         <motion.div

@@ -274,9 +274,9 @@ export default function ProductDetailPage() {
 
       {/* Related Products */}
       <section className="max-w-[1800px] mx-auto px-6 md:px-12 mt-32 border-t border-gray-100 pt-24">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 px-4">
           <span className="text-premium-subheading block mb-4">Complete the Look</span>
-          <h2 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em]">Related Products</h2>
+          <h2 className="text-xl sm:text-2xl md:text-4xl font-light uppercase tracking-[0.1em] md:tracking-[0.2em] whitespace-nowrap overflow-hidden text-ellipsis">Related Products</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {relatedProducts.map((p) => (

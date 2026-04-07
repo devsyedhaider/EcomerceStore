@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { useOrderStore } from '@/store/useOrderStore';
 import { useProductStore } from '@/store/useProductStore';
 import { useMemo, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function AdminDashboard() {
   const allOrders = useOrderStore((state) => state.orders);
@@ -58,7 +59,7 @@ export default function AdminDashboard() {
       order.items.forEach(item => {
         const product = allProducts.find(p => p.id === item.id);
         const category = product?.category.toLowerCase() || 'other';
-        const itemTotal = item.price * item.quantity;
+        const itemTotal = (item.price || 0) * (item.quantity || 0);
         
         if (categoryRevenue[category] !== undefined) {
           categoryRevenue[category] += itemTotal;
@@ -95,10 +96,16 @@ export default function AdminDashboard() {
       {/* Welcome Header */}
       <div className="flex items-end justify-between">
         <div>
-           <h1 className="text-4xl font-black uppercase tracking-tighter">Dashboard Overview</h1>
+           <div className="flex items-center gap-3 mb-1">
+              <h1 className="text-4xl font-black uppercase tracking-tighter">Dashboard Overview</h1>
+              <div className="flex items-center gap-1.5 px-2 py-0.5 bg-accent/10 border border-accent/20 rounded-full">
+                <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                <span className="text-[8px] font-black uppercase tracking-widest text-accent">Live Cloud Sync</span>
+              </div>
+           </div>
            <p className="text-zinc-500 font-medium">Welcome back, here&apos;s what&apos;s happening today.</p>
         </div>
-        <Link href="/admin/products/new" className="btn-primary h-12 flex items-center gap-2">
+        <Link href="/admin/products/new" className="btn-primary h-12 flex items-center gap-2 px-8">
             <PlusCircle className="w-5 h-5" /> ADD PRODUCT
         </Link>
       </div>
@@ -106,9 +113,9 @@ export default function AdminDashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl border border-zinc-200 flex flex-col gap-4 hover:shadow-lg transition-shadow">
+          <div key={i} className="bg-white p-6 rounded-2xl border border-zinc-200 flex flex-col gap-4 hover:shadow-lg transition-all group">
              <div className="flex items-center justify-between">
-                <div className="w-12 h-12 bg-zinc-50 rounded-xl flex items-center justify-center text-black">
+                <div className="w-12 h-12 bg-zinc-50 rounded-xl flex items-center justify-center text-black group-hover:bg-accent group-hover:text-white transition-colors">
                    <stat.icon className="w-6 h-6" />
                 </div>
                 <div className={`flex items-center gap-1 text-[10px] font-black px-2 py-1 rounded-full ${stat.isUp ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
@@ -126,9 +133,12 @@ export default function AdminDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Recent Orders Table */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-zinc-200 overflow-hidden">
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-sm">
            <div className="p-6 border-b border-zinc-100 flex items-center justify-between">
-              <h3 className="font-black uppercase tracking-tight text-lg">Recent Orders</h3>
+              <div className="flex items-center gap-3">
+                 <h3 className="font-black uppercase tracking-tight text-lg">Recent Orders</h3>
+                 <span className="px-2 py-0.5 bg-zinc-100 text-zinc-500 text-[9px] font-black uppercase rounded">{allOrders.length} TOTAL</span>
+              </div>
               <Link href="/admin/orders" className="text-xs font-black text-accent hover:underline uppercase tracking-widest">View All</Link>
            </div>
            
@@ -137,25 +147,25 @@ export default function AdminDashboard() {
                   <table className="w-full text-left">
                      <thead>
                         <tr className="bg-zinc-50 text-[10px] font-black uppercase tracking-widest text-zinc-400">
-                           <th className="px-6 py-4">Order ID</th>
-                           <th className="px-6 py-4">Customer</th>
-                           <th className="px-6 py-4">Status</th>
-                           <th className="px-6 py-4">Amount</th>
-                           <th className="px-6 py-4">Date</th>
+                           <th className="px-6 py-4 border-b border-zinc-100">Order ID</th>
+                           <th className="px-6 py-4 border-b border-zinc-100">Customer</th>
+                           <th className="px-6 py-4 border-b border-zinc-100">Status</th>
+                           <th className="px-6 py-4 border-b border-zinc-100">Amount</th>
+                           <th className="px-6 py-4 border-b border-zinc-100">Date</th>
                         </tr>
                      </thead>
                      <tbody className="divide-y divide-zinc-100">
                         {recentOrders.map((order) => (
-                           <tr key={order.id} className="hover:bg-zinc-50 transition-colors cursor-pointer group">
-                              <td className="px-6 py-4 text-sm font-black text-zinc-500">#{order.id.slice(0, 8)}</td>
+                           <tr key={order.id} className="hover:bg-zinc-50/80 transition-colors cursor-pointer group">
+                              <td className="px-6 py-4 text-sm font-black text-zinc-900 leading-none">#{order.id.slice(0, 8)}</td>
                               <td className="px-6 py-4 text-sm font-medium text-zinc-600">
                                  {order.shippingDetails?.firstName || 'Guest'} {order.shippingDetails?.lastName || ''}
                                </td>
                               <td className="px-6 py-4">
                                  <span className={cn(
                                     "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest",
-                                    order.status === 'Delivered' ? "bg-green-100 text-green-700" : 
-                                    order.status === 'Pending' ? "bg-yellow-100 text-yellow-700" : "bg-blue-100 text-blue-700"
+                                    order.status === 'Delivered' ? "bg-green-100/50 text-green-700" : 
+                                    order.status === 'Pending' ? "bg-yellow-100/50 text-yellow-700" : "bg-blue-100/50 text-blue-700"
                                  )}>
                                     {order.status}
                                  </span>
@@ -176,28 +186,58 @@ export default function AdminDashboard() {
            )}
         </div>
 
-        {/* Quick Actions / Activity - Kept static for visual appeal as requested */}
+        {/* Quick Actions / Activity - Revenue Analytics REAL TIME */}
         <div className="bg-zinc-900 rounded-2xl p-8 text-white flex flex-col h-full shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-accent opacity-20 blur-3xl -mr-16 -mt-16" />
-            <h3 className="text-xl font-black uppercase tracking-tighter mb-8 relative z-10">Revenue Analytics</h3>
-            <div className="flex-grow flex flex-col justify-center gap-6 relative z-10">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-accent opacity-20 blur-3xl -mr-24 -mt-24 pointer-events-none" />
+            <div className="flex items-center justify-between mb-8 relative z-10">
+                <h3 className="text-xl font-black uppercase tracking-tighter">Revenue Analytics</h3>
+                <div className="flex items-center gap-1.5 px-2 py-1 bg-white/5 border border-white/10 rounded-full">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-[8px] font-black uppercase tracking-widest text-green-500">Active</span>
+                </div>
+            </div>
+            
+            <div className="flex-grow flex flex-col justify-center gap-8 relative z-10">
                 {analyticsData.categories.map((cat, i) => (
-                    <div key={i} className="space-y-2">
-                        <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-zinc-400">
-                            <span>{cat.name}</span>
-                            <span>{cat.percentage}%</span>
+                    <div key={i} className="space-y-3">
+                        <div className="flex justify-between items-end text-xs font-bold uppercase tracking-widest text-zinc-400">
+                            <span className="text-[10px]">{cat.name}</span>
+                            <span className="text-white font-black">{cat.percentage}%</span>
                         </div>
-                        <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
-                            <div className={cn("h-full transition-all duration-1000", cat.color)} style={{ width: `${cat.percentage}%` }} />
+                        <div className="h-2 w-full bg-zinc-800 rounded-full overflow-hidden p-[1px]">
+                            <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${cat.percentage}%` }}
+                                transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                                className={cn("h-full rounded-full transition-colors", cat.color)} 
+                            />
                         </div>
                     </div>
                 ))}
             </div>
-            <div className="mt-12 p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 relative z-10">
-                <p className="text-accent font-black text-[10px] uppercase tracking-widest border-b border-white/10 pb-2 mb-3">Goal Progress</p>
-                <div className="flex items-end gap-2">
-                    <p className="text-3xl font-black">{analyticsData.progress}%</p>
-                    <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest pb-1.5">to {formatPrice(analyticsData.goal)} Target</p>
+
+            <div className="mt-12 p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 relative z-10 group overflow-hidden">
+                <motion.div 
+                    initial={false}
+                    animate={{ opacity: [0.1, 0.2, 0.1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute inset-0 bg-accent pointer-events-none" 
+                />
+                <p className="text-accent font-black text-[10px] uppercase tracking-widest border-b border-white/10 pb-2 mb-4">Goal Progress (Real-time)</p>
+                <div className="flex flex-col gap-4">
+                    <div className="flex items-end gap-2 text-white">
+                        <p className="text-4xl font-black leading-none">{analyticsData.progress}%</p>
+                        <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest pb-1">to {formatPrice(analyticsData.goal)} Target</p>
+                    </div>
+                    {/* Overall Progress Bar */}
+                    <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
+                        <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: `${analyticsData.progress}%` }}
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                            className="h-full bg-accent" 
+                        />
+                    </div>
                 </div>
             </div>
         </div>

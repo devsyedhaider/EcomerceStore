@@ -124,7 +124,7 @@ export default function Footer() {
               <li><Link href="/about" className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-black">About Us</Link></li>
               <li><Link href="/contact" className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-black">Contact Us</Link></li>
               <li><Link href="/new-arrivals" className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-black">New Arrivals</Link></li>
-              <li><Link href="/products" className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-black">The Collection</Link></li>
+              <li><Link href="/categories" className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 hover:text-accent transition-all font-black">Our Collection</Link></li>
             </ul>
           </div>
 

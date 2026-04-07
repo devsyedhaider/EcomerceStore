@@ -331,7 +331,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={handleContinueToPayment}
                   disabled={formData.postalCode.length !== 5}
-                  className="w-full h-14 bg-accent text-white text-xs font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-3 hover:bg-black transition-all disabled:opacity-40 disabled:cursor-not-allowed group"
+                  className="w-full h-14 bg-accent text-white text-xs font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-3 hover:bg-black transition-all disabled:opacity-40 disabled:cursor-not-allowed group cursor-pointer"
                 >
                   Continue to Payment
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -372,13 +372,13 @@ export default function CheckoutPage() {
                   <button 
                     type="button" 
                     onClick={() => setStep(1)}
-                    className="flex-grow h-16 border-2 border-accent rounded-2xl font-black text-sm text-accent hover:bg-accent hover:text-white transition-all uppercase tracking-[0.2em]"
+                    className="flex-grow h-16 border-2 border-accent rounded-2xl font-black text-sm text-accent hover:bg-accent hover:text-white transition-all uppercase tracking-[0.2em] cursor-pointer"
                   >
                     Back
                   </button>
                   <button 
                     type="submit"
-                    className="flex-[2] h-16 bg-accent text-white rounded-2xl font-black text-sm hover:bg-black transition-all shadow-xl uppercase tracking-[0.2em]"
+                    className="flex-[2] h-16 bg-accent text-white rounded-2xl font-black text-sm hover:bg-black transition-all shadow-xl uppercase tracking-[0.2em] cursor-pointer"
                   >
                     Place Your Order
                   </button>
@@ -460,4 +460,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
