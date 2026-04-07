@@ -39,16 +39,16 @@ export default function CheckoutPage() {
       const userOrders = getOrdersByEmail(user.email);
       const lastOrder = userOrders.length > 0 ? userOrders[0] : null;
 
-      if (lastOrder) {
+      if (lastOrder && lastOrder.shippingDetails) {
         setFormData(prev => ({
           ...prev,
-          firstName: lastOrder.shippingDetails.firstName,
-          lastName: lastOrder.shippingDetails.lastName,
-          email: user.email,
-          phone: lastOrder.shippingDetails.phone,
-          address: lastOrder.shippingDetails.address,
-          city: lastOrder.shippingDetails.city,
-          postalCode: lastOrder.shippingDetails.postalCode || '', // Handle legacy orders without postalCode
+          firstName: lastOrder.shippingDetails.firstName || '',
+          lastName: lastOrder.shippingDetails.lastName || '',
+          email: user.email || '',
+          phone: lastOrder.shippingDetails.phone || '',
+          address: lastOrder.shippingDetails.address || '',
+          city: lastOrder.shippingDetails.city || '',
+          postalCode: lastOrder.shippingDetails.postalCode || '', 
         }));
       } else {
         const nameParts = (user.name || '').split(' ');
@@ -59,7 +59,7 @@ export default function CheckoutPage() {
           ...prev,
           firstName,
           lastName,
-          email: user.email,
+          email: user.email || '',
           phone: user.phone || '',
         }));
       }
@@ -93,7 +93,7 @@ export default function CheckoutPage() {
 
   const applyPromoCode = () => {
     const trimmedInput = promoInput.trim().toLowerCase();
-    const activeCode = (promo.code || 'elvaedit10').toLowerCase();
+    const activeCode = (promo?.code || 'elvaedit10').toLowerCase();
     const emailToCheck = formData.email || user?.email || '';
     
     if (!emailToCheck) {
