@@ -95,7 +95,7 @@ body {
   }
 
   .btn-premium {
-    @apply inline-flex items-center justify-center px-12 py-5 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 ease-in-out border border-accent-gold/30 hover:bg-accent-gold hover:text-black hover:border-accent-gold active:scale-95 shadow-lg shadow-black/10;
+    @apply inline-flex items-center justify-center px-12 py-5 bg-accent text-white text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 ease-in-out border border-transparent hover:bg-black hover:text-white active:scale-95 shadow-lg shadow-accent/10;
   }
 
   .btn-premium-outline {
@@ -127,7 +127,7 @@ body {
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-12 py-5 bg-transparent text-black text-[10px] font-black uppercase tracking-[0.3em] border-2 border-zinc-200 transition-all duration-500 ease-in-out hover:border-black hover:bg-black hover:text-accent active:scale-95;
+    @apply inline-flex items-center justify-center px-12 py-5 bg-transparent text-black text-[10px] font-black uppercase tracking-[0.3em] border-2 border-zinc-200 transition-all duration-500 ease-in-out hover:border-black hover:bg-black hover:text-white active:scale-95;
   }
 
   .transition-smooth {
@@ -148,5 +148,9 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-lato), sans-serif !important;
   @apply tracking-widest font-black uppercase;
+}
+
+button, a {
+  @apply transition-all duration-500 ease-in-out cursor-pointer;
 }
 

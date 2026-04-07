@@ -109,7 +109,7 @@ export default function Footer() {
                 </div>
                 <button 
                   type="submit" 
-                  className="w-full py-4 bg-accent text-white text-[10px] font-black uppercase tracking-[0.4em] hover:bg-black hover:border-white transition-all duration-500 shadow-xl"
+                  className="w-full py-4 bg-accent text-white text-[10px] font-black uppercase tracking-[0.4em] hover:bg-black hover:border-white transition-all duration-500 shadow-xl cursor-pointer"
                 >
                   Subscribe Now
                 </button>
