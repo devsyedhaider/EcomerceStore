@@ -27,9 +27,9 @@ function NewArrivalsContent() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const priceRanges = [
-    { label: 'Under Rs. 5,000', value: '0-5000' },
-    { label: 'Rs. 5,000 - 10,000', value: '5000-10000' },
-    { label: 'Above Rs. 10,000', value: '10000-999999' },
+    { label: 'Under Rs 5,000', value: '0-5000' },
+    { label: 'Rs 5,000 - 10,000', value: '5000-10000' },
+    { label: 'Above Rs 10,000', value: '10000-999999' },
   ];
 
   const filteredProducts = useMemo(() => {

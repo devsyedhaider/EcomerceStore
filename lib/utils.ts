@@ -10,5 +10,5 @@ export function formatPrice(price: number) {
     style: 'currency',
     currency: 'PKR',
     minimumFractionDigits: 0,
-  }).format(price);
+  }).format(price).replace('Rs.', 'Rs');
 }

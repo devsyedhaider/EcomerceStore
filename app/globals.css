@@ -6,11 +6,12 @@
 
   --color-primary: #111111;
   --color-accent: #5F6F52;
+  --color-accent-gold: #D4AF37;
   --color-accent-light: #A9B388;
   --color-accent-dark: #3A4D39;
   --color-secondary: #ffffff;
-  --color-muted: #F8F9F4;
-  --color-border: #E8EBE0;
+  --color-muted: #F5F2EA;
+  --color-border: #E8E5DA;
   --color-gray-dark: #2D2E2B;
   --color-gray-light: #7D8271;
 
@@ -43,7 +44,7 @@
 }
 
 :root {
-  --background: #FEFEFC;
+  --background: #FCF9F2;
   --foreground: #111111;
 }
 
@@ -94,7 +95,7 @@ body {
   }
 
   .btn-premium {
-    @apply inline-flex items-center justify-center px-12 py-5 bg-black text-accent text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 ease-in-out border border-accent/30 hover:bg-accent hover:text-black hover:border-accent active:scale-95 shadow-lg shadow-black/10;
+    @apply inline-flex items-center justify-center px-12 py-5 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 ease-in-out border border-accent-gold/30 hover:bg-accent-gold hover:text-black hover:border-accent-gold active:scale-95 shadow-lg shadow-black/10;
   }
 
   .btn-premium-outline {
@@ -122,7 +123,7 @@ body {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center px-12 py-5 bg-accent text-white text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 ease-in-out hover:bg-black hover:text-accent active:scale-95 shadow-xl shadow-accent/10;
+    @apply inline-flex items-center justify-center px-12 py-5 bg-accent text-white text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 ease-in-out hover:bg-black hover:text-white active:scale-95 shadow-xl shadow-accent/10;
   }
 
   .btn-outline {
