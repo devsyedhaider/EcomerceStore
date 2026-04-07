@@ -74,7 +74,7 @@ export default function Home() {
           >
             <h1 className="text-5xl md:text-8xl font-light uppercase tracking-[0.25em] mb-8 leading-tight font-lato">
               {hero.title || 'Elegance'}{' '}
-              <span className="font-medium">{hero.accentTitle || 'Redefined'}</span>
+              <span className="font-light">{hero.accentTitle || 'Redefined'}</span>
             </h1>
 
             {/* Elegant Divider */}
@@ -94,7 +94,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.8 }}
-              className="text-base md:text-lg text-white/70 font-normal leading-[2] max-w-lg mx-auto"
+              className="text-lg md:text-xl text-white/70 font-normal leading-relaxed max-w-2xl mx-auto"
             >
               {hero.subtitle || 'Handcrafted jewelry from Pakistan — where timeless artistry meets modern luxury, designed to tell your story.'}
             </motion.p>
@@ -224,12 +224,12 @@ export default function Home() {
       {/* 3. Trending Now Grid (Previously Featured) */}
       <section className="py-24 px-6 md:px-12 bg-white border-t border-gray-100">
         <div className="max-w-[1800px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-row items-end justify-between mb-10 md:mb-16 gap-4">
             <div>
-              <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">Trending Now</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-light uppercase tracking-[0.1em] md:tracking-[0.2em] whitespace-nowrap">Trending Now</h2>
             </div>
-            <Link href="/trending" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
-              View All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-premium" />
+            <Link href="/trending" className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-black flex items-center gap-2 group border-b border-black pb-1 mb-1 whitespace-nowrap">
+              View All <ChevronRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition-premium" />
             </Link>
           </div>
 
@@ -365,13 +365,13 @@ export default function Home() {
       {/* 5. New Arrivals Grid */}
       <section className="py-24 px-6 md:px-12 bg-white">
         <div className="max-w-[1800px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-row items-end justify-between mb-10 md:mb-16 gap-4">
             <div className="text-left md:text-left">
-              <span className="text-premium-subheading block mb-4">The Latest Drop</span>
-              <h2 className="text-4xl md:text-5xl font-light uppercase tracking-[0.2em]">New Arrivals</h2>
+              <span className="text-[8px] md:text-[10px] uppercase font-bold tracking-[0.3em] text-accent block mb-2">The Latest Drop</span>
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-light uppercase tracking-[0.1em] md:tracking-[0.2em] whitespace-nowrap">New Arrivals</h2>
             </div>
-            <Link href="/new-arrivals" className="text-xs uppercase tracking-[0.2em] font-medium flex items-center gap-2 group border-b border-black pb-1">
-              View All <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-premium" />
+            <Link href="/new-arrivals" className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-black flex items-center gap-2 group border-b border-black pb-1 mb-1 whitespace-nowrap">
+              View All <ChevronRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition-premium" />
             </Link>
           </div>
 
