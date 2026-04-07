@@ -74,7 +74,7 @@ export default function Home() {
           >
             <h1 className="text-5xl md:text-8xl font-light uppercase tracking-[0.25em] mb-8 leading-tight font-lato">
               {hero.title || 'Elegance'}{' '}
-              <span className="font-light">{hero.accentTitle || 'Redefined'}</span>
+              <span className="font-medium">{hero.accentTitle || 'Redefined'}</span>
             </h1>
 
             {/* Elegant Divider */}
@@ -228,7 +228,7 @@ export default function Home() {
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-light uppercase tracking-[0.1em] md:tracking-[0.2em] whitespace-nowrap">Trending Now</h2>
             </div>
-            <Link href="/trending" className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-black flex items-center gap-2 group border-b border-black pb-1 mb-1 whitespace-nowrap">
+            <Link href="/trending" className="text-[10px] md:text-xs uppercase tracking-[0.05em] md:tracking-[0.2em] font-black flex items-center gap-1 md:gap-2 group border-b border-black pb-1 mb-1 whitespace-nowrap">
               View All <ChevronRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition-premium" />
             </Link>
           </div>
@@ -370,7 +370,7 @@ export default function Home() {
               <span className="text-[8px] md:text-[10px] uppercase font-bold tracking-[0.3em] text-accent block mb-2">The Latest Drop</span>
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-light uppercase tracking-[0.1em] md:tracking-[0.2em] whitespace-nowrap">New Arrivals</h2>
             </div>
-            <Link href="/new-arrivals" className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-black flex items-center gap-2 group border-b border-black pb-1 mb-1 whitespace-nowrap">
+            <Link href="/new-arrivals" className="text-[10px] md:text-xs uppercase tracking-[0.05em] md:tracking-[0.2em] font-black flex items-center gap-1 md:gap-2 group border-b border-black pb-1 mb-1 whitespace-nowrap">
               View All <ChevronRight className="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition-premium" />
             </Link>
           </div>

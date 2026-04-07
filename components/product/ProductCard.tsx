@@ -75,7 +75,7 @@ export default function ProductCard({
       onClick={handleCardClick}
     >
       {/* Image Container */}
-      <div className="block relative aspect-[4/5] overflow-hidden bg-[#F8F8F8]">
+      <div className="block relative aspect-[4/3] md:aspect-[4/5] overflow-hidden bg-[#F8F8F8]">
         {/* Main Image */}
         <img
           src={product.images[0]}
@@ -108,9 +108,9 @@ export default function ProductCard({
             animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
             onClick={handleAddToCart}
-            className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+            className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
           >
-            <ShoppingBag size={20} strokeWidth={1.2} />
+            <ShoppingBag size={18} strokeWidth={1.2} />
           </motion.button>
           <motion.div 
             animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
@@ -120,54 +120,54 @@ export default function ProductCard({
                e.stopPropagation();
                router.push(`/products/${product.id}`);
             }}
-            className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+            className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
           >
-            <Eye size={20} strokeWidth={1.2} />
+            <Eye size={18} strokeWidth={1.2} />
           </motion.div>
           <motion.button 
             animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
             transition={{ delay: 0.15, duration: 0.4 }}
             onClick={handleWishlist}
             className={cn(
-              "w-12 h-12 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer",
+              "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer",
               isWishlisted ? "bg-rose-500 text-white" : "bg-white text-black hover:bg-rose-500 hover:text-white"
             )}
           >
-            <Heart size={20} strokeWidth={1.2} fill={isWishlisted ? "currentColor" : "none"} />
+            <Heart size={18} strokeWidth={1.2} fill={isWishlisted ? "currentColor" : "none"} />
           </motion.button>
         </div>
 
         {/* Badges Overlay */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 font-bold uppercase tracking-widest text-[9px]">
+        <div className="absolute top-3 left-3 md:top-4 md:left-4 flex flex-col gap-2 z-10 font-bold uppercase tracking-widest text-[8px] md:text-[9px]">
           {mounted && product.isNew && showNewBadge && (
-            <span className="bg-black/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full shadow-lg">
+            <span className="bg-black/90 backdrop-blur-md text-white px-2 py-1 md:px-3 md:py-1.5 rounded-full shadow-lg">
               New Arrival
             </span>
           )}
           {mounted && (product.price < 500 || product.isFeatured) && showSaleBadge && (
-             <span className="bg-[#e194b8] text-white px-4 py-1.5 rounded-full shadow-lg shadow-[#e194b8]/20">
+             <span className="bg-[#e194b8] text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full shadow-lg shadow-[#e194b8]/20">
               Sale
             </span>
           )}
         </div>
 
         {/* Status Badge */}
-        <div className="absolute bottom-4 left-4 z-10">
+        <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4 z-10">
           {product.stock === 0 ? (
-            <span className="bg-zinc-800/80 backdrop-blur-sm text-white text-[10px] font-bold px-4 py-2 rounded-xl uppercase tracking-widest">
+            <span className="bg-zinc-800/80 backdrop-blur-sm text-white text-[9px] md:text-[10px] font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-xl uppercase tracking-widest">
               Sold Out
             </span>
           ) : (
-            <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-black/5">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-zinc-600 text-[10px] font-bold uppercase tracking-wide">In Stock</span>
+            <div className="flex items-center gap-1 bg-white/90 backdrop-blur-md px-2 py-1 md:px-3 md:py-1.5 rounded-full shadow-sm border border-black/5">
+              <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-zinc-600 text-[9px] md:text-[10px] font-bold uppercase tracking-wide">In Stock</span>
             </div>
           )}
         </div>
       </div>
 
       {/* Content Area */}
-      <div className="flex flex-col p-6 flex-grow" onClick={(e) => e.stopPropagation()}>
+      <div className="flex flex-col p-4 md:p-6 flex-grow" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-3">
           <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-bold">{categoryName}</span>
           <div className="flex items-center gap-0.5">

@@ -195,7 +195,7 @@ export default function ProductDetailPage() {
                 onClick={handleAddToCart}
                 disabled={isAdded}
                 className={cn(
-                  "w-full h-16 bg-white border-2 border-zinc-200 text-black font-black uppercase tracking-widest hover:border-black transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2",
+                  "w-full h-16 bg-white border-2 border-zinc-200 text-black font-black uppercase tracking-widest hover:border-black transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer",
                   isAdded && "bg-gray-200 border-gray-200 text-gray-500 hover:bg-gray-200 hover:text-gray-500 cursor-default"
                 )}
               >
@@ -208,7 +208,7 @@ export default function ProductDetailPage() {
               
               <button 
                 onClick={handleBuyNow}
-                className="w-full h-16 bg-black text-white font-black uppercase tracking-widest hover:bg-zinc-800 transition-all duration-300 transform active:scale-95 shadow-xl"
+                className="w-full h-16 bg-black text-white font-black uppercase tracking-widest hover:bg-zinc-800 transition-all duration-300 transform active:scale-95 shadow-xl cursor-pointer"
               >
                 Buy Now
               </button>
