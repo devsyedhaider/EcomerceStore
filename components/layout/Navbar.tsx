@@ -118,7 +118,7 @@ export default function Navbar() {
               >
                 <Heart className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
                 {mounted && wishlistCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-accent text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full animate-bounce-subtle">
+                  <span className="absolute -top-1 -right-1 bg-accent text-white text-[8px] font-black w-3.5 h-3.5 md:w-4 md:h-4 flex items-center justify-center rounded-full shadow-sm animate-bounce-subtle">
                     {wishlistCount}
                   </span>
                 )}
@@ -145,7 +145,7 @@ export default function Navbar() {
               >
                 <ShoppingCart className="w-5 h-5 md:w-6 md:h-6 stroke-[1.2] group-hover:text-accent transition-colors" />
                 {mounted && itemCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-accent text-white text-[9px] font-black w-4 h-4 flex items-center justify-center rounded-full animate-bounce-subtle">
+                  <span className="absolute -top-1 -right-1 bg-accent text-white text-[8px] font-black w-3.5 h-3.5 md:w-4 md:h-4 flex items-center justify-center rounded-full shadow-sm animate-bounce-subtle">
                     {itemCount}
                   </span>
                 )}
