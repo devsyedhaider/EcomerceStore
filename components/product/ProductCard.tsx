@@ -104,14 +104,14 @@ export default function ProductCard({
           "absolute inset-0 flex items-center justify-center gap-3 transition-all duration-700 z-20",
           isHovered ? "opacity-100" : "opacity-0 pointer-events-none"
         )}>
-          <motion.button 
-            animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-            transition={{ delay: 0.05, duration: 0.4 }}
-            onClick={handleAddToCart}
-            className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
-          >
-            <ShoppingBag size={18} strokeWidth={1.2} />
-          </motion.button>
+            <motion.button 
+              animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+              transition={{ delay: 0.05, duration: 0.4 }}
+              onClick={handleAddToCart}
+              className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+            >
+              <ShoppingBag size={18} strokeWidth={1.2} />
+            </motion.button>
           <motion.div 
             animate={isHovered ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
             transition={{ delay: 0.1, duration: 0.4 }}
@@ -120,7 +120,7 @@ export default function ProductCard({
                e.stopPropagation();
                router.push(`/products/${product.id}`);
             }}
-            className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+            className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
           >
             <Eye size={18} strokeWidth={1.2} />
           </motion.div>
@@ -130,7 +130,7 @@ export default function ProductCard({
             onClick={handleWishlist}
             className={cn(
               "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer",
-              isWishlisted ? "bg-rose-500 text-white" : "bg-white text-black hover:bg-rose-500 hover:text-white"
+              isWishlisted ? "bg-accent text-white" : "bg-white text-black hover:bg-accent hover:text-white"
             )}
           >
             <Heart size={18} strokeWidth={1.2} fill={isWishlisted ? "currentColor" : "none"} />
@@ -207,7 +207,7 @@ export default function ProductCard({
             className="group/btn flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-accent transition-colors duration-300 cursor-pointer"
           >
             Add
-            <div className="w-8 h-8 rounded-full border border-zinc-100 flex items-center justify-center group-hover/btn:bg-black group-hover/btn:text-white group-hover/btn:border-black transition-all duration-500 group-hover/btn:scale-110">
+            <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center transition-all duration-500 group-hover/btn:bg-black group-hover/btn:scale-110 shadow-lg shadow-accent/20">
               <Plus size={14} />
             </div>
           </button>

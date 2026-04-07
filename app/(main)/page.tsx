@@ -54,7 +54,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col pb-0">
-      {/* 1. Full-width Hero Banner — Clean & Professional */}
+      {/* 1. Full-width Hero Banner — Minimalists Premium */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-zinc-950">
         <div className="absolute inset-0 z-0">
           <img
@@ -65,40 +65,45 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
         </div>
 
-        <div className="relative z-10 text-center text-white px-6 max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
-            className="flex flex-col items-center"
-          >
-            <h1 className="text-5xl md:text-8xl font-light uppercase tracking-[0.25em] mb-8 leading-tight font-lato">
-              {hero.title || 'Elegance'}{' '}
-              <span className="font-medium">{hero.accentTitle || 'Redefined'}</span>
+        <div className="relative z-10 text-center text-white px-6 w-full max-w-[1400px] mx-auto pt-10">
+          <div className="flex flex-col items-center">
+            {/* 2. Premium Typographic Stack */}
+            <h1 className="flex flex-col items-center text-center">
+              <div className="overflow-hidden py-2">
+                <motion.span 
+                  initial={{ opacity: 0, y: 120 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="block text-6xl md:text-8xl lg:text-[140px] font-lato font-black uppercase tracking-[-0.03em] text-white leading-none"
+                >
+                  UNLEASH
+                </motion.span>
+              </div>
+
+              <div className="overflow-hidden py-2 -mt-4">
+                <motion.span 
+                   initial={{ opacity: 0, y: 120 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ duration: 1.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                   className="block text-6xl md:text-8xl lg:text-[140px] font-lato font-black uppercase tracking-[-0.03em] leading-none"
+                >
+                   <span className="text-accent">YOUR</span> <span className="text-white">EDGE</span>
+                </motion.span>
+              </div>
             </h1>
 
-            {/* Elegant Divider */}
+            {/* 3. Branded Narrative Paragraph */}
             <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
-              className="flex items-center gap-4 mb-6 origin-center"
-            >
-              <span className="block w-12 h-[1px] bg-gradient-to-r from-transparent to-accent/80" />
-              <span className="w-1.5 h-1.5 rounded-full bg-accent opacity-80" />
-              <span className="block w-12 h-[1px] bg-gradient-to-l from-transparent to-accent/80" />
-            </motion.div>
-
-            {/* Subtitle Paragraph */}
-            <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.8 }}
-              className="text-lg md:text-xl text-white/70 font-normal leading-relaxed max-w-2xl mx-auto"
+              transition={{ duration: 2, delay: 1 }}
+              className="max-w-2xl mx-auto"
             >
-              {hero.subtitle || 'Handcrafted jewelry from Pakistan — where timeless artistry meets modern luxury, designed to tell your story.'}
-            </motion.p>
-          </motion.div>
+               <p className="text-xs md:text-sm text-white/50 font-medium uppercase tracking-[0.3em] leading-[2.2] text-center">
+                  Experience the ultimate fusion of heritage artistry and contemporary minimalism, crafted for the modern individual who values quiet luxury and impeccable detail in every step.
+               </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
