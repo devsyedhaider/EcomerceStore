@@ -75,7 +75,7 @@ export default function ProductCard({
       onClick={handleCardClick}
     >
       {/* Image Container */}
-      <div className="block relative aspect-[4/3] md:aspect-[4/5] overflow-hidden bg-[#F8F8F8]">
+      <div className="block relative aspect-[4/3] md:aspect-square overflow-hidden bg-[#F8F8F8]">
         {/* Main Image */}
         <img
           src={product.images[0]}
