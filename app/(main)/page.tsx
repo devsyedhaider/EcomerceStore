@@ -145,7 +145,7 @@ export default function Home() {
       </AnimatePresence>
 
       {/* 2. Boutique Collections Avatar Navigation - Full Screen Centered */}
-      <section className="py-12 bg-white border-b border-zinc-50">
+      <section className="py-12 bg-background border-b border-border/50">
         <div className="max-w-[1700px] mx-auto px-6 md:px-12">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -222,7 +222,7 @@ export default function Home() {
 
 
       {/* 3. Trending Now Grid (Previously Featured) */}
-      <section className="py-24 px-6 md:px-12 bg-white border-t border-gray-100">
+      <section className="py-24 px-6 md:px-12 bg-background border-t border-border">
         <div className="max-w-[1800px] mx-auto">
           <div className="flex flex-row items-end justify-between mb-10 md:mb-16 gap-4">
             <div>
@@ -253,7 +253,7 @@ export default function Home() {
       </section>
 
       {/* 4. Promotional Banner - Professional Overhaul */}
-      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-zinc-900 py-24">
+      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-accent py-24">
         {/* Background Layer: Video or Image */}
         <div className="absolute inset-0 z-0">
           {promo.videoUrl ? (
@@ -363,7 +363,7 @@ export default function Home() {
       </section>
 
       {/* 5. New Arrivals Grid */}
-      <section className="py-24 px-6 md:px-12 bg-white">
+      <section className="py-24 px-6 md:px-12 bg-background">
         <div className="max-w-[1800px] mx-auto">
           <div className="flex flex-row items-end justify-between mb-10 md:mb-16 gap-4">
             <div className="text-left md:text-left">
@@ -395,8 +395,8 @@ export default function Home() {
       </section>
 
       {/* 6. About Section - Exact UI Match with Mockup */}
-      <section className="py-24 md:py-32 bg-[#F9F9F9]">
-        <div className="max-w-[1100px] mx-auto px-6 md:px-0 bg-white shadow-sm border border-zinc-50 overflow-hidden">
+      <section className="py-24 md:py-32 bg-muted">
+        <div className="max-w-[1100px] mx-auto px-6 md:px-0 bg-background shadow-sm border border-border/50 overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-12 items-stretch">
             {/* Left: Cinematic Image - Now even narrower (4/12 columns) */}
             <motion.div

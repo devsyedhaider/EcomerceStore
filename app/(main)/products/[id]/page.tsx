@@ -208,7 +208,7 @@ export default function ProductDetailPage() {
               
               <button 
                 onClick={handleBuyNow}
-                className="w-full h-16 bg-black text-white font-black uppercase tracking-widest hover:bg-zinc-800 transition-all duration-300 transform active:scale-95 shadow-xl cursor-pointer"
+                className="w-full h-16 bg-accent text-white font-black uppercase tracking-widest hover:bg-accent-dark transition-all duration-300 transform active:scale-95 shadow-xl cursor-pointer"
               >
                 Buy Now
               </button>

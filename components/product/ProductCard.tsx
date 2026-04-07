@@ -145,7 +145,7 @@ export default function ProductCard({
             </span>
           )}
           {mounted && (product.price < 500 || product.isFeatured) && showSaleBadge && (
-             <span className="bg-[#e194b8] text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full shadow-lg shadow-[#e194b8]/20">
+             <span className="bg-accent text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full shadow-lg shadow-accent/20">
               Sale
             </span>
           )}
