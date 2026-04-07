@@ -19,6 +19,10 @@ export interface Product {
   isNew: boolean;
   isFeatured: boolean;
   isTopInCategory: boolean;
+  materials?: string;
+  warrantyPolicy?: string;
+  shippingReturns?: string;
+  careInstructions?: string;
 }
 
 interface ProductStore {
@@ -54,6 +58,9 @@ export const useProductStore = create<ProductStore>()(
               isNew: p.is_new,
               isFeatured: p.is_featured,
               isTopInCategory: p.is_top_in_category,
+              warrantyPolicy: p.warranty_policy,
+              shippingReturns: p.shipping_returns,
+              careInstructions: p.care_instructions,
             }));
             set({ products: mappedData });
           }
@@ -72,16 +79,29 @@ export const useProductStore = create<ProductStore>()(
               is_new: product.isNew,
               is_featured: product.isFeatured,
               is_top_in_category: product.isTopInCategory,
+              warranty_policy: product.warrantyPolicy,
+              shipping_returns: product.shippingReturns,
+              care_instructions: product.careInstructions,
             };
             // @ts-ignore
-            delete dbProduct.isNew; delete dbProduct.isFeatured; delete dbProduct.isTopInCategory;
+            delete dbProduct.isNew; 
+            // @ts-ignore
+            delete dbProduct.isFeatured; 
+            // @ts-ignore
+            delete dbProduct.isTopInCategory;
+            // @ts-ignore
+            delete dbProduct.warrantyPolicy;
+            // @ts-ignore
+            delete dbProduct.shippingReturns;
+            // @ts-ignore
+            delete dbProduct.careInstructions;
             
             const { error } = await supabase.from('products').insert([dbProduct]);
             if (error) throw error;
           }
           set((state) => ({ products: [product, ...state.products] }));
         } catch (error) {
-          console.warn('📡 Cloud sync for adding product failed. Saved locally only.');
+          console.warn('📡 Cloud sync for adding product failed. Saved locally only.', error);
         }
       },
 
@@ -92,6 +112,9 @@ export const useProductStore = create<ProductStore>()(
             if ('isNew' in dbUpdate) { dbUpdate.is_new = dbUpdate.isNew; delete dbUpdate.isNew; }
             if ('isFeatured' in dbUpdate) { dbUpdate.is_featured = dbUpdate.isFeatured; delete dbUpdate.isFeatured; }
             if ('isTopInCategory' in dbUpdate) { dbUpdate.is_top_in_category = dbUpdate.isTopInCategory; delete dbUpdate.isTopInCategory; }
+            if ('warrantyPolicy' in dbUpdate) { dbUpdate.warranty_policy = dbUpdate.warrantyPolicy; delete dbUpdate.warrantyPolicy; }
+            if ('shippingReturns' in dbUpdate) { dbUpdate.shipping_returns = dbUpdate.shippingReturns; delete dbUpdate.shippingReturns; }
+            if ('careInstructions' in dbUpdate) { dbUpdate.care_instructions = dbUpdate.careInstructions; delete dbUpdate.careInstructions; }
             const { error } = await supabase.from('products').update(dbUpdate).eq('id', id);
             if (error) throw error;
           }
@@ -99,7 +122,7 @@ export const useProductStore = create<ProductStore>()(
             products: state.products.map((p) => (p.id === id ? { ...p, ...updatedProduct } : p)),
           }));
         } catch (error) {
-          console.warn('📡 Cloud sync for updating product failed. Saved locally only.');
+          console.warn('📡 Cloud sync for updating product failed. Saved locally only.', error);
         }
       },
 

@@ -5,7 +5,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ShoppingBag, Heart, Share2, ShieldCheck, Truck, RefreshCw, Star, ArrowLeft, ChevronRight, Check } from 'lucide-react';
+import { ShoppingBag, Heart, Share2, ShieldCheck, Truck, RefreshCw, Star, ArrowLeft, ChevronRight, Check, Sparkles, Info } from 'lucide-react';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
 import { formatPrice, cn } from '@/lib/utils';
@@ -157,48 +157,75 @@ export default function ProductDetailPage() {
               {product.description}
             </p>
 
+            {/* Product Details Accordions */}
+            <div className="mb-16 border-t border-gray-100">
+                {[
+                  { id: 'materials', title: 'Materials', content: product.materials, icon: <Sparkles className="w-4 h-4" /> },
+                  { id: 'warranty', title: 'Warranty Policy', content: product.warrantyPolicy, icon: <ShieldCheck className="w-4 h-4" /> },
+                  { id: 'shipping', title: 'Shipping & Returns', content: product.shippingReturns, icon: <Truck className="w-4 h-4" /> },
+                  { id: 'care', title: 'Care Instructions', content: product.careInstructions, icon: <Info className="w-4 h-4" /> }
+                ].map((item) => item.content && (
+                  <div key={item.id} className="border-b border-gray-100 py-6">
+                    <button className="w-full flex items-center justify-between text-[10px] uppercase tracking-[0.2em] font-bold group cursor-pointer hover:text-gray-light transition-premium">
+                      <div className="flex items-center gap-3">
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </div>
+                      <ChevronRight className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+                    </button>
+                    <div className="mt-4 text-[10px] uppercase tracking-wider leading-relaxed text-gray-500 font-light">
+                      {item.content}
+                    </div>
+                  </div>
+                ))}
+            </div>
+
             {/* Selectors */}
             <div className="space-y-12 mb-16">
               {/* Color Selector */}
-              <div>
-                <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold mb-6">Color: <span className="font-light text-gray-light">{selectedColor}</span></h3>
-                <div className="flex gap-4">
-                  {product.colors.map((color) => (
-                    <button
-                      key={color.name}
-                      onClick={() => setSelectedColor(color.name)}
-                      className={cn(
-                        "w-8 h-8 rounded-full border transition-premium p-0.5 cursor-pointer",
-                        selectedColor === color.name ? "border-black" : "border-transparent"
-                      )}
-                    >
-                      <div className="w-full h-full rounded-full" style={{ backgroundColor: color.hex }} />
-                    </button>
-                  ))}
+              {product.colors && product.colors.length > 0 && product.colors[0].name !== 'Standard' && (
+                <div>
+                  <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold mb-6">Color: <span className="font-light text-gray-light">{selectedColor}</span></h3>
+                  <div className="flex gap-4">
+                    {product.colors.map((color) => (
+                      <button
+                        key={color.name}
+                        onClick={() => setSelectedColor(color.name)}
+                        className={cn(
+                          "w-8 h-8 rounded-full border transition-premium p-0.5 cursor-pointer",
+                          selectedColor === color.name ? "border-black" : "border-transparent"
+                        )}
+                      >
+                        <div className="w-full h-full rounded-full" style={{ backgroundColor: color.hex }} />
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Size Selector */}
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold">Select Size</h3>
-                  <button className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-light border-b border-gray-200 hover:text-black transition-premium cursor-pointer">Size Guide</button>
+              {product.sizes && product.sizes.length > 0 && (
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold">Select Size</h3>
+                    <button className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-light border-b border-gray-200 hover:text-black transition-premium cursor-pointer">Size Guide</button>
+                  </div>
+                  <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
+                    {product.sizes.map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => setSelectedSize(size)}
+                        className={cn(
+                          "h-12 border text-[10px] uppercase tracking-widest font-medium transition-premium cursor-pointer",
+                          selectedSize === size ? "bg-black text-white border-black" : "border-gray-100 hover:border-black text-gray-light"
+                        )}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
-                  {product.sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => setSelectedSize(size)}
-                      className={cn(
-                        "h-12 border text-[10px] uppercase tracking-widest font-medium transition-premium cursor-pointer",
-                        selectedSize === size ? "bg-black text-white border-black" : "border-gray-100 hover:border-black text-gray-light"
-                      )}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              )}
             </div>
 
             {/* Actions */}

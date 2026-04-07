@@ -28,26 +28,18 @@ export default function EditProductPage() {
   const [price, setPrice] = useState('');
   const [stock, setStock] = useState('');
   const [category, setCategory] = useState(categories[0]?.id || 'men');
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [materials, setMaterials] = useState('');
+  const [warrantyPolicy, setWarrantyPolicy] = useState('');
+  const [shippingReturns, setShippingReturns] = useState('');
+  const [careInstructions, setCareInstructions] = useState('');
   const [images, setImages] = useState<string[]>([]);
-  const [selectedColors, setSelectedColors] = useState<{ name: string; hex: string }[]>([]);
   const [isTopInCategory, setIsTopInCategory] = useState(false);
   const [isFeatured, setIsFeatured] = useState(false);
   const [isNew, setIsNew] = useState(false);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const sizes = ['6', '7', '8', '9', '10', '11', '12'];
-  const availableColors = [
-    { name: 'Black', hex: '#000000' },
-    { name: 'White', hex: '#FFFFFF' },
-    { name: 'Red', hex: '#FF0000' },
-    { name: 'Blue', hex: '#0000FF' },
-    { name: 'Grey', hex: '#808080' },
-    { name: 'Navy', hex: '#000080' },
-    { name: 'Green', hex: '#008000' },
-    { name: 'Sand', hex: '#C2B280' },
-  ];
+
 
   useEffect(() => {
     setMounted(true);
@@ -57,9 +49,11 @@ export default function EditProductPage() {
       setPrice(product.price.toString());
       setStock(product.stock.toString());
       setCategory(product.category);
-      setSelectedSizes(product.sizes);
+      setMaterials(product.materials || '');
+      setWarrantyPolicy(product.warrantyPolicy || '');
+      setShippingReturns(product.shippingReturns || '');
+      setCareInstructions(product.careInstructions || '');
       setImages(product.images);
-      setSelectedColors(product.colors || []);
       setIsTopInCategory(product.isTopInCategory || false);
       setIsFeatured(product.isFeatured || false);
       setIsNew(product.isNew || false);
@@ -96,21 +90,7 @@ export default function EditProductPage() {
     }
   };
 
-  const toggleSize = (size: string) => {
-    if (selectedSizes.includes(size)) {
-        setSelectedSizes(prev => prev.filter(s => s !== size));
-    } else {
-        setSelectedSizes(prev => prev.concat(size));
-    }
-  };
 
-  const toggleColor = (color: { name: string; hex: string }) => {
-    if (selectedColors.some(c => c.hex === color.hex)) {
-        setSelectedColors(prev => prev.filter(c => c.hex !== color.hex));
-    } else {
-        setSelectedColors(prev => [...prev, color]);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,12 +102,16 @@ export default function EditProductPage() {
         price: Number(price),
         category: category.toLowerCase(),
         images,
-        sizes: selectedSizes,
-        colors: selectedColors,
+        sizes: ['8', '9', '10'], // Default sizes
+        colors: [{ name: 'Standard', hex: '#000000' }],
         stock: Number(stock),
         isTopInCategory: isTopInCategory,
         isFeatured: isFeatured,
         isNew: isNew,
+        materials,
+        warrantyPolicy,
+        shippingReturns,
+        careInstructions
     };
 
     try {
@@ -309,55 +293,44 @@ export default function EditProductPage() {
                         </select>
                     </div>
 
-                    <div className="space-y-4">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Available Colors</label>
-                        <div className="flex flex-wrap gap-3">
-                            {availableColors.map(color => (
-                                <button 
-                                    key={color.hex} 
-                                    type="button" 
-                                    onClick={() => toggleColor(color)}
-                                    className={cn(
-                                        "w-8 h-8 rounded-full border-2 transition-all flex items-center justify-center",
-                                        selectedColors.some(c => c.hex === color.hex) 
-                                            ? "border-accent scale-110 shadow-lg shadow-accent/20" 
-                                            : "border-white/10 hover:border-white/30"
-                                    )}
-                                    title={color.name}
-                                >
-                                    <div 
-                                        className="w-5 h-5 rounded-full" 
-                                        style={{ backgroundColor: color.hex, border: color.hex === '#FFFFFF' ? '1px solid #e5e7eb' : 'none' }} 
-                                    />
-                                    {selectedColors.some(c => c.hex === color.hex) && (
-                                        <div className="absolute -top-1 -right-1 bg-accent text-white rounded-full p-0.5">
-                                            <Check className="w-2 h-2" />
-                                        </div>
-                                    )}
-                                </button>
-                            ))}
-                        </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Materials</label>
+                        <input 
+                            value={materials}
+                            onChange={e => setMaterials(e.target.value)}
+                            className="w-full h-12 bg-white/5 border border-white/10 rounded-xl px-4 text-sm outline-none focus:ring-1 focus:ring-accent text-white"
+                            placeholder="e.g. Leather, Mesh"
+                        />
                     </div>
 
-                    <div className="space-y-4">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Available Sizes</label>
-                        <div className="flex flex-wrap gap-2">
-                            {sizes.map(s => (
-                                <button 
-                                    key={s} 
-                                    type="button" 
-                                    onClick={() => toggleSize(s)}
-                                    className={cn(
-                                        "w-10 h-10 rounded-lg text-xs font-black transition-colors border",
-                                        selectedSizes.includes(s) 
-                                            ? "bg-accent text-zinc-900 border-accent" 
-                                            : "bg-white/5 border-white/10 hover:bg-white/10"
-                                    )}
-                                >
-                                    {s}
-                                </button>
-                            ))}
-                        </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Warranty Policy</label>
+                        <textarea 
+                            value={warrantyPolicy}
+                            onChange={e => setWarrantyPolicy(e.target.value)}
+                            className="w-full h-24 bg-white/5 border border-white/10 rounded-xl p-4 text-sm outline-none focus:ring-1 focus:ring-accent text-white resize-none"
+                            placeholder="Describe warranty details..."
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Shipping & Returns</label>
+                        <textarea 
+                            value={shippingReturns}
+                            onChange={e => setShippingReturns(e.target.value)}
+                            className="w-full h-24 bg-white/5 border border-white/10 rounded-xl p-4 text-sm outline-none focus:ring-1 focus:ring-accent text-white resize-none"
+                            placeholder="Describe shipping & returns..."
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Care Instructions</label>
+                        <textarea 
+                            value={careInstructions}
+                            onChange={e => setCareInstructions(e.target.value)}
+                            className="w-full h-24 bg-white/5 border border-white/10 rounded-xl p-4 text-sm outline-none focus:ring-1 focus:ring-accent text-white resize-none"
+                            placeholder="How to care for this product..."
+                        />
                     </div>
 
                     <div className="pt-4 border-t border-white/10 space-y-6">
