@@ -144,7 +144,7 @@ export default function CartPage() {
               </div>
               
               {shipping > 0 && (
-                <div className="bg-gray-50 p-4">
+                <div className="bg-white p-4">
                    <p className="text-[8px] text-gray-light font-medium uppercase tracking-[0.1em] leading-relaxed">
                     Add Rs. {formatPrice(5000 - total)} more to your bag and qualify for complimentary shipping.
                    </p>

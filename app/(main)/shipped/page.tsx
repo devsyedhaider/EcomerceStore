@@ -77,7 +77,7 @@ export default function ShippedPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   viewport={{ once: false }}
-                  className="space-y-6 text-center lg:text-left bg-zinc-50 p-8 rounded-[32px] border border-zinc-100 hover:border-accent/40 transition-all duration-700"
+                  className="space-y-6 text-center lg:text-left bg-white p-8 rounded-[32px] border border-zinc-100 hover:border-accent/40 transition-all duration-700"
                >
                   <feature.icon className="w-8 h-8 text-accent mx-auto lg:mx-0 stroke-[1.2]" />
                   <h3 className="text-xs font-black uppercase tracking-[0.2em] text-zinc-900">{feature.label}</h3>

@@ -160,7 +160,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-white/80 backdrop-blur-xl border-t border-zinc-50 shadow-sm"
+            className="bg-white border-t border-zinc-50 shadow-sm"
           >
              <div className="max-w-7xl mx-auto px-4 md:px-0">
                 <ul className="flex items-center justify-center gap-8 md:gap-14 h-12 overflow-x-auto no-scrollbar scroll-smooth">

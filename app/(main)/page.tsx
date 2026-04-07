@@ -388,7 +388,7 @@ export default function Home() {
       </section>
 
       {/* 6. About Section - Exact UI Match with Mockup */}
-      <section className="py-24 md:py-32 bg-[#F9F9F9]">
+      <section className="py-24 md:py-32 bg-white">
         <div className="max-w-[1100px] mx-auto px-6 md:px-0 bg-white shadow-sm border border-zinc-50 overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-12 items-stretch">
             {/* Left: Cinematic Image - Now even narrower (4/12 columns) */}
@@ -524,7 +524,7 @@ export default function Home() {
       </AnimatePresence>
 
       {/* 7. Testimonials Section - Auto Sliding Premium Experience */}
-      <section className="py-24 md:py-32 bg-zinc-50 overflow-hidden">
+      <section className="py-24 md:py-32 bg-white overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="flex flex-col items-center text-center mb-20">
             <motion.span 

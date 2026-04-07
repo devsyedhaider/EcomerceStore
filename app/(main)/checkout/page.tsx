@@ -187,20 +187,20 @@ export default function CheckoutPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Stepper */}
-      <div className="flex items-center justify-center gap-4 mb-16">
-        <div className={cn("flex items-center gap-2", step >= 1 ? "text-black" : "text-zinc-300")}>
-            <span className={cn("w-8 h-8 rounded-full flex items-center justify-center text-xs font-black", step >= 1 ? "bg-black text-white" : "bg-zinc-100 text-zinc-400")}>1</span>
-            <span className="text-xs font-black uppercase tracking-widest hidden md:inline">Information</span>
+      <div className="flex items-center justify-center gap-6 md:gap-12 mb-20 px-4 py-8 bg-zinc-50/50 rounded-2xl border border-zinc-100">
+        <div className={cn("flex items-center gap-3 px-4 py-2 rounded-xl transition-premium", step >= 1 ? "text-black bg-white shadow-sm" : "text-zinc-300")}>
+            <span className={cn("w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black", step >= 1 ? "bg-black text-white" : "bg-zinc-100 text-zinc-400")}>1</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] hidden md:inline">Information</span>
         </div>
-        <div className="w-12 h-px bg-zinc-200" />
-        <div className={cn("flex items-center gap-2", step >= 2 ? "text-black" : "text-zinc-300")}>
-            <span className={cn("w-8 h-8 rounded-full flex items-center justify-center text-xs font-black", step >= 2 ? "bg-black text-white" : "bg-zinc-100 text-zinc-400")}>2</span>
-            <span className="text-xs font-black uppercase tracking-widest hidden md:inline">Payment</span>
+        <div className="w-8 h-px bg-zinc-200" />
+        <div className={cn("flex items-center gap-3 px-4 py-2 rounded-xl transition-premium", step >= 2 ? "text-black bg-white shadow-sm" : "text-zinc-300")}>
+            <span className={cn("w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black", step >= 2 ? "bg-black text-white" : "bg-zinc-100 text-zinc-400")}>2</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] hidden md:inline">Payment</span>
         </div>
-        <div className="w-12 h-px bg-zinc-200" />
-        <div className={cn("flex items-center gap-2", step >= 3 ? "text-black" : "text-zinc-300")}>
-            <span className={cn("w-8 h-8 rounded-full flex items-center justify-center text-xs font-black", step >= 3 ? "bg-black text-white" : "bg-zinc-100 text-zinc-400")}>3</span>
-            <span className="text-xs font-black uppercase tracking-widest hidden md:inline">Success</span>
+        <div className="w-8 h-px bg-zinc-200" />
+        <div className={cn("flex items-center gap-3 px-4 py-2 rounded-xl transition-premium", step >= 3 ? "text-black bg-white shadow-sm" : "text-zinc-300")}>
+            <span className={cn("w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black", step >= 3 ? "bg-black text-white" : "bg-zinc-100 text-zinc-400")}>3</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] hidden md:inline">Success</span>
         </div>
       </div>
 
@@ -223,7 +223,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white border border-zinc-100 p-8 space-y-6">
+                  <div className="bg-zinc-50 border border-zinc-100 p-8 space-y-6 shadow-sm">
                     {/* Name Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
@@ -235,7 +235,7 @@ export default function CheckoutPage() {
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleInputChange}
-                            className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                            className="w-full h-12 bg-white pl-11 pr-4 text-sm outline-none border border-transparent focus:border-accent transition-all placeholder:text-zinc-300"
                             placeholder="First name"
                           />
                         </div>
@@ -249,7 +249,7 @@ export default function CheckoutPage() {
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleInputChange}
-                            className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                            className="w-full h-12 bg-white pl-11 pr-4 text-sm outline-none border border-transparent focus:border-accent transition-all placeholder:text-zinc-300"
                             placeholder="Last name"
                           />
                         </div>
@@ -267,7 +267,7 @@ export default function CheckoutPage() {
                           name="email"
                           value={formData.email}
                           onChange={handleInputChange}
-                          className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                          className="w-full h-12 bg-white pl-11 pr-4 text-sm outline-none border border-transparent focus:border-accent transition-all placeholder:text-zinc-300"
                           placeholder="name@example.com"
                         />
                       </div>
@@ -284,7 +284,7 @@ export default function CheckoutPage() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleInputChange}
-                          className="w-full h-12 bg-zinc-50 pl-11 pr-4 text-sm outline-none border border-transparent focus:border-black transition-all placeholder:text-zinc-300"
+                          className="w-full h-12 bg-white pl-11 pr-4 text-sm outline-none border border-transparent focus:border-accent transition-all placeholder:text-zinc-300"
                           placeholder="03XXXXXXXXX"
                         />
                       </div>
@@ -304,7 +304,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white border border-zinc-100 p-8 space-y-6">
+                  <div className="bg-zinc-50 border border-zinc-100 p-8 space-y-6 shadow-sm">
                     {/* Street */}
                     <div className="space-y-2">
                       <label className="block text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">Street Address</label>
@@ -397,7 +397,7 @@ export default function CheckoutPage() {
                    </label>
                 </div>
 
-                <div className="bg-blue-50 p-6 rounded-2xl flex gap-4 border border-blue-100 text-blue-800">
+                <div className="bg-white p-6 rounded-2xl flex gap-4 border border-blue-100 text-blue-800">
                     <Info className="w-6 h-6 flex-shrink-0" />
                     <p className="text-xs font-medium leading-relaxed">
                         By clicking &quot;Place Order&quot;, you agree to our Terms of Service and Privacy Policy. You will receive a confirmation call shortly to verify your order.
@@ -408,7 +408,7 @@ export default function CheckoutPage() {
                   <button 
                     type="button" 
                     onClick={() => setStep(1)}
-                    className="flex-grow h-16 border-2 border-black rounded-2xl font-black text-lg hover:bg-zinc-50 transition-all uppercase"
+                    className="flex-grow h-16 border-2 border-black rounded-2xl font-black text-lg hover:bg-white transition-all uppercase"
                   >
                     Back
                   </button>
@@ -426,7 +426,7 @@ export default function CheckoutPage() {
 
         {/* Order Summary Sidebar */}
         <div>
-          <div className="bg-zinc-50 rounded-3xl p-10 border border-zinc-100 sticky top-32">
+          <div className="bg-white rounded-3xl p-10 border border-zinc-100 sticky top-32">
             <h3 className="text-2xl font-black uppercase tracking-tighter mb-8">YOUR ORDER</h3>
             
             <div className="max-h-[400px] overflow-auto no-scrollbar space-y-6 mb-8 pr-4">
