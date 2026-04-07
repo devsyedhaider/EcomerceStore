@@ -106,7 +106,7 @@ export default function LoginPage() {
             <button 
                 disabled={isLoading}
                 type="submit" 
-                className="w-40 h-14 bg-[#e194b8] text-white font-medium uppercase tracking-[0.2em] text-[11px] hover:opacity-90 transition-all flex items-center justify-center disabled:opacity-50"
+                className="w-40 h-14 bg-accent text-white font-medium uppercase tracking-[0.2em] text-[11px] hover:opacity-90 transition-all flex items-center justify-center disabled:opacity-50"
             >
                 {isLoading ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : 'Sign in'}
             </button>
