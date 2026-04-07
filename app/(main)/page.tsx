@@ -67,16 +67,16 @@ export default function Home() {
 
         <div className="relative z-10 text-center text-white px-6 w-full max-w-[1400px] mx-auto pt-10">
           <div className="flex flex-col items-center">
-            {/* 2. Premium Typographic Stack */}
+            {/* 2. Premium Typographic Stack — Dynamic from Admin */}
             <h1 className="flex flex-col items-center text-center">
               <div className="overflow-hidden py-2">
                 <motion.span 
                   initial={{ opacity: 0, y: 120 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="block text-6xl md:text-8xl lg:text-[140px] font-lato font-black uppercase tracking-[-0.03em] text-white leading-none"
+                  className="block text-6xl md:text-8xl lg:text-[140px] font-lato font-black uppercase tracking-[0.05em] text-white leading-none"
                 >
-                  UNLEASH
+                  {hero.title}
                 </motion.span>
               </div>
 
@@ -85,24 +85,12 @@ export default function Home() {
                    initial={{ opacity: 0, y: 120 }}
                    animate={{ opacity: 1, y: 0 }}
                    transition={{ duration: 1.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                   className="block text-6xl md:text-8xl lg:text-[140px] font-lato font-black uppercase tracking-[-0.03em] leading-none"
+                   className="block text-6xl md:text-8xl lg:text-[140px] font-lato font-black uppercase tracking-[0.05em] leading-none text-[#2C3524]"
                 >
-                   <span className="text-accent">YOUR</span> <span className="text-white">EDGE</span>
+                   {hero.accentTitle}
                 </motion.span>
               </div>
             </h1>
-
-            {/* 3. Branded Narrative Paragraph */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 2, delay: 1 }}
-              className="max-w-2xl mx-auto"
-            >
-               <p className="text-xs md:text-sm text-white/50 font-medium uppercase tracking-[0.3em] leading-[2.2] text-center">
-                  Experience the ultimate fusion of heritage artistry and contemporary minimalism, crafted for the modern individual who values quiet luxury and impeccable detail in every step.
-               </p>
-            </motion.div>
           </div>
         </div>
       </section>
