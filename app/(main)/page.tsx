@@ -55,7 +55,7 @@ export default function Home() {
   return (
     <div className="flex flex-col pb-0">
       {/* 1. Full-width Hero Banner — Minimalists Premium */}
-      <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-zinc-950">
+      <section className="relative h-[60vh] md:h-[80vh] min-h-[500px] w-full flex items-center justify-center overflow-hidden bg-zinc-950">
         <div className="absolute inset-0 z-0">
           <img
             src={hero.backgroundImage}
@@ -65,27 +65,27 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
         </div>
 
-        <div className="relative z-10 text-center text-white px-6 w-full max-w-[1400px] mx-auto pt-10">
+        <div className="relative z-10 text-center text-white px-6 w-full max-w-[1400px] mx-auto pt-20">
           <div className="flex flex-col items-center">
-            {/* 2. Premium Typographic Stack — Dynamic from Admin */}
+            {/* 2. Premium Typographic Stack — Unbreakable Single-Line Fluid Scale */}
             <h1 className="flex flex-col items-center text-center">
-              <div className="overflow-hidden py-2">
+              <div className="overflow-hidden py-1 w-full flex justify-center">
                 <motion.span 
                   initial={{ opacity: 0, y: 120 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="block text-6xl md:text-8xl lg:text-[140px] font-lato font-black uppercase tracking-[0.05em] text-white leading-none"
+                  className="block text-3xl sm:text-7xl md:text-8xl lg:text-[120px] font-lato font-black uppercase tracking-[-0.01em] text-white leading-tight px-4 whitespace-nowrap"
                 >
                   {hero.title}
                 </motion.span>
               </div>
 
-              <div className="overflow-hidden py-2 -mt-4">
+              <div className="overflow-hidden py-1 -mt-2 md:-mt-6 w-full flex justify-center">
                 <motion.span 
                    initial={{ opacity: 0, y: 120 }}
                    animate={{ opacity: 1, y: 0 }}
                    transition={{ duration: 1.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                   className="block text-6xl md:text-8xl lg:text-[140px] font-lato font-black uppercase tracking-[0.05em] leading-none text-[#2C3524]"
+                   className="block text-3xl sm:text-7xl md:text-8xl lg:text-[120px] font-lato font-black uppercase tracking-[-0.01em] leading-tight text-[#2C3524] px-4 whitespace-nowrap"
                 >
                    {hero.accentTitle}
                 </motion.span>
