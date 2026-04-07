@@ -166,14 +166,24 @@ export default function ProductDetailPage() {
                   { id: 'care', title: 'Care Instructions', content: product.careInstructions, icon: <Info className="w-4 h-4" /> }
                 ].map((item) => item.content && (
                   <div key={item.id} className="border-b border-gray-100 py-6">
-                    <button className="w-full flex items-center justify-between text-[10px] uppercase tracking-[0.2em] font-bold group cursor-pointer hover:text-gray-light transition-premium">
+                    <button 
+                      onClick={() => {
+                        const el = document.getElementById(`content-${item.id}`);
+                        const icon = document.getElementById(`icon-${item.id}`);
+                        if (el) {
+                          el.classList.toggle('hidden');
+                          icon?.classList.toggle('rotate-90');
+                        }
+                      }}
+                      className="w-full flex items-center justify-between text-sm uppercase tracking-[0.1em] font-bold group cursor-pointer hover:text-gray-light transition-premium"
+                    >
                       <div className="flex items-center gap-3">
-                        {item.icon}
+                        <div className="text-accent">{item.icon}</div>
                         <span>{item.title}</span>
                       </div>
-                      <ChevronRight className="w-3 h-3 group-hover:rotate-90 transition-transform" />
+                      <ChevronRight id={`icon-${item.id}`} className="w-4 h-4 transition-transform duration-300" />
                     </button>
-                    <div className="mt-4 text-[10px] uppercase tracking-wider leading-relaxed text-gray-500 font-light">
+                    <div id={`content-${item.id}`} className="hidden mt-4 text-sm uppercase tracking-wider leading-relaxed text-gray-500 font-light animate-fade-in">
                       {item.content}
                     </div>
                   </div>
