@@ -74,6 +74,11 @@ export const usePromoStore = create<PromoStore>()(
               buttonText: data.button_text ?? data.buttonText,
               backgroundImage: data.background_image || data.backgroundImage || defaultPromo.backgroundImage,
               secondVideoUrl: data.second_video_url || data.secondVideoUrl || defaultPromo.secondVideoUrl,
+              videoBannerUrl: data.video_banner_url ?? data.videoBannerUrl ?? defaultPromo.videoBannerUrl,
+              videoBannerHeading: data.video_banner_heading ?? data.videoBannerHeading ?? defaultPromo.videoBannerHeading,
+              videoBannerSubtext: data.video_banner_subtext ?? data.videoBannerSubtext ?? defaultPromo.videoBannerSubtext,
+              videoBannerCta: data.video_banner_cta ?? data.videoBannerCta ?? defaultPromo.videoBannerCta,
+              videoBannerCtaLink: data.video_banner_cta_link ?? data.videoBannerCtaLink ?? defaultPromo.videoBannerCtaLink,
             };
             set({ promo: mappedPromo, lastSync: new Date() });
           }

@@ -388,99 +388,93 @@ export default function Home() {
       </section>
 
       {/* 5.5 — Video Promo Banner (below New Arrivals) */}
-      {promo.videoBannerUrl && (
-        <section className="relative w-full h-[70vh] min-h-[480px] max-h-[800px] overflow-hidden flex items-center justify-center bg-zinc-950">
-          {/* Video Layer */}
+      <section className="relative w-full h-[70vh] min-h-[480px] max-h-[800px] overflow-hidden flex items-center justify-center bg-zinc-950">
+        {/* Video or Fallback Image */}
+        {promo.videoBannerUrl ? (
           <video
             key={promo.videoBannerUrl}
             autoPlay
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0, transition: 'opacity 1s ease' }}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+            style={{ opacity: 0 }}
             onCanPlay={(e) => { e.currentTarget.style.opacity = '0.55'; }}
           >
             <source src={promo.videoBannerUrl} type="video/mp4" />
+            <source src={promo.videoBannerUrl} type="video/webm" />
           </video>
-
-          {/* Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/30 to-zinc-950/60 z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/40 via-transparent to-zinc-950/40 z-10" />
-
-          {/* Grain texture */}
-          <div className="absolute inset-0 z-10 opacity-[0.04] pointer-events-none"
-            style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")', backgroundSize: '200px 200px' }}
+        ) : (
+          <img
+            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=100&w=2560&auto=format&fit=crop"
+            alt="Promo Banner"
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
           />
+        )}
 
-          {/* Content */}
-          <div className="relative z-20 flex flex-col items-center text-center px-6 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              viewport={{ once: false }}
-              className="flex items-center gap-4 mb-8"
+        {/* Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/30 to-zinc-950/60 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/40 via-transparent to-zinc-950/40 z-10" />
+
+        {/* Content */}
+        <div className="relative z-20 flex flex-col items-center text-center px-6 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: false }}
+            className="flex items-center gap-4 mb-8"
+          >
+            <div className="w-10 h-[1px] bg-accent" />
+            <span className="text-[10px] uppercase tracking-[0.5em] font-black text-accent">
+              New Season
+            </span>
+            <div className="w-10 h-[1px] bg-accent" />
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: false }}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-[0.05em] text-white leading-[1] mb-6"
+          >
+            {promo.videoBannerHeading || 'Crafted for the Bold'}
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            viewport={{ once: false }}
+            className="text-sm md:text-base uppercase tracking-[0.25em] font-light text-white/50 mb-12 max-w-lg"
+          >
+            {promo.videoBannerSubtext || 'Discover the new season collection'}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            viewport={{ once: false }}
+          >
+            <Link
+              href={promo.videoBannerCtaLink || '/products'}
+              className="group relative inline-flex items-center gap-4 px-12 py-5 border border-white/30 text-white text-[11px] font-black uppercase tracking-[0.35em] overflow-hidden transition-all duration-500 hover:border-white"
             >
-              <div className="w-10 h-[1px] bg-accent" />
-              <span className="text-[10px] uppercase tracking-[0.5em] font-black text-accent">
-                New Season
-              </span>
-              <div className="w-10 h-[1px] bg-accent" />
-            </motion.div>
+              <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+              <span className="relative z-10 group-hover:text-black transition-colors duration-500">{promo.videoBannerCta || 'Shop Now'}</span>
+              <ArrowRight className="relative z-10 w-4 h-4 group-hover:text-black group-hover:translate-x-1 transition-all duration-500" />
+            </Link>
+          </motion.div>
+        </div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              viewport={{ once: false }}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-[0.05em] text-white leading-[1] mb-6"
-            >
-              {promo.videoBannerHeading || 'Crafted for the Bold'}
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
-              viewport={{ once: false }}
-              className="text-sm md:text-base uppercase tracking-[0.25em] font-light text-white/50 mb-12 max-w-lg"
-            >
-              {promo.videoBannerSubtext || 'Discover the new season collection'}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              viewport={{ once: false }}
-            >
-              <Link
-                href={promo.videoBannerCtaLink || '/products'}
-                className="group relative inline-flex items-center gap-4 px-12 py-5 border border-white/30 text-white text-[11px] font-black uppercase tracking-[0.35em] overflow-hidden transition-all duration-500 hover:border-accent hover:text-black"
-              >
-                <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                <span className="relative z-10">{promo.videoBannerCta || 'Shop Now'}</span>
-                <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Corner decorations */}
-          <div className="absolute top-8 left-8 z-20 opacity-30">
-            <div className="w-6 h-6 border-t border-l border-white" />
-          </div>
-          <div className="absolute top-8 right-8 z-20 opacity-30">
-            <div className="w-6 h-6 border-t border-r border-white" />
-          </div>
-          <div className="absolute bottom-8 left-8 z-20 opacity-30">
-            <div className="w-6 h-6 border-b border-l border-white" />
-          </div>
-          <div className="absolute bottom-8 right-8 z-20 opacity-30">
-            <div className="w-6 h-6 border-b border-r border-white" />
-          </div>
-        </section>
-      )}
+        {/* Corner decorations */}
+        <div className="absolute top-8 left-8 z-20 opacity-30"><div className="w-6 h-6 border-t border-l border-white" /></div>
+        <div className="absolute top-8 right-8 z-20 opacity-30"><div className="w-6 h-6 border-t border-r border-white" /></div>
+        <div className="absolute bottom-8 left-8 z-20 opacity-30"><div className="w-6 h-6 border-b border-l border-white" /></div>
+        <div className="absolute bottom-8 right-8 z-20 opacity-30"><div className="w-6 h-6 border-b border-r border-white" /></div>
+      </section>
 
       {/* 6. About Section - Exact UI Match with Mockup */}
       <section className="py-24 md:py-32 bg-white">
