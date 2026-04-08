@@ -74,7 +74,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 120 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="block text-3xl sm:text-7xl md:text-8xl lg:text-[120px] font-lato font-black uppercase tracking-[-0.01em] text-white leading-tight px-4 whitespace-nowrap"
+                  className="block text-5xl sm:text-7xl md:text-8xl lg:text-[120px] font-lato font-black uppercase tracking-[-0.01em] text-white leading-tight px-4 whitespace-nowrap"
                 >
                   {hero.title}
                 </motion.span>
@@ -85,7 +85,7 @@ export default function Home() {
                    initial={{ opacity: 0, y: 120 }}
                    animate={{ opacity: 1, y: 0 }}
                    transition={{ duration: 1.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                   className="block text-3xl sm:text-7xl md:text-8xl lg:text-[120px] font-lato font-black uppercase tracking-[-0.01em] leading-tight text-[#2C3524] px-4 whitespace-nowrap"
+                   className="block text-5xl sm:text-7xl md:text-8xl lg:text-[120px] font-lato font-black uppercase tracking-[-0.01em] leading-tight text-[#2C3524] px-4 whitespace-nowrap"
                 >
                    {hero.accentTitle}
                 </motion.span>

@@ -74,6 +74,16 @@ export default function ProductCard({
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
     >
+      {/* Remove from Wishlist button — only on wishlist page */}
+      {isWishlistPage && (
+        <button
+          onClick={handleWishlist}
+          title="Remove from wishlist"
+          className="absolute top-3 right-3 z-30 w-8 h-8 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-[#6B7C3C] hover:bg-[#6B7C3C] hover:text-white shadow-md border border-zinc-100 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+        >
+          <X size={14} strokeWidth={2.5} />
+        </button>
+      )}
       {/* Image Container */}
       <div className="block relative aspect-[4/3] md:aspect-square overflow-hidden bg-[#F8F8F8]">
         {/* Main Image */}

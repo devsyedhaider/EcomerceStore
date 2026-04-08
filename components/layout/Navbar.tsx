@@ -162,8 +162,8 @@ export default function Navbar() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="bg-white border-t border-zinc-50 shadow-sm"
           >
-             <div className="max-w-7xl mx-auto px-4 md:px-0">
-                <ul className="flex items-center justify-center gap-8 md:gap-14 h-12 overflow-x-auto no-scrollbar scroll-smooth">
+             <div className="max-w-7xl mx-auto px-2 md:px-0">
+                <ul className="flex items-center justify-start md:justify-center gap-5 md:gap-14 h-14 overflow-x-auto no-scrollbar scroll-smooth px-2">
                    {[
                       { name: 'Home', href: '/' },
                       { name: 'New Arrival', href: '/new-arrivals' },
@@ -173,12 +173,12 @@ export default function Navbar() {
                       { name: 'Contact us', href: '/contact' },
                       { name: 'Our Collection', href: '/categories' }
                    ].map((tab) => (
-                      <li key={tab.name}>
+                      <li key={tab.name} className="flex-shrink-0">
                          <Link 
                             href={tab.href}
                             className={cn(
-                               "text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] whitespace-nowrap transition-all duration-500 py-3 block hover:text-accent text-zinc-500",
-                               pathname === tab.href ? "text-accent font-black" : ""
+                               "text-xs md:text-[11px] font-bold uppercase tracking-[0.1em] md:tracking-[0.25em] whitespace-nowrap transition-all duration-500 py-4 block hover:text-accent text-zinc-500 border-b-2 border-transparent",
+                               pathname === tab.href ? "text-accent font-black border-b-2 border-accent" : ""
                             )}
                          >
                             {tab.name}
