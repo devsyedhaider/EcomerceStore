@@ -86,7 +86,7 @@ export default function Navbar() {
         {/* Main Brand & Actions Bar */}
         <nav className={cn(
             "bg-white px-4 md:px-10 transition-all duration-500 border-none",
-            isScrolled ? "h-16" : "h-20"
+            isScrolled ? "h-20" : "h-32"
         )}>
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
             {/* Left: Mobile Menu Trigger */}
@@ -105,7 +105,10 @@ export default function Navbar() {
                     <img
                       src="/logo.png"
                       alt="The Elva Edit"
-                      className="h-10 md:h-12 w-auto object-contain transition-opacity duration-500 group-hover:opacity-80"
+                      className={cn(
+                        "w-auto object-contain transition-all duration-500 group-hover:opacity-80",
+                        isScrolled ? "h-12 md:h-14" : "h-20 md:h-28"
+                      )}
                     />
                 </Link>
             </div>
@@ -365,7 +368,7 @@ export default function Navbar() {
       </AnimatePresence>
       <div className={cn(
         "transition-all duration-500",
-        isAuthPage ? "h-[80px]" : "h-[90px] md:h-[110px]"
+        isAuthPage ? "h-[100px]" : "h-[140px] md:h-[180px]"
       )} /> {/* Proper spacer for fixed header */}
     </>
   );
