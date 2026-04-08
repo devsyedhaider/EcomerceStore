@@ -17,7 +17,7 @@ export default function AdminPromoPage() {
 
   if (!mounted) return null;
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, slot: 'main' | 'second' | 'banner') => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -26,81 +26,16 @@ export default function AdminPromoPage() {
         try {
           const { compressImage } = await import('@/lib/image-utils');
           const compressed = await compressImage(base64, 1920, 1080, 0.7);
-          setLocalPromo(prev => ({ ...prev, backgroundImage: compressed }));
+          if (slot === 'main') setLocalPromo(prev => ({ ...prev, backgroundImage: compressed }));
+          else if (slot === 'second') setLocalPromo(prev => ({ ...prev, secondBackgroundImage: compressed }));
+          else if (slot === 'banner') setLocalPromo(prev => ({ ...prev, videoBannerBackgroundImage: compressed }));
         } catch {
-          setLocalPromo(prev => ({ ...prev, backgroundImage: base64 }));
+          if (slot === 'main') setLocalPromo(prev => ({ ...prev, backgroundImage: base64 }));
+          else if (slot === 'second') setLocalPromo(prev => ({ ...prev, secondBackgroundImage: base64 }));
+          else if (slot === 'banner') setLocalPromo(prev => ({ ...prev, videoBannerBackgroundImage: base64 }));
         }
       };
       reader.readAsDataURL(file);
-    }
-  };
-
-  const uploadFile = async (file: File, path: string) => {
-    const { supabase } = await import('@/lib/supabase');
-    if (!supabase) throw new Error('Supabase not initialized');
-
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `${path}/${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('videos')
-      .upload(filePath, file);
-
-    if (uploadError) throw uploadError;
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('videos')
-      .getPublicUrl(filePath);
-
-    return publicUrl;
-  };
-
-  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      try {
-        setIsSaving(true);
-        const url = await uploadFile(file, 'promo');
-        setLocalPromo(prev => ({ ...prev, videoUrl: url }));
-      } catch (error) {
-        console.error('Video upload failed:', error);
-        alert('Failed to upload video to Supabase Storage. Make sure the "videos" bucket exists and is public.');
-      } finally {
-        setIsSaving(false);
-      }
-    }
-  };
-
-  const handleSecondVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      try {
-        setIsSaving(true);
-        const url = await uploadFile(file, 'cinematic');
-        setLocalPromo(prev => ({ ...prev, secondVideoUrl: url }));
-      } catch (error) {
-        console.error('Video upload failed:', error);
-        alert('Failed to upload video to Supabase Storage.');
-      } finally {
-        setIsSaving(false);
-      }
-    }
-  };
-
-  const handleVideoBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      try {
-        setIsSaving(true);
-        const url = await uploadFile(file, 'banner');
-        setLocalPromo(prev => ({ ...prev, videoBannerUrl: url }));
-      } catch (error) {
-        console.error('Video upload failed:', error);
-        alert('Failed to upload video to Supabase Storage.');
-      } finally {
-        setIsSaving(false);
-      }
     }
   };
 
@@ -215,38 +150,42 @@ export default function AdminPromoPage() {
             <div className="flex items-center justify-between border-b border-zinc-50 pb-8">
               <div className="flex items-center gap-4">
                 <ImageIcon className="w-5 h-5 text-zinc-300" />
-                <h2 className="text-lg font-light uppercase tracking-[0.2em]">Visual Asset</h2>
+                <h2 className="text-lg font-light uppercase tracking-[0.2em]">Visual Assets</h2>
               </div>
               <div className="flex flex-wrap gap-4">
-                 <input type="file" id="promo-upload" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                 <input 
+                   type="file" 
+                   id="promo-upload" 
+                   className="hidden" 
+                   accept="image/*" 
+                   onChange={(e) => handleImageUpload(e, 'main')} 
+                 />
                  <label
                    htmlFor="promo-upload"
                    className="text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 border border-zinc-200 hover:border-black hover:bg-zinc-50 transition-all cursor-pointer flex items-center gap-2"
                  >
-                   <ImageIcon className="w-3 h-3" /> Change Image File
+                   <ImageIcon className="w-3 h-3" /> Main Banner Image
                  </label>
 
-                 <input type="file" id="video-upload" className="hidden" accept="video/mp4" onChange={handleVideoUpload} />
-                 <label
-                   htmlFor="video-upload"
-                   className="text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 border border-zinc-200 hover:border-black hover:bg-zinc-50 transition-all cursor-pointer flex items-center gap-2"
-                 >
-                   <ImageIcon className="w-3 h-3" /> Select Promo Video
-                  </label>
-
-                  <input type="file" id="second-video-upload" className="hidden" accept="video/mp4" onChange={handleSecondVideoUpload} />
+                  <input 
+                    type="file" 
+                    id="second-video-upload" 
+                    className="hidden" 
+                    accept="image/*" 
+                    onChange={(e) => handleImageUpload(e, 'second')} 
+                  />
                   <label
                     htmlFor="second-video-upload"
                     className="text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 border border-zinc-200 hover:border-black hover:bg-zinc-50 transition-all cursor-pointer flex items-center gap-2"
                   >
-                    <ImageIcon className="w-3 h-3 text-accent" /> Select Second Video
+                    <ImageIcon className="w-3 h-3 text-accent" /> Cinematic Banner Image
                  </label>
               </div>
             </div>
 
             <div className="space-y-6">
               <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Background Image URL</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Main Background Image URL</label>
                 <input
                   value={localPromo.backgroundImage}
                   onChange={e => setLocalPromo({...localPromo, backgroundImage: e.target.value})}
@@ -255,67 +194,61 @@ export default function AdminPromoPage() {
                 />
               </div>
 
-              <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Background Video URL (Optional)</label>
-                <input
-                  value={localPromo.videoUrl || ''}
-                  onChange={e => setLocalPromo({...localPromo, videoUrl: e.target.value})}
-                  className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light"
-                  placeholder="https://example.com/video.mp4"
-                />
-                <p className="text-[9px] uppercase tracking-widest text-zinc-400">Direct link to mp4 file recommended for best performance.</p>
-              </div>
-
               <div className="pt-6 border-t border-zinc-50">
                 <div className="flex items-center gap-4 mb-6">
                   <Layout className="w-5 h-5 text-zinc-300" />
-                  <h2 className="text-lg font-light uppercase tracking-[0.2em]">Secondary Cinematic Video</h2>
+                  <h2 className="text-lg font-light uppercase tracking-[0.2em]">Cinematic Banner</h2>
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Hero Video URL (Below About Us)</label>
+                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Background Image URL (Below About Us)</label>
                   <input
-                    value={localPromo.secondVideoUrl || ''}
-                    onChange={e => setLocalPromo({...localPromo, secondVideoUrl: e.target.value})}
+                    value={localPromo.secondBackgroundImage || ''}
+                    onChange={e => setLocalPromo({...localPromo, secondBackgroundImage: e.target.value})}
                     className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-black transition-all font-light"
-                    placeholder="https://example.com/brand-video.mp4"
+                    placeholder="https://images.unsplash.com/..."
                   />
-                  <p className="text-[8px] uppercase tracking-widest text-zinc-400 opacity-60">This video plays automatically below the 'About Us' section without text or buttons.</p>
+                  <p className="text-[8px] uppercase tracking-widest text-zinc-400 opacity-60">This high-impact image appears below the 'About Us' section.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ─── Video Promo Banner Editor ─── */}
+          {/* ─── Promo Showcase Banner Editor ─── */}
           <div className="bg-white p-10 border border-zinc-100 space-y-8">
             <div className="flex items-center justify-between border-b border-zinc-50 pb-8">
               <div className="flex items-center gap-4">
-                <Video className="w-5 h-5 text-accent" />
+                <ImageIcon className="w-5 h-5 text-accent" />
                 <div>
-                  <h2 className="text-lg font-light uppercase tracking-[0.2em]">Video Promo Banner</h2>
-                  <p className="text-[9px] uppercase tracking-widest text-zinc-400 mt-1">Shown below New Arrivals section</p>
+                  <h2 className="text-lg font-light uppercase tracking-[0.2em]">Showcase Banner</h2>
+                  <p className="text-[9px] uppercase tracking-widest text-zinc-400 mt-1">Huge banner shown below New Arrivals</p>
                 </div>
               </div>
               <div>
-                <input type="file" id="video-banner-upload" className="hidden" accept="video/mp4,video/webm" onChange={handleVideoBannerUpload} />
+                <input 
+                  type="file" 
+                  id="video-banner-upload" 
+                  className="hidden" 
+                  accept="image/*" 
+                  onChange={(e) => handleImageUpload(e, 'banner')} 
+                />
                 <label
                   htmlFor="video-banner-upload"
                   className="text-[10px] font-bold uppercase tracking-[0.2em] px-5 py-3 border border-accent text-accent hover:bg-accent hover:text-white transition-all cursor-pointer flex items-center gap-2"
                 >
-                  <Play className="w-3 h-3" /> Upload Video
+                  <ImageIcon className="w-3" /> Upload Image
                 </label>
               </div>
             </div>
 
             <div className="space-y-5">
               <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Video URL (mp4 / webm direct link)</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Showcase Image URL</label>
                 <input
-                  value={localPromo.videoBannerUrl || ''}
-                  onChange={e => setLocalPromo({...localPromo, videoBannerUrl: e.target.value})}
+                  value={localPromo.videoBannerBackgroundImage || ''}
+                  onChange={e => setLocalPromo({...localPromo, videoBannerBackgroundImage: e.target.value})}
                   className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-accent transition-all font-light"
-                  placeholder="https://example.com/promo-banner.mp4"
+                  placeholder="https://images.unsplash.com/..."
                 />
-                <p className="text-[9px] uppercase tracking-widest text-zinc-400">Leave empty to hide this banner from the storefront.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -385,24 +318,11 @@ export default function AdminPromoPage() {
           <div className="relative min-h-[500px] flex items-center justify-center overflow-hidden bg-zinc-900 rounded-2xl border border-zinc-100 p-8">
             {/* Background Layer: Video or Image */}
             <div className="absolute inset-0 z-0">
-              {localPromo.videoUrl ? (
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  onLoadedData={(e) => e.currentTarget.play()}
-                  key={localPromo.videoUrl}
-                  src={localPromo.videoUrl}
-                  className="w-full h-full object-cover opacity-50"
-                />
-              ) : (
-                <img
-                  src={localPromo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
-                  alt="Promotion Background"
-                  className="w-full h-full object-cover opacity-40 scale-105"
-                />
-              )}
+              <img
+                src={localPromo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
+                alt="Promotion Background"
+                className="w-full h-full object-cover opacity-40 scale-105"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-zinc-900/50" />
             </div>
 
@@ -465,16 +385,11 @@ export default function AdminPromoPage() {
             </div>
 
             <div className="relative min-h-[300px] flex items-center justify-center overflow-hidden bg-black rounded-2xl border border-zinc-100">
-              {localPromo.secondVideoUrl ? (
+              {localPromo.secondBackgroundImage ? (
                 <>
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    onLoadedData={(e) => e.currentTarget.play()}
-                    key={localPromo.secondVideoUrl}
-                    src={localPromo.secondVideoUrl}
+                  <img
+                    src={localPromo.secondBackgroundImage}
+                    alt="Cinematic Background"
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
@@ -485,7 +400,7 @@ export default function AdminPromoPage() {
                 </>
               ) : (
                 <div className="text-center p-12 text-zinc-500 uppercase tracking-widest text-[10px]">
-                  No Cinematic Video Selected
+                  No Cinematic Background Selected
                 </div>
               )}
             </div>
@@ -502,14 +417,12 @@ export default function AdminPromoPage() {
               </span>
             </div>
 
-            <div className="relative min-h-[320px] flex items-center justify-center overflow-hidden bg-zinc-950 rounded-2xl border border-zinc-800">
-              {localPromo.videoBannerUrl ? (
-                <video
-                  key={localPromo.videoBannerUrl}
-                  autoPlay muted loop playsInline
+            <div className="relative min-h-[450px] flex items-center justify-center overflow-hidden bg-zinc-950 rounded-2xl border border-zinc-800">
+              {localPromo.videoBannerBackgroundImage ? (
+                <img
+                  src={localPromo.videoBannerBackgroundImage}
+                  alt="Showcase Background"
                   className="absolute inset-0 w-full h-full object-cover opacity-50"
-                  onLoadedData={(e) => e.currentTarget.play()}
-                  src={localPromo.videoBannerUrl}
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 to-zinc-800" />
@@ -531,9 +444,9 @@ export default function AdminPromoPage() {
                 <div className="px-7 py-2.5 border border-white/30 text-white text-[9px] font-black uppercase tracking-[0.3em] flex items-center gap-2">
                   {localPromo.videoBannerCta || 'Shop Now'} <span>→</span>
                 </div>
-                {!localPromo.videoBannerUrl && (
+                {!localPromo.videoBannerBackgroundImage && (
                   <p className="mt-5 text-[8px] uppercase tracking-widest text-zinc-600">
-                    Add a video URL above to activate on storefront
+                    Add an image URL above to activate on storefront
                   </p>
                 )}
               </div>

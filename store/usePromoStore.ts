@@ -12,9 +12,8 @@ interface PromoContent {
   description: string;
   buttonText: string;
   backgroundImage: string;
-  videoUrl?: string;
-  secondVideoUrl?: string;
-  videoBannerUrl?: string;
+  secondBackgroundImage?: string;
+  videoBannerBackgroundImage?: string;
   videoBannerHeading?: string;
   videoBannerSubtext?: string;
   videoBannerCta?: string;
@@ -39,9 +38,8 @@ const defaultPromo: PromoContent = {
   description: 'Valid on all new arrivals - Get 10% OFF now!',
   buttonText: 'CLAIM DISCOUNT',
   backgroundImage: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=100&w=2560&auto=format&fit=crop',
-  videoUrl: '',
-  secondVideoUrl: 'https://player.vimeo.com/external/340032049.sd.mp4?s=6a575e92706e2c31e9c9339327855013ed2d8333&profile_id=164&oauth2_token_id=57447761',
-  videoBannerUrl: '',
+  secondBackgroundImage: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=100&w=2560&auto=format&fit=crop',
+  videoBannerBackgroundImage: 'https://images.unsplash.com/photo-1611080626919-7cf5a969fc8f?q=100&w=2560&auto=format&fit=crop',
   videoBannerHeading: 'Crafted for the Bold',
   videoBannerSubtext: 'Discover the new season collection',
   videoBannerCta: 'Shop Now',
@@ -73,8 +71,8 @@ export const usePromoStore = create<PromoStore>()(
               titleAccent: data.title_accent ?? data.titleAccent,
               buttonText: data.button_text ?? data.buttonText,
               backgroundImage: data.background_image || data.backgroundImage || defaultPromo.backgroundImage,
-              secondVideoUrl: data.second_video_url || data.secondVideoUrl || defaultPromo.secondVideoUrl,
-              videoBannerUrl: data.video_banner_url ?? data.videoBannerUrl ?? defaultPromo.videoBannerUrl,
+              secondBackgroundImage: data.second_background_image || data.secondBackgroundImage || defaultPromo.secondBackgroundImage,
+              videoBannerBackgroundImage: data.video_banner_background_image || data.videoBannerBackgroundImage || defaultPromo.videoBannerBackgroundImage,
               videoBannerHeading: data.video_banner_heading ?? data.videoBannerHeading ?? defaultPromo.videoBannerHeading,
               videoBannerSubtext: data.video_banner_subtext ?? data.videoBannerSubtext ?? defaultPromo.videoBannerSubtext,
               videoBannerCta: data.video_banner_cta ?? data.videoBannerCta ?? defaultPromo.videoBannerCta,
@@ -97,8 +95,8 @@ export const usePromoStore = create<PromoStore>()(
                     titleAccent: newData.title_accent ?? newData.titleAccent,
                     buttonText: newData.button_text ?? newData.buttonText,
                     backgroundImage: newData.background_image || newData.backgroundImage || defaultPromo.backgroundImage,
-                    secondVideoUrl: newData.second_video_url || newData.secondVideoUrl || defaultPromo.secondVideoUrl,
-                    videoBannerUrl: newData.video_banner_url ?? newData.videoBannerUrl ?? defaultPromo.videoBannerUrl,
+                    secondBackgroundImage: newData.second_background_image || newData.secondBackgroundImage || defaultPromo.secondBackgroundImage,
+                    videoBannerBackgroundImage: newData.video_banner_background_image || newData.videoBannerBackgroundImage || defaultPromo.videoBannerBackgroundImage,
                     videoBannerHeading: newData.video_banner_heading ?? newData.videoBannerHeading ?? defaultPromo.videoBannerHeading,
                     videoBannerSubtext: newData.video_banner_subtext ?? newData.videoBannerSubtext ?? defaultPromo.videoBannerSubtext,
                     videoBannerCta: newData.video_banner_cta ?? newData.videoBannerCta ?? defaultPromo.videoBannerCta,
@@ -132,9 +130,8 @@ export const usePromoStore = create<PromoStore>()(
             if (content.titleAccent !== undefined) { dbUpdate.title_accent = content.titleAccent; delete dbUpdate.titleAccent; }
             if (content.buttonText !== undefined) { dbUpdate.button_text = content.buttonText; delete dbUpdate.buttonText; }
             if (content.backgroundImage !== undefined) { dbUpdate.background_image = content.backgroundImage; delete dbUpdate.backgroundImage; }
-            if (content.videoUrl !== undefined) { dbUpdate.video_url = content.videoUrl; delete dbUpdate.videoUrl; }
-            if (content.secondVideoUrl !== undefined) { dbUpdate.second_video_url = content.secondVideoUrl; delete dbUpdate.secondVideoUrl; }
-            if (content.videoBannerUrl !== undefined) { dbUpdate.video_banner_url = content.videoBannerUrl; delete dbUpdate.videoBannerUrl; }
+            if (content.secondBackgroundImage !== undefined) { dbUpdate.second_background_image = content.secondBackgroundImage; delete dbUpdate.secondBackgroundImage; }
+            if (content.videoBannerBackgroundImage !== undefined) { dbUpdate.video_banner_background_image = content.videoBannerBackgroundImage; delete dbUpdate.videoBannerBackgroundImage; }
             if (content.videoBannerHeading !== undefined) { dbUpdate.video_banner_heading = content.videoBannerHeading; delete dbUpdate.videoBannerHeading; }
             if (content.videoBannerSubtext !== undefined) { dbUpdate.video_banner_subtext = content.videoBannerSubtext; delete dbUpdate.videoBannerSubtext; }
             if (content.videoBannerCta !== undefined) { dbUpdate.video_banner_cta = content.videoBannerCta; delete dbUpdate.videoBannerCta; }

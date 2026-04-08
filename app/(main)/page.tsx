@@ -249,23 +249,11 @@ export default function Home() {
       <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-accent py-24">
         {/* Background Layer: Video or Image */}
         <div className="absolute inset-0 z-0">
-          {promo.videoUrl ? (
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover opacity-50"
-            >
-              <source src={promo.videoUrl} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              src={promo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
-              alt="Promotion Background"
-              className="w-full h-full object-cover opacity-40 scale-105"
-            />
-          )}
+          <img
+            src={promo.backgroundImage || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop'}
+            alt="Promotion Background"
+            className="w-full h-full object-cover opacity-40 scale-105"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-zinc-900/50" />
         </div>
 
@@ -388,29 +376,13 @@ export default function Home() {
       </section>
 
       {/* 5.5 — Video Promo Banner (below New Arrivals) */}
-      <section className="relative w-full h-[70vh] min-h-[480px] max-h-[800px] overflow-hidden flex items-center justify-center bg-zinc-950">
-        {/* Video or Fallback Image */}
-        {promo.videoBannerUrl ? (
-          <video
-            key={promo.videoBannerUrl}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-            style={{ opacity: 0 }}
-            onCanPlay={(e) => { e.currentTarget.style.opacity = '0.55'; }}
-          >
-            <source src={promo.videoBannerUrl} type="video/mp4" />
-            <source src={promo.videoBannerUrl} type="video/webm" />
-          </video>
-        ) : (
-          <img
-            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=100&w=2560&auto=format&fit=crop"
-            alt="Promo Banner"
-            className="absolute inset-0 w-full h-full object-cover opacity-40"
-          />
-        )}
+      <section className="relative w-full h-[90vh] min-h-[600px] max-h-[1000px] overflow-hidden flex items-center justify-center bg-zinc-950">
+        {/* Background Image */}
+        <img
+          src={promo.videoBannerBackgroundImage || (promo as any).videoBannerUrl || 'https://images.unsplash.com/photo-1611080626919-7cf5a969fc8f?q=100&w=2560&auto=format&fit=crop'}
+          alt="Promo Banner"
+          className="absolute inset-0 w-full h-full object-cover opacity-50"
+        />
 
         {/* Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/30 to-zinc-950/60 z-10" />
@@ -545,9 +517,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Cinematic Brand Video Section (New) */}
+      {/* Cinematic Brand Image Section */}
       <AnimatePresence>
-        {promo.secondVideoUrl && (
+        {promo.secondBackgroundImage && (
           <section className="relative h-[600px] md:h-[800px] w-full overflow-hidden bg-zinc-950">
             <motion.div
               initial={{ opacity: 0, scale: 1.1 }}
@@ -556,34 +528,18 @@ export default function Home() {
               viewport={{ once: false }}
               className="absolute inset-0 z-0 bg-zinc-950"
             >
-              {/* Luxury Static Fallback/Poster */}
               <img 
-                src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=100&w=2560&auto=format&fit=crop" 
+                src={promo.secondBackgroundImage || "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=100&w=2560&auto=format&fit=crop"} 
                 alt="Jewelry Backdrop" 
-                className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105"
+                className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105"
               />
               
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                onCanPlay={(e) => {
-                  e.currentTarget.play();
-                }}
-                onPlaying={(e) => {
-                  e.currentTarget.style.opacity = '1';
-                }}
-                key={promo.secondVideoUrl}
-                src={promo.secondVideoUrl}
-                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0"
-              />
               {/* Luxury Vignette & Grain */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
             </motion.div>
 
-            {/* Subtle Text Over Video */}
+            {/* Subtle Text Over Background */}
             <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
               <motion.span 
                 initial={{ opacity: 0, y: 20 }}
