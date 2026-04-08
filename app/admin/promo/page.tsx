@@ -35,27 +35,72 @@ export default function AdminPromoPage() {
     }
   };
 
+  const uploadFile = async (file: File, path: string) => {
+    const { supabase } = await import('@/lib/supabase');
+    if (!supabase) throw new Error('Supabase not initialized');
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `${path}/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('videos')
+      .upload(filePath, file);
+
+    if (uploadError) throw uploadError;
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('videos')
+      .getPublicUrl(filePath);
+
+    return publicUrl;
+  };
+
   const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const videoBlobUrl = URL.createObjectURL(file);
-      setLocalPromo(prev => ({ ...prev, videoUrl: videoBlobUrl }));
+      try {
+        setIsSaving(true);
+        const url = await uploadFile(file, 'promo');
+        setLocalPromo(prev => ({ ...prev, videoUrl: url }));
+      } catch (error) {
+        console.error('Video upload failed:', error);
+        alert('Failed to upload video to Supabase Storage. Make sure the "videos" bucket exists and is public.');
+      } finally {
+        setIsSaving(false);
+      }
     }
   };
 
   const handleSecondVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const videoBlobUrl = URL.createObjectURL(file);
-      setLocalPromo(prev => ({ ...prev, secondVideoUrl: videoBlobUrl }));
+      try {
+        setIsSaving(true);
+        const url = await uploadFile(file, 'cinematic');
+        setLocalPromo(prev => ({ ...prev, secondVideoUrl: url }));
+      } catch (error) {
+        console.error('Video upload failed:', error);
+        alert('Failed to upload video to Supabase Storage.');
+      } finally {
+        setIsSaving(false);
+      }
     }
   };
 
   const handleVideoBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const videoBlobUrl = URL.createObjectURL(file);
-      setLocalPromo(prev => ({ ...prev, videoBannerUrl: videoBlobUrl }));
+      try {
+        setIsSaving(true);
+        const url = await uploadFile(file, 'banner');
+        setLocalPromo(prev => ({ ...prev, videoBannerUrl: url }));
+      } catch (error) {
+        console.error('Video upload failed:', error);
+        alert('Failed to upload video to Supabase Storage.');
+      } finally {
+        setIsSaving(false);
+      }
     }
   };
 

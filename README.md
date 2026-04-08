@@ -36,4 +36,3 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-but i face one issue in this project i will login the admin pannel into another chrome tab and like i will change the broweser and login the admin pannel but they can login proply but not show order and details like all browser show the same admin pannel with details i need the my cleint open this project into one time your browser and add some changes and publish the each coustomer have show same ui you understans 

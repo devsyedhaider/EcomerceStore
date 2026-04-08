@@ -56,7 +56,7 @@ export const usePromoStore = create<PromoStore>()(
       isSyncing: false,
       lastSync: null,
 
-      fetchPromo: async () => {
+  fetchPromo: async () => {
         if (!supabase) return;
         set({ isLoading: true });
         try {
@@ -82,6 +82,34 @@ export const usePromoStore = create<PromoStore>()(
             };
             set({ promo: mappedPromo, lastSync: new Date() });
           }
+
+          // Set up real-time subscription
+          supabase
+            .channel('promo_settings_changes')
+            .on(
+              'postgres_changes',
+              { event: '*', schema: 'public', table: 'promo_settings' },
+              (payload) => {
+                const newData = payload.new as any;
+                if (newData) {
+                  const mappedPromo = {
+                    ...newData,
+                    titleAccent: newData.title_accent ?? newData.titleAccent,
+                    buttonText: newData.button_text ?? newData.buttonText,
+                    backgroundImage: newData.background_image || newData.backgroundImage || defaultPromo.backgroundImage,
+                    secondVideoUrl: newData.second_video_url || newData.secondVideoUrl || defaultPromo.secondVideoUrl,
+                    videoBannerUrl: newData.video_banner_url ?? newData.videoBannerUrl ?? defaultPromo.videoBannerUrl,
+                    videoBannerHeading: newData.video_banner_heading ?? newData.videoBannerHeading ?? defaultPromo.videoBannerHeading,
+                    videoBannerSubtext: newData.video_banner_subtext ?? newData.videoBannerSubtext ?? defaultPromo.videoBannerSubtext,
+                    videoBannerCta: newData.video_banner_cta ?? newData.videoBannerCta ?? defaultPromo.videoBannerCta,
+                    videoBannerCtaLink: newData.video_banner_cta_link ?? newData.videoBannerCtaLink ?? defaultPromo.videoBannerCtaLink,
+                  };
+                  set({ promo: mappedPromo, lastSync: new Date() });
+                }
+              }
+            )
+            .subscribe();
+
         } catch (error) {
           console.warn('📡 Fetching promo data skipped or failed. Using defaults.');
         } finally {
