@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePromoStore } from '@/store/usePromoStore';
-import { Save, Image as ImageIcon, Layout, Type, Ticket } from 'lucide-react';
+import { Save, Image as ImageIcon, Layout, Type, Ticket, Video, Play, Link as LinkIcon, AlignLeft } from 'lucide-react';
 
 export default function AdminPromoPage() {
   const { promo, updatePromo } = usePromoStore();
@@ -48,6 +48,14 @@ export default function AdminPromoPage() {
     if (file) {
       const videoBlobUrl = URL.createObjectURL(file);
       setLocalPromo(prev => ({ ...prev, secondVideoUrl: videoBlobUrl }));
+    }
+  };
+
+  const handleVideoBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const videoBlobUrl = URL.createObjectURL(file);
+      setLocalPromo(prev => ({ ...prev, videoBannerUrl: videoBlobUrl }));
     }
   };
 
@@ -232,6 +240,83 @@ export default function AdminPromoPage() {
             </div>
           </div>
 
+          {/* ─── Video Promo Banner Editor ─── */}
+          <div className="bg-white p-10 border border-zinc-100 space-y-8">
+            <div className="flex items-center justify-between border-b border-zinc-50 pb-8">
+              <div className="flex items-center gap-4">
+                <Video className="w-5 h-5 text-accent" />
+                <div>
+                  <h2 className="text-lg font-light uppercase tracking-[0.2em]">Video Promo Banner</h2>
+                  <p className="text-[9px] uppercase tracking-widest text-zinc-400 mt-1">Shown below New Arrivals section</p>
+                </div>
+              </div>
+              <div>
+                <input type="file" id="video-banner-upload" className="hidden" accept="video/mp4,video/webm" onChange={handleVideoBannerUpload} />
+                <label
+                  htmlFor="video-banner-upload"
+                  className="text-[10px] font-bold uppercase tracking-[0.2em] px-5 py-3 border border-accent text-accent hover:bg-accent hover:text-white transition-all cursor-pointer flex items-center gap-2"
+                >
+                  <Play className="w-3 h-3" /> Upload Video
+                </label>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <div className="space-y-3">
+                <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Video URL (mp4 / webm direct link)</label>
+                <input
+                  value={localPromo.videoBannerUrl || ''}
+                  onChange={e => setLocalPromo({...localPromo, videoBannerUrl: e.target.value})}
+                  className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-accent transition-all font-light"
+                  placeholder="https://example.com/promo-banner.mp4"
+                />
+                <p className="text-[9px] uppercase tracking-widest text-zinc-400">Leave empty to hide this banner from the storefront.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Banner Heading</label>
+                  <input
+                    value={localPromo.videoBannerHeading || ''}
+                    onChange={e => setLocalPromo({...localPromo, videoBannerHeading: e.target.value})}
+                    className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-accent transition-all font-bold uppercase"
+                    placeholder="Crafted for the Bold"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">Subtext</label>
+                  <input
+                    value={localPromo.videoBannerSubtext || ''}
+                    onChange={e => setLocalPromo({...localPromo, videoBannerSubtext: e.target.value})}
+                    className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-accent transition-all font-light"
+                    placeholder="Discover the new season collection"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">CTA Button Text</label>
+                  <input
+                    value={localPromo.videoBannerCta || ''}
+                    onChange={e => setLocalPromo({...localPromo, videoBannerCta: e.target.value})}
+                    className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-accent transition-all font-bold uppercase tracking-widest"
+                    placeholder="Shop Now"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">CTA Link</label>
+                  <input
+                    value={localPromo.videoBannerCtaLink || ''}
+                    onChange={e => setLocalPromo({...localPromo, videoBannerCtaLink: e.target.value})}
+                    className="w-full h-12 bg-zinc-50 border-none px-6 text-sm outline-none focus:ring-1 focus:ring-accent transition-all font-light"
+                    placeholder="/products"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button
             onClick={handleSave}
             disabled={isSaving}
@@ -358,6 +443,61 @@ export default function AdminPromoPage() {
                   No Cinematic Video Selected
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Video Promo Banner Live Preview */}
+          <div className="space-y-4 pt-12 border-t border-zinc-100">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-zinc-400 flex items-center gap-2">
+                <Video className="w-4 h-4 text-accent" /> Video Promo Banner Preview
+              </h3>
+              <span className="px-2 py-1 bg-accent/10 text-accent text-[8px] font-bold uppercase tracking-widest rounded">
+                Below New Arrivals
+              </span>
+            </div>
+
+            <div className="relative min-h-[320px] flex items-center justify-center overflow-hidden bg-zinc-950 rounded-2xl border border-zinc-800">
+              {localPromo.videoBannerUrl ? (
+                <video
+                  key={localPromo.videoBannerUrl}
+                  autoPlay muted loop playsInline
+                  className="absolute inset-0 w-full h-full object-cover opacity-50"
+                  onLoadedData={(e) => e.currentTarget.play()}
+                  src={localPromo.videoBannerUrl}
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 to-zinc-800" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-zinc-950/50" />
+
+              <div className="relative z-10 flex flex-col items-center text-center px-8">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-6 h-[1px] bg-accent" />
+                  <span className="text-[8px] uppercase tracking-[0.5em] font-black text-accent">New Season</span>
+                  <div className="w-6 h-[1px] bg-accent" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-3 leading-tight">
+                  {localPromo.videoBannerHeading || 'Crafted for the Bold'}
+                </h3>
+                <p className="text-[9px] uppercase tracking-[0.25em] font-light text-white/50 mb-6 max-w-xs">
+                  {localPromo.videoBannerSubtext || 'Discover the new season collection'}
+                </p>
+                <div className="px-7 py-2.5 border border-white/30 text-white text-[9px] font-black uppercase tracking-[0.3em] flex items-center gap-2">
+                  {localPromo.videoBannerCta || 'Shop Now'} <span>→</span>
+                </div>
+                {!localPromo.videoBannerUrl && (
+                  <p className="mt-5 text-[8px] uppercase tracking-widest text-zinc-600">
+                    Add a video URL above to activate on storefront
+                  </p>
+                )}
+              </div>
+
+              {/* Corner marks */}
+              <div className="absolute top-4 left-4 w-4 h-4 border-t border-l border-white/20" />
+              <div className="absolute top-4 right-4 w-4 h-4 border-t border-r border-white/20" />
+              <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-white/20" />
+              <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-white/20" />
             </div>
           </div>
         </div>

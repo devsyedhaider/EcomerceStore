@@ -14,6 +14,11 @@ interface PromoContent {
   backgroundImage: string;
   videoUrl?: string;
   secondVideoUrl?: string;
+  videoBannerUrl?: string;
+  videoBannerHeading?: string;
+  videoBannerSubtext?: string;
+  videoBannerCta?: string;
+  videoBannerCtaLink?: string;
 }
 
 interface PromoStore {
@@ -35,7 +40,12 @@ const defaultPromo: PromoContent = {
   buttonText: 'CLAIM DISCOUNT',
   backgroundImage: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=100&w=2560&auto=format&fit=crop',
   videoUrl: '',
-  secondVideoUrl: 'https://player.vimeo.com/external/340032049.sd.mp4?s=6a575e92706e2c31e9c9339327855013ed2d8333&profile_id=164&oauth2_token_id=57447761', // High-performance Diamond Move
+  secondVideoUrl: 'https://player.vimeo.com/external/340032049.sd.mp4?s=6a575e92706e2c31e9c9339327855013ed2d8333&profile_id=164&oauth2_token_id=57447761',
+  videoBannerUrl: '',
+  videoBannerHeading: 'Crafted for the Bold',
+  videoBannerSubtext: 'Discover the new season collection',
+  videoBannerCta: 'Shop Now',
+  videoBannerCtaLink: '/products',
 };
 
 export const usePromoStore = create<PromoStore>()(
@@ -91,6 +101,11 @@ export const usePromoStore = create<PromoStore>()(
             if (content.backgroundImage !== undefined) { dbUpdate.background_image = content.backgroundImage; delete dbUpdate.backgroundImage; }
             if (content.videoUrl !== undefined) { dbUpdate.video_url = content.videoUrl; delete dbUpdate.videoUrl; }
             if (content.secondVideoUrl !== undefined) { dbUpdate.second_video_url = content.secondVideoUrl; delete dbUpdate.secondVideoUrl; }
+            if (content.videoBannerUrl !== undefined) { dbUpdate.video_banner_url = content.videoBannerUrl; delete dbUpdate.videoBannerUrl; }
+            if (content.videoBannerHeading !== undefined) { dbUpdate.video_banner_heading = content.videoBannerHeading; delete dbUpdate.videoBannerHeading; }
+            if (content.videoBannerSubtext !== undefined) { dbUpdate.video_banner_subtext = content.videoBannerSubtext; delete dbUpdate.videoBannerSubtext; }
+            if (content.videoBannerCta !== undefined) { dbUpdate.video_banner_cta = content.videoBannerCta; delete dbUpdate.videoBannerCta; }
+            if (content.videoBannerCtaLink !== undefined) { dbUpdate.video_banner_cta_link = content.videoBannerCtaLink; delete dbUpdate.videoBannerCtaLink; }
 
             const { error } = await supabase
               .from('promo_settings')
