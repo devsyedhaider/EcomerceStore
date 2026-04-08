@@ -150,10 +150,10 @@ export default function Footer() {
             <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-white">Social Muse</h4>
             <div className="flex flex-col gap-10">
               <div className="flex items-center gap-8">
-                <a href="#" className="text-zinc-500 hover:text-accent transition-all">
+                <a href="https://www.facebook.com/share/1DdFEa73UF/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-accent transition-all">
                   <Facebook className="w-5 h-5 stroke-1" />
                 </a>
-                <a href="#" className="text-zinc-500 hover:text-accent transition-all">
+                <a href="https://www.instagram.com/glamhubbyalina?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-accent transition-all">
                   <Instagram className="w-5 h-5 stroke-1" />
                 </a>
                 <a href="#" className="text-zinc-500 hover:text-white flex items-center gap-3">
@@ -162,8 +162,8 @@ export default function Footer() {
               </div>
               
               <div className="flex flex-col gap-5">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 font-bold underline decoration-zinc-900 underline-offset-4">support@theelvaedit.com</p>
-                <p className="text-[11px] uppercase tracking-[0.3em] text-zinc-600 font-bold">+92 300 123 4567</p>
+                <a href="mailto:support@theelvaedit.com" className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 font-bold underline decoration-zinc-900 underline-offset-4 hover:text-white transition-colors">support@theelvaedit.com</a>
+                <a href="tel:+923126728122" className="text-[11px] uppercase tracking-[0.3em] text-zinc-600 font-bold hover:text-white transition-colors">+92 312 6728122</a>
               </div>
             </div>
           </div>

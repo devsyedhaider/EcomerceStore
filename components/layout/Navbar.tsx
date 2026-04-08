@@ -86,7 +86,7 @@ export default function Navbar() {
         {/* Main Brand & Actions Bar */}
         <nav className={cn(
             "bg-white px-4 md:px-10 transition-all duration-500 border-none",
-            isScrolled ? "h-20" : "h-32"
+            isScrolled ? "h-16" : "h-20"
         )}>
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
             {/* Left: Mobile Menu Trigger */}
@@ -105,10 +105,7 @@ export default function Navbar() {
                     <img
                       src="/logo.png"
                       alt="The Elva Edit"
-                      className={cn(
-                        "w-auto object-contain transition-all duration-500 group-hover:opacity-80",
-                        isScrolled ? "h-12 md:h-14" : "h-20 md:h-28"
-                      )}
+                      className="h-10 md:h-12 w-auto object-contain transition-opacity duration-500 group-hover:opacity-80"
                     />
                 </Link>
             </div>
@@ -353,8 +350,8 @@ export default function Navbar() {
               {/* Sidebar Bottom Fine Print */}
               <div className="p-10 md:p-12 border-t border-zinc-50 bg-zinc-50/30">
                   <div className="flex items-center gap-10 mb-10">
-                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors"><Instagram className="w-5 h-5" /></Link>
-                      <Link href="#" className="text-zinc-400 hover:text-accent transition-colors"><Facebook className="w-5 h-5" /></Link>
+                      <a href="https://www.instagram.com/glamhubbyalina?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-accent transition-colors"><Instagram className="w-5 h-5" /></a>
+                      <a href="https://www.facebook.com/share/1DdFEa73UF/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-accent transition-colors"><Facebook className="w-5 h-5" /></a>
                       <Link href="#" className="text-zinc-400 hover:text-accent transition-colors font-bold text-sm">𝕏</Link>
                   </div>
                   <div className="flex flex-col gap-2">
@@ -368,7 +365,7 @@ export default function Navbar() {
       </AnimatePresence>
       <div className={cn(
         "transition-all duration-500",
-        isAuthPage ? "h-[100px]" : "h-[140px] md:h-[180px]"
+        isAuthPage ? "h-[80px]" : "h-[90px] md:h-[110px]"
       )} /> {/* Proper spacer for fixed header */}
     </>
   );

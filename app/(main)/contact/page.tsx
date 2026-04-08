@@ -47,21 +47,25 @@ export default function ContactPage() {
             
             {/* Communication Hubs */}
             {[
-              { icon: Mail, label: 'Concierge Email', value: 'support@theelvaedit.com', sub: '24/48H Response time', accent: true },
-              { icon: Phone, label: 'Artisan Hotline', value: '+92 300 123 4567', sub: 'Availability: 09AM - 08PM PKT' },
-              { icon: MessageCircle, label: 'Instant WhatsApp', value: '+92 345 987 6543', sub: 'Chat with our designers directly' },
+              { icon: Mail, label: 'Concierge Email', value: 'support@theelvaedit.com', sub: '24/48H Response time', accent: true, href: 'mailto:support@theelvaedit.com' },
+              { icon: Phone, label: 'Artisan Hotline', value: '+92 312 6728122', sub: 'Availability: 09AM - 08PM PKT', href: 'tel:+923126728122' },
+              { icon: MessageCircle, label: 'Instant WhatsApp', value: '+92 312 6728122', sub: 'Chat with our designers directly', href: 'https://wa.me/923126728122' },
               { icon: MapPin, label: 'Design Studio', value: 'Lahore, Punjab, PK', sub: 'Bespoke Viewings by Appointment' },
-              { icon: Instagram, label: 'Visual Muse', value: '@theelvaedit.boutique', sub: 'Follow for the daily sparkle' },
+              { icon: Instagram, label: 'Visual Muse', value: '@glamhubbyalina', sub: 'Follow for the daily sparkle', href: 'https://www.instagram.com/glamhubbyalina?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr' },
+              { icon: Facebook, label: 'Community Hub', value: 'The Elva Edit', sub: 'Join our Facebook community', href: 'https://www.facebook.com/share/1DdFEa73UF/?mibextid=wwXIfr' },
               { icon: Clock, label: 'Boutique Hours', value: 'Mon - Sat', sub: 'Excluding Public Holidays' }
-            ].map((hub, i) => (
-               <motion.div 
+            ].map((hub, i) => {
+              const CardWrapper = hub.href ? motion.a : motion.div;
+              return (
+               <CardWrapper 
                   key={i}
+                  {...(hub.href ? { href: hub.href, target: "_blank", rel: "noopener noreferrer" } : {})}
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false }}
                   transition={{ delay: i * 0.1 }}
-                  className="group relative p-8 md:p-12 bg-white rounded-[32px] md:rounded-[40px] border border-zinc-100 hover:border-accent transition-all duration-700 hover:shadow-2xl hover:shadow-accent/5 overflow-hidden text-center"
+                  className="group relative p-8 md:p-12 bg-white rounded-[32px] md:rounded-[40px] border border-zinc-100 hover:border-accent transition-all duration-700 hover:shadow-2xl hover:shadow-accent/5 overflow-hidden text-center cursor-pointer"
                >
                   <div className="relative z-10 space-y-6">
                      <div className="w-14 h-14 md:w-16 md:h-16 bg-zinc-50 rounded-full flex items-center justify-center mx-auto group-hover:bg-accent group-hover:text-white transition-all duration-700">
@@ -76,8 +80,9 @@ export default function ContactPage() {
                   
                   {/* Luxury Background Glow */}
                   <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-accent/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-               </motion.div>
-            ))}
+               </CardWrapper>
+              );
+            })}
           </div>
       </section>
 
@@ -95,11 +100,14 @@ export default function ContactPage() {
            
            <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-12 pt-8">
               {[
-                { icon: Instagram, label: 'Instagram', sub: 'DM for assistance' },
-                { icon: MessageSquare, label: 'Facebook Messenger', sub: 'Connect with a specialist' }
+                { icon: Instagram, label: 'Instagram', sub: 'DM for assistance', href: 'https://www.instagram.com/glamhubbyalina?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr' },
+                { icon: MessageSquare, label: 'Facebook Messenger', sub: 'Connect with a specialist', href: 'https://www.facebook.com/share/1DdFEa73UF/?mibextid=wwXIfr' }
               ].map((btn, i) => (
-                <motion.button 
+                <motion.a 
                    key={i}
+                   href={btn.href}
+                   target="_blank"
+                   rel="noopener noreferrer"
                    whileHover={{ scale: 1.05 }}
                    whileTap={{ scale: 0.95 }}
                    className="w-full md:w-auto px-8 md:px-12 h-20 border border-white/10 rounded-full flex items-center justify-center md:justify-start gap-4 hover:border-accent hover:bg-white/5 transition-all group"
@@ -109,7 +117,7 @@ export default function ContactPage() {
                       <p className="text-[10px] font-black uppercase tracking-widest">{btn.label}</p>
                       <p className="text-[9px] text-zinc-500 uppercase font-medium">{btn.sub}</p>
                    </div>
-                </motion.button>
+                </motion.a>
               ))}
            </div>
         </div>
