@@ -68,24 +68,24 @@ export default function Home() {
         <div className="relative z-10 text-center text-white px-6 w-full max-w-[1400px] mx-auto pt-20">
           <div className="flex flex-col items-center">
             {/* 2. Premium Typographic Stack — Unbreakable Single-Line Fluid Scale */}
-            <h1 className="flex flex-col items-center text-center">
-              <div className="overflow-hidden py-1 w-full flex justify-center">
+            <h1 className="flex flex-col items-center text-center gap-2 md:gap-4">
+              <div className="overflow-visible py-1 w-full flex justify-center">
                 <motion.span 
                   initial={{ opacity: 0, y: 120 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="block text-5xl sm:text-7xl md:text-8xl lg:text-[120px] font-lato font-black uppercase tracking-[-0.01em] text-white leading-tight px-4 whitespace-nowrap"
+                  className="block text-[clamp(1.8rem,9vw,120px)] font-lato font-black uppercase tracking-[-0.01em] text-white leading-none px-1 sm:px-4 whitespace-nowrap"
                 >
                   {hero.title}
                 </motion.span>
               </div>
-
-              <div className="overflow-hidden py-1 -mt-2 md:-mt-6 w-full flex justify-center">
+ 
+              <div className="overflow-visible py-1 w-full flex justify-center">
                 <motion.span 
                    initial={{ opacity: 0, y: 120 }}
                    animate={{ opacity: 1, y: 0 }}
                    transition={{ duration: 1.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                   className="block text-5xl sm:text-7xl md:text-8xl lg:text-[120px] font-lato font-black uppercase tracking-[-0.01em] leading-tight text-[#2C3524] px-4 whitespace-nowrap"
+                   className="block text-[clamp(1.8rem,9vw,120px)] font-lato font-black uppercase tracking-[-0.01em] leading-none text-[#2C3524] px-1 sm:px-4 whitespace-nowrap"
                 >
                    {hero.accentTitle}
                 </motion.span>
@@ -531,38 +531,80 @@ export default function Home() {
               <img 
                 src={promo.secondBackgroundImage || "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=100&w=2560&auto=format&fit=crop"} 
                 alt="Jewelry Backdrop" 
-                className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105"
+                className="absolute inset-0 w-full h-full object-cover opacity-50 scale-105"
               />
               
               {/* Luxury Vignette & Grain */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
             </motion.div>
 
-            {/* Subtle Text Over Background */}
+            {/* Premium Content Overlay */}
             <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-              <motion.span 
-                initial={{ opacity: 0, y: 20 }}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 1 }}
-                className="text-[10px] md:text-xs uppercase tracking-[0.6em] text-white/60 mb-6"
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="relative px-4 md:px-12 py-8 md:py-16 backdrop-blur-xl bg-black/40 border border-white/10 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group scale-[0.9] sm:scale-100"
               >
-                The Art of Creation
-              </motion.span>
-              <motion.h2 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 1 }}
-                className="text-4xl md:text-6xl font-light text-white uppercase tracking-[0.2em] mb-4"
-              >
-                Bespoke Mastery
-              </motion.h2>
+                {/* Decorative Corners */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/20 rounded-tl-[2rem] transition-all group-hover:scale-110" />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/20 rounded-br-[2rem] transition-all group-hover:scale-110" />
+
+                <motion.span 
+                  initial={{ opacity: 0, letterSpacing: "0.2em" }}
+                  whileInView={{ opacity: 1, letterSpacing: "0.8em" }}
+                  transition={{ delay: 0.3, duration: 1.5 }}
+                  className="block text-[8px] md:text-[10px] uppercase font-bold text-accent mb-6"
+                >
+                  The Art of Creation
+                </motion.span>
+                
+                <h2 className="relative flex flex-col items-center">
+                  <motion.span 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5, duration: 1 }}
+                    className="text-[clamp(1.5rem,6vw,72px)] font-light text-white uppercase tracking-[0.1em] leading-tight mb-1"
+                  >
+                    Bespoke
+                  </motion.span>
+                  <motion.span 
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7, duration: 1 }}
+                    className="text-[clamp(1.5rem,6vw,72px)] font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40 uppercase tracking-[0.2em] leading-tight"
+                  >
+                    Mastery
+                  </motion.span>
+                </h2>
+
+                <motion.div 
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  whileInView={{ scaleX: 1, opacity: 1 }}
+                  transition={{ delay: 1, duration: 1.5 }}
+                  className="h-[1px] w-full bg-gradient-to-r from-transparent via-accent to-transparent mt-10"
+                />
+
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 0.6 }}
+                  transition={{ delay: 1.2, duration: 1 }}
+                  className="mt-6 text-[9px] uppercase tracking-[0.3em] font-light text-white"
+                >
+                  Handcrafted Excellence Since 1994
+                </motion.p>
+              </motion.div>
+
+              {/* Scroll Indicator Hint */}
               <motion.div 
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ delay: 1, duration: 1 }}
-                className="w-24 h-[1px] bg-accent origin-center"
-              />
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="absolute bottom-12 flex flex-col items-center gap-4 opacity-30"
+              >
+                <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
+                <span className="text-[7px] uppercase tracking-[0.5em] text-white">Explore</span>
+              </motion.div>
             </div>
           </section>
         )}

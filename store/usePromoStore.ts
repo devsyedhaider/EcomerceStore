@@ -145,7 +145,8 @@ export const usePromoStore = create<PromoStore>()(
             set({ lastSync: new Date() });
           }
         } catch (error) {
-          console.warn('📡 Cloud sync for promo failed. Changes saved locally only.');
+          console.error('📡 Cloud sync for promo failed:', error);
+          throw error; // Re-throw so the UI can show the alert
         } finally {
           set({ isSyncing: false });
         }
