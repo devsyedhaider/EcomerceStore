@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter, Lato } from "next/font/google";
 import "./globals.css";
 import DataInitializer from "@/components/DataInitializer";
+import ScrollReset from "@/components/ScrollReset";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const lato = Lato({ 
@@ -25,6 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${inter.variable} ${lato.variable} font-lato min-h-screen flex flex-col transition-all duration-300`} suppressHydrationWarning>
+        <Suspense fallback={null}>
+          <ScrollReset />
+        </Suspense>
         <DataInitializer />
         {children}
       </body>
