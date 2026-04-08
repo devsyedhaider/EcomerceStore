@@ -59,7 +59,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <img
             src={hero.backgroundImage}
-            alt="ElvaEdit Boutique"
+            alt="The Elva Edit Boutique"
             className="w-full h-full object-cover object-center opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
@@ -479,7 +479,7 @@ export default function Home() {
 
               {/* Branding name overlay (Subtle top left) */}
               <div className="absolute top-8 left-8">
-                 <span className="text-[9px] uppercase tracking-[0.3em] text-accent font-bold opacity-80">ElvaEdit</span>
+                 <span className="text-[9px] uppercase tracking-[0.3em] text-accent font-bold opacity-80">The Elva Edit</span>
               </div>
             </motion.div>
 
@@ -495,7 +495,7 @@ export default function Home() {
               
               <div className="space-y-6 max-w-lg">
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
-                  ElvaEdit is a Pakistan based jewellery brand which was founded in 2026. Committed to create trendy, luxury and timeless pieces at an affordable price without compromising the quality or sustainability.
+                  The Elva Edit is a Pakistan based jewellery brand which was founded in 2026. Committed to create trendy, luxury and timeless pieces at an affordable price without compromising the quality or sustainability.
                 </p>
                 
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
@@ -503,7 +503,7 @@ export default function Home() {
                 </p>
                 
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
-                  At ElvaEdit, we provide the highest quality jewelry. Every purchase is an experience, not just a transaction.
+                  At The Elva Edit, we provide the highest quality jewelry. Every purchase is an experience, not just a transaction.
                 </p>
               </div>
 
@@ -619,7 +619,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               className="text-[10px] uppercase font-bold tracking-[0.4em] text-accent mb-4"
             >
-              The ElvaEdit Experience
+              The Elva Edit Experience
             </motion.span>
             <motion.h2 
               initial={{ opacity: 0, y: 10 }}
@@ -643,7 +643,7 @@ export default function Home() {
                 {
                   name: "Aisha Ahmed",
                   location: "Karachi, Pakistan",
-                  review: "ElvaEdit has become my go-to for luxury jewelry. The craftsmanship is exceptional and the customer service was extremely helpful during checkout.",
+                  review: "The Elva Edit has become my go-to for luxury jewelry. The craftsmanship is exceptional and the customer service was extremely helpful during checkout.",
                   stars: 5
                 },
                 {

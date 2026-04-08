@@ -80,8 +80,8 @@ export default function Footer() {
           {/* Column 1: Brand & Newsletter Integrated */}
           <div className="flex flex-col gap-10">
             <div className="flex flex-col">
-              <span className="text-4xl font-lato font-black tracking-widest uppercase italic text-white leading-none">
-                ElvaEdit
+              <span className="text-3xl font-lato font-black tracking-widest uppercase italic text-white leading-none">
+                The Elva Edit
               </span>
               <span className="text-[10px] font-bold tracking-[0.4em] text-zinc-500 mt-2 uppercase underline decoration-accent underline-offset-8">Boutique Jewellery</span>
             </div>
@@ -162,7 +162,7 @@ export default function Footer() {
               </div>
               
               <div className="flex flex-col gap-5">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 font-bold underline decoration-zinc-900 underline-offset-4">support@elvaedit.com</p>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 font-bold underline decoration-zinc-900 underline-offset-4">support@theelvaedit.com</p>
                 <p className="text-[11px] uppercase tracking-[0.3em] text-zinc-600 font-bold">+92 300 123 4567</p>
               </div>
             </div>
@@ -178,7 +178,7 @@ export default function Footer() {
           </div>
           
           <p className="text-[9px] font-bold uppercase tracking-[0.3em]">
-            © 2026 ElvaEdit. All Rights Reserved.
+            © 2026 The Elva Edit. All Rights Reserved.
           </p>
         </div>
       </div>

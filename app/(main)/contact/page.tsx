@@ -20,7 +20,7 @@ export default function ContactPage() {
               transition={{ duration: 1.5 }}
               className="text-[9px] md:text-xs font-black uppercase text-accent mb-6 md:mb-8 block font-lato tracking-[0.3em] md:tracking-[0.5em]"
            >
-              The ElvaEdit Concierge
+              The Elva Edit Concierge
            </motion.span>
            <motion.h1 
               initial={{ opacity: 0, y: 40 }}
@@ -47,11 +47,11 @@ export default function ContactPage() {
             
             {/* Communication Hubs */}
             {[
-              { icon: Mail, label: 'Concierge Email', value: 'support@elvaedit.com', sub: '24/48H Response time', accent: true },
+              { icon: Mail, label: 'Concierge Email', value: 'support@theelvaedit.com', sub: '24/48H Response time', accent: true },
               { icon: Phone, label: 'Artisan Hotline', value: '+92 300 123 4567', sub: 'Availability: 09AM - 08PM PKT' },
               { icon: MessageCircle, label: 'Instant WhatsApp', value: '+92 345 987 6543', sub: 'Chat with our designers directly' },
               { icon: MapPin, label: 'Design Studio', value: 'Lahore, Punjab, PK', sub: 'Bespoke Viewings by Appointment' },
-              { icon: Instagram, label: 'Visual Muse', value: '@elvaedit.boutique', sub: 'Follow for the daily sparkle' },
+              { icon: Instagram, label: 'Visual Muse', value: '@theelvaedit.boutique', sub: 'Follow for the daily sparkle' },
               { icon: Clock, label: 'Boutique Hours', value: 'Mon - Sat', sub: 'Excluding Public Holidays' }
             ].map((hub, i) => (
                <motion.div 

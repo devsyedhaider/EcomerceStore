@@ -85,7 +85,7 @@ export default function Navbar() {
 
         {/* Main Brand & Actions Bar */}
         <nav className={cn(
-            "bg-white/95 backdrop-blur-md px-4 md:px-10 transition-all duration-500 border-none",
+            "bg-white px-4 md:px-10 transition-all duration-500 border-none",
             isScrolled ? "h-16" : "h-20"
         )}>
           <div className="max-w-[1900px] mx-auto h-full flex items-center justify-between relative">
@@ -102,10 +102,11 @@ export default function Navbar() {
             {/* Center: Luxury Brand Logo */}
             <div className="flex-grow flex justify-center items-center">
                 <Link href="/" className="flex flex-col items-center group text-center">
-                    <span className="text-lg md:text-xl font-lato font-black tracking-[0.2em] text-[#121212] group-hover:text-accent transition-colors duration-500 leading-tight uppercase">
-                        ElvaEdit
-                    </span>
-                    <span className="text-[6px] font-bold tracking-[0.4em] text-accent mt-0 uppercase font-lato opacity-80">Boutique Jewellery</span>
+                    <img
+                      src="/logo.png"
+                      alt="The Elva Edit"
+                      className="h-10 md:h-12 w-auto object-contain transition-opacity duration-500 group-hover:opacity-80"
+                    />
                 </Link>
             </div>
 
@@ -354,7 +355,7 @@ export default function Navbar() {
                       <Link href="#" className="text-zinc-400 hover:text-accent transition-colors font-bold text-sm">𝕏</Link>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.3em] font-lato uppercase">© 2026 ElvaEdit</p>
+                    <p className="text-[8px] font-bold text-zinc-400 tracking-[0.3em] font-lato uppercase">© 2026 The Elva Edit</p>
                     <p className="text-[8px] font-medium text-zinc-300 tracking-[0.2em] font-lato uppercase">Boutique Jewellery</p>
                   </div>
               </div>

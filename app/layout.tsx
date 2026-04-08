@@ -14,9 +14,9 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "ElvaEdit | Fine Collections",
-  description: "Exquisite designs and handcrafted elegance at ElvaEdit.",
-  keywords: ["jewelry", "luxury", "fine collections", "ElvaEdit"],
+  title: "The Elva Edit | Fine Collections",
+  description: "Exquisite designs and handcrafted elegance at The Elva Edit.",
+  keywords: ["jewelry", "luxury", "fine collections", "The Elva Edit"],
 };
 
 export default function RootLayout({

@@ -94,7 +94,7 @@ export default function CheckoutPage() {
 
   const applyPromoCode = () => {
     const trimmedInput = promoInput.trim().toLowerCase();
-    const activeCode = (promo?.code || 'elvaedit10').toLowerCase();
+    const activeCode = (promo?.code || 'theelvaedit10').toLowerCase();
     const emailToCheck = formData.email || user?.email || '';
     
     if (!emailToCheck) {
@@ -173,9 +173,7 @@ export default function CheckoutPage() {
         </div>
         <h1 className="text-5xl font-black uppercase tracking-tighter mb-4">Order Confirmed!</h1>
         <p className="text-zinc-500 mb-2 font-black uppercase tracking-widest text-sm">Order ID: #EE-928374</p>
-        <p className="text-zinc-500 mb-12 max-w-md font-medium text-lg leading-relaxed">
-            Thank you for shopping with ElvaEdit. Your order has been placed successfully and will be delivered within 2-3 business days.
-        </p>
+            Thank you for shopping with The Elva Edit. Your order has been placed successfully and will be delivered within 2-3 business days.
         <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/" className="btn-primary min-w-[200px]">BACK TO HOME</Link>
             <Link href="/products" className="btn-outline min-w-[200px]">KEEP SHOPPING</Link>

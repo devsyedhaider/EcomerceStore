@@ -21,7 +21,7 @@ export default function AboutPage() {
               transition={{ duration: 1.5 }}
               className="text-[10px] md:text-xs font-black uppercase text-accent mb-8 block"
            >
-              The ElvaEdit Story
+              The Elva Edit Story
            </motion.span>
            <motion.h1 
               initial={{ opacity: 0, y: 40 }}
@@ -37,7 +37,7 @@ export default function AboutPage() {
               transition={{ duration: 1, delay: 0.6 }}
               className="max-w-2xl mx-auto text-zinc-500 text-base md:text-lg leading-relaxed font-medium"
            >
-              ElvaEdit is a Pakistan based jewellery brand which was founded in 2026. Committed to create trendy, luxury and timeless pieces at an affordable price without compromising the quality or sustainability.
+              The Elva Edit is a Pakistan based jewellery brand which was founded in 2026. Committed to create trendy, luxury and timeless pieces at an affordable price without compromising the quality or sustainability.
            </motion.p>
         </div>
       </section>
@@ -117,7 +117,7 @@ export default function AboutPage() {
                 "Jewellery is the <span className="text-accent italic-none font-italic-none">Exclaimation Point</span> of a woman's outfit."
              </blockquote>
              <cite className="text-[10px] uppercase font-black tracking-[0.5em] text-zinc-500 block">
-                — Founder of ElvaEdit
+                — Founder of The Elva Edit
              </cite>
           </motion.div>
           

@@ -20,7 +20,7 @@ export default function ShippedPage() {
   const shippingFaqs = [
     { q: 'What is your delivery timeframe?', a: 'Within Pakistan, we offer 2-4 business day delivery. International orders via DHL take 7-12 business days.' },
     { q: 'How do I return a piece?', a: 'Return requests must be initiated within 48 hours of delivery. Pieces must be in original unworn condition with tags.' },
-    { q: 'Is shipping insured?', a: 'Yes, every ElvaEdit piece is fully insured during transit against theft and accidental damage until signed for by you.' }
+    { q: 'Is shipping insured?', a: 'Yes, every The Elva Edit piece is fully insured during transit against theft and accidental damage until signed for by you.' }
   ];
 
   return (
