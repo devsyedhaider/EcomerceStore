@@ -77,8 +77,12 @@ export default function CartPage() {
                         {item.name}
                       </Link>
                       <div className="flex flex-col gap-1">
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-gray-light font-medium">Size: {item.size}</span>
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-gray-light font-medium">Color: {item.color}</span>
+                        {item.size && item.size !== 'One Size' && (
+                          <span className="text-[9px] uppercase tracking-[0.2em] text-gray-light font-medium">Size: {item.size}</span>
+                        )}
+                        {item.color && item.color !== 'Default' && (
+                          <span className="text-[9px] uppercase tracking-[0.2em] text-gray-light font-medium">Color: {item.color}</span>
+                        )}
                       </div>
                       <button 
                         onClick={() => removeItem(item.id, item.size, item.color)}
@@ -120,8 +124,8 @@ export default function CartPage() {
           </div>
 
           <div className="pt-12">
-            <Link href="/products" className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 hover:text-black transition-premium group">
-              <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-smooth" /> Return to Shop
+            <Link href="/products" className="btn-premium">
+               Return to Shop
             </Link>
           </div>
         </div>

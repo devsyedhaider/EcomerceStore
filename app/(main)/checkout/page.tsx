@@ -455,7 +455,10 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex-grow">
                     <h4 className="font-black text-sm uppercase tracking-tight">{item.name || 'Product'}</h4>
-                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-1">QTY: {item.quantity || 0} • SZ: {item.size || 'N/A'}</p>
+                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-1">
+                      QTY: {item.quantity || 0}
+                      {item.size && item.size !== 'One Size' && ` • SZ: ${item.size}`}
+                    </p>
                     <p className="font-black text-sm mt-2">{formatPrice((item.price || 0) * (item.quantity || 0))}</p>
                   </div>
                 </div>

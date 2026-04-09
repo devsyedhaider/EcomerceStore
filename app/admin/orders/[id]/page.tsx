@@ -85,7 +85,7 @@ export default function OrderDetailsPage() {
                                 <div className="flex-grow">
                                     <h4 className="font-black text-sm uppercase tracking-tight">{item.name}</h4>
                                     <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-1">
-                                        SZ: {item.size} • QTY: {item.quantity}
+                                        {item.size && item.size !== 'One Size' && `SZ: ${item.size} • `}QTY: {item.quantity}
                                     </p>
                                     <p className="font-black text-sm mt-1">{formatPrice(item.price * item.quantity)}</p>
                                 </div>
