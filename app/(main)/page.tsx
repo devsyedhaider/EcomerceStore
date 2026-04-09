@@ -152,7 +152,7 @@ export default function Home() {
               <Link href="/products?isNew=true" className="group flex flex-col items-center gap-4">
                 <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
                   <img 
-                    src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=200&auto=format&fit=crop" 
+                    src="/arrival.avif" 
                     alt="New Arrivals" 
                     className="w-full h-full object-cover"
                   />
@@ -166,12 +166,12 @@ export default function Home() {
               <Link href="/products?isTrending=true" className="group flex flex-col items-center gap-4">
                 <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border border-zinc-100 transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-accent/10">
                   <img 
-                    src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=200&auto=format&fit=crop" 
-                    alt="Best Sellers" 
+                    src="/trending.avif" 
+                    alt="Trending Now" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">Best Sellers</span>
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-zinc-800 group-hover:text-accent transition-colors">Trending Now</span>
               </Link>
             </motion.div>
 
