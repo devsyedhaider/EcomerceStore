@@ -246,7 +246,7 @@ export default function Home() {
       </section>
 
       {/* 4. Promotional Banner - Professional Overhaul */}
-      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-accent py-24">
+      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-zinc-950 py-24">
         {/* Background Layer: Video or Image */}
         <div className="absolute inset-0 z-0">
           <img
