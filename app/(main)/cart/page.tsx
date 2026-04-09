@@ -124,7 +124,7 @@ export default function CartPage() {
           </div>
 
           <div className="pt-12">
-            <Link href="/products" className="btn-premium">
+            <Link href="/products" className="btn-premium w-full md:w-auto">
                Return to Shop
             </Link>
           </div>

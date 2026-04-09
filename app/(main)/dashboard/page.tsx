@@ -140,7 +140,11 @@ export default function DashboardPage() {
                                               </div>
                                               <div>
                                                   <p className="text-[11px] font-black uppercase tracking-[0.1em] mb-1">{item.name}</p>
-                                                  <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">QTY: {item.quantity} • UNIT PRICE: {formatPrice(item.price)}</p>
+                                                  <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">
+                                                    QTY: {item.quantity}
+                                                    {item.size && item.size !== 'One Size' && ` • SZ: ${item.size}`}
+                                                    • UNIT PRICE: {formatPrice(item.price)}
+                                                  </p>
                                               </div>
                                           </div>
                                       ))}
