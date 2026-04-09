@@ -82,9 +82,9 @@ export default function CartPage() {
                       </div>
                       <button 
                         onClick={() => removeItem(item.id, item.size, item.color)}
-                        className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] font-bold text-gray-300 hover:text-black transition-premium mt-6 cursor-pointer"
+                        className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-black text-zinc-600 hover:text-accent transition-all mt-6 cursor-pointer group/remove"
                       >
-                        <X className="w-3 h-3" /> Remove
+                        <X className="w-3.5 h-3.5 group-hover/remove:rotate-90 transition-transform duration-300" /> Remove
                       </button>
                     </div>
                   </div>
