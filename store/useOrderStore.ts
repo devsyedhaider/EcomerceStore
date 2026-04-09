@@ -13,6 +13,7 @@ export interface ShippingDetails {
   city: string;
   phone: string;
   postalCode: string;
+  paymentMethod: string;
 }
 
 export interface Order {

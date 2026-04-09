@@ -30,7 +30,7 @@ export default function CheckoutPage() {
     apartment: '',
     city: '',
     postalCode: '',
-    paymentMethod: 'cod'
+    paymentMethod: 'bank_deposit'
   });
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -353,24 +353,64 @@ export default function CheckoutPage() {
 
             {step === 2 && (
               <div className="animate-in slide-in-from-right duration-500">
-                <h2 className="text-3xl font-black uppercase tracking-tighter mb-8 flex items-center gap-3">
-                    <CreditCard className="w-8 h-8" /> PAYMENT METHOD
-                </h2>
+                <h2 className="text-3xl font-black uppercase tracking-tighter">Payment</h2>
+                <p className="text-xs text-zinc-500 font-medium mb-8">All transactions are secure and encrypted.</p>
                 
-                <div className="space-y-4 mb-12">
-                   <label className={cn(
-                       "flex items-center justify-between p-6 border-2 rounded-2xl cursor-pointer transition-all",
-                       formData.paymentMethod === 'cod' ? "border-black bg-zinc-50 shadow-md" : "border-zinc-100 hover:border-zinc-300"
-                   )}>
-                       <div className="flex items-center gap-4">
-                           <input type="radio" checked={formData.paymentMethod === 'cod'} onChange={() => setFormData(p => ({ ...p, paymentMethod: 'cod' }))} className="w-5 h-5 accent-black" />
-                           <div>
-                               <p className="font-black uppercase tracking-tight">Cash on Delivery (COD)</p>
-                               <p className="text-xs text-zinc-500 font-medium">Pay when you receive your order at your doorstep</p>
-                           </div>
-                       </div>
-                       <Truck className="w-6 h-6 text-zinc-400" />
-                   </label>
+                <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden mb-12">
+                  <div className="p-0 border-b border-zinc-200">
+                    <label className={cn(
+                      "flex items-center gap-4 p-5 cursor-pointer transition-all",
+                      formData.paymentMethod === 'bank_deposit' ? "bg-zinc-50/50" : "hover:bg-zinc-50/30"
+                    )}>
+                      <input 
+                        type="radio" 
+                        checked={formData.paymentMethod === 'bank_deposit'} 
+                        onChange={() => setFormData(p => ({ ...p, paymentMethod: 'bank_deposit' }))} 
+                        className="w-4 h-4 accent-zinc-900" 
+                      />
+                      <span className="font-bold text-sm tracking-tight">Bank Deposit</span>
+                    </label>
+                  </div>
+
+                  {formData.paymentMethod === 'bank_deposit' && (
+                    <div className="bg-zinc-50/50 p-6 space-y-6 border-b border-zinc-200 animate-in fade-in slide-in-from-top-2 duration-300">
+                      <p className="text-xs text-zinc-600 leading-relaxed">
+                        Make your payment directly into our bank account and send a screenshot to our WhatsApp number 
+                        <span className="font-bold"> +92 312 6728122</span>. Please use your Order ID as the payment reference. 
+                        Your order will not be shipped until the funds have cleared in our account.
+                      </p>
+                      
+                      <div className="space-y-4 pt-4">
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">Title</p>
+                          <p className="font-bold text-sm text-zinc-900">Alina Noman</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">Bank</p>
+                          <p className="font-bold text-sm text-zinc-900">Meezan Bank</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">Account Number</p>
+                            <p className="font-bold text-sm text-zinc-900">11500111983313</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-1">WhatsApp (Submit Proof)</p>
+                            <a 
+                              href="https://wa.me/923126728122" 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="font-bold text-sm text-accent hover:underline flex items-center gap-2"
+                            >
+                              +92 312 6728122
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Optional: Add other methods here if needed, but user said remove COD */}
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl flex gap-4 border border-blue-100 text-blue-800">

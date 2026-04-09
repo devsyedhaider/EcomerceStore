@@ -192,7 +192,11 @@ export default function OrderDetailsPage() {
                         <div className="w-10 h-10 bg-zinc-50 rounded-full flex items-center justify-center">
                             <Truck className="w-5 h-5 text-zinc-400" />
                         </div>
-                        <span className="font-black text-sm uppercase tracking-tight">Cash on Delivery</span>
+                        <span className="font-black text-sm uppercase tracking-tight">
+                            {order.shippingDetails?.paymentMethod === 'bank_deposit' ? 'Bank Deposit' : 
+                             order.shippingDetails?.paymentMethod === 'cod' ? 'Cash on Delivery' : 
+                             order.shippingDetails?.paymentMethod || 'N/A'}
+                        </span>
                      </div>
                 </div>
             </div>
