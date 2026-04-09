@@ -162,7 +162,7 @@ export default function Footer() {
               </div>
               
               <div className="flex flex-col gap-5">
-                <a href="mailto:support@theelvaedit.com" className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 font-bold underline decoration-zinc-900 underline-offset-4 hover:text-white transition-colors">support@theelvaedit.com</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Alinahussain121@gmail.com" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-[0.3em] text-zinc-600 font-bold underline decoration-zinc-900 underline-offset-4 hover:text-white transition-colors">Alinahussain121@gmail.com</a>
                 <a href="tel:+923126728122" className="text-[11px] uppercase tracking-[0.3em] text-zinc-600 font-bold hover:text-white transition-colors">+92 312 6728122</a>
               </div>
             </div>

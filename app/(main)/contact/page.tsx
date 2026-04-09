@@ -47,7 +47,7 @@ export default function ContactPage() {
             
             {/* Communication Hubs */}
             {[
-              { icon: Mail, label: 'Concierge Email', value: 'support@theelvaedit.com', sub: '24/48H Response time', accent: true, href: 'mailto:support@theelvaedit.com' },
+              { icon: Mail, label: 'Concierge Email', value: 'Alinahussain121@gmail.com', sub: '24/48H Response time', accent: true, href: 'https://mail.google.com/mail/?view=cm&fs=1&to=Alinahussain121@gmail.com' },
               { icon: Phone, label: 'Artisan Hotline', value: '+92 312 6728122', sub: 'Availability: 09AM - 08PM PKT', href: 'tel:+923126728122' },
               { icon: MessageCircle, label: 'Instant WhatsApp', value: '+92 312 6728122', sub: 'Chat with our designers directly', href: 'https://wa.me/923126728122' },
               { icon: MapPin, label: 'Design Studio', value: 'Lahore, Punjab, PK', sub: 'Bespoke Viewings by Appointment' },

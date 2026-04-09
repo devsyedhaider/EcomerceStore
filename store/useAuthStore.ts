@@ -32,7 +32,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         email: supabaseUser.email!,
         name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0],
         phone: supabaseUser.user_metadata?.phone || supabaseUser.phone,
-        role: supabaseUser.email === 'admintheauricvault@gmail.com' ? 'admin' : (supabaseUser.user_metadata?.role || 'customer'),
+        role: (supabaseUser.email === 'admintheauricvault@gmail.com' || supabaseUser.email === 'Alinahussain121@gmail.com') ? 'admin' : (supabaseUser.user_metadata?.role || 'customer'),
       };
       
       // Set cookies for middleware
