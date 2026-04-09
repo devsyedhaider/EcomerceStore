@@ -204,7 +204,7 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+      <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 lg:gap-20">
         {/* Form */}
         <div>
           <form ref={formRef} onSubmit={handlePlaceOrder} className="space-y-12">
@@ -465,18 +465,18 @@ export default function CheckoutPage() {
 
             <div className="mb-8 p-6 bg-white border border-zinc-100 rounded-2xl shadow-sm">
                <label className="block text-[10px] font-black uppercase tracking-[0.4em] text-accent mb-4">Apply Token</label>
-               <div className="flex gap-2">
+               <div className="flex flex-col sm:flex-row gap-3">
                   <input 
                     type="text"
                     value={promoInput}
                     onChange={(e) => setPromoInput(e.target.value)}
                     placeholder="PASTE TOKEN HERE..."
-                    className="flex-grow h-12 bg-zinc-50 px-4 text-xs font-bold uppercase tracking-[0.2em] outline-none focus:ring-1 focus:ring-accent/30 transition-all border border-zinc-50 focus:border-accent/20"
+                    className="w-full h-12 bg-zinc-50 px-4 text-xs font-bold uppercase tracking-[0.2em] outline-none focus:ring-1 focus:ring-accent/30 transition-all border border-zinc-50 focus:border-accent/20"
                   />
                   <button 
                     type="button"
                     onClick={applyPromoCode}
-                    className="h-12 px-8 bg-accent text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-black transition-all duration-500 shadow-lg flex-shrink-0 cursor-pointer"
+                    className="w-full sm:w-auto h-12 px-8 bg-accent text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-black transition-all duration-500 shadow-lg flex-shrink-0 cursor-pointer"
                   >
                     Apply
                   </button>
