@@ -9,6 +9,7 @@ export interface ShippingDetails {
   firstName: string;
   lastName: string;
   address: string;
+  apartment?: string;
   city: string;
   phone: string;
   postalCode: string;

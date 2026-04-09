@@ -18,7 +18,7 @@ export default function CheckoutPage() {
   const { addOrder, getOrdersByEmail } = useOrderStore();
   const { user } = useAuthStore();
   const total = typeof getTotal === 'function' ? getTotal() : 0;
-  const shipping = (total || 0) > 5000 ? 0 : 250;
+  const shipping = (total || 0) > 5000 ? 0 : 350;
   
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -27,6 +27,7 @@ export default function CheckoutPage() {
     email: '',
     phone: '',
     address: '',
+    apartment: '',
     city: '',
     postalCode: '',
     paymentMethod: 'cod'
@@ -47,6 +48,7 @@ export default function CheckoutPage() {
           email: user.email || '',
           phone: lastOrder.shippingDetails.phone || '',
           address: lastOrder.shippingDetails.address || '',
+          apartment: lastOrder.shippingDetails.apartment || '',
           city: lastOrder.shippingDetails.city || '',
           postalCode: lastOrder.shippingDetails.postalCode || '', 
         }));
@@ -270,16 +272,28 @@ export default function CheckoutPage() {
                       />
                     </div>
 
-                    {/* Street / Apartment */}
+                    {/* Street Address */}
                     <div className="md:col-span-2 space-y-3 group">
-                      <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-zinc-900 group-focus-within:text-accent transition-colors">Apartment & Street Address</label>
+                      <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-zinc-900 group-focus-within:text-accent transition-colors">Street Address</label>
                       <input
                         required
                         name="address"
                         value={formData.address}
                         onChange={handleInputChange}
                         className="w-full h-14 bg-zinc-50 px-6 text-sm outline-none border border-transparent focus:border-zinc-200 focus:bg-white transition-all placeholder:text-zinc-300 font-medium"
-                        placeholder="House #, Street name, Area"
+                        placeholder="House # and Street name"
+                      />
+                    </div>
+
+                    {/* Apartment / Suite */}
+                    <div className="md:col-span-2 space-y-3 group">
+                      <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-zinc-900 group-focus-within:text-accent transition-colors">Apartment, suite, etc. (optional)</label>
+                      <input
+                        name="apartment"
+                        value={formData.apartment}
+                        onChange={handleInputChange}
+                        className="w-full h-14 bg-zinc-50 px-6 text-sm outline-none border border-transparent focus:border-zinc-200 focus:bg-white transition-all placeholder:text-zinc-300 font-medium"
+                        placeholder="Apartment, suite, unit, etc. (optional)"
                       />
                     </div>
 

@@ -19,7 +19,7 @@ export default function CartPage() {
 
   const total = useMemo(() => getTotal(), [items, getTotal]);
   const itemCount = useMemo(() => getItemCount(), [items, getItemCount]);
-  const shipping = useMemo(() => total > 5000 ? 0 : 250, [total]);
+  const shipping = useMemo(() => total > 5000 ? 0 : 350, [total]);
 
   if (items.length === 0) {
     return (

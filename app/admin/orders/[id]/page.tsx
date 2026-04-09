@@ -143,7 +143,10 @@ export default function OrderDetailsPage() {
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-0.5">Shipping Address</p>
-                                    <p className="font-bold leading-relaxed">{order.shippingDetails?.address || 'N/A'}</p>
+                                    <p className="font-bold leading-relaxed">
+                                        {order.shippingDetails?.address || 'N/A'}
+                                        {order.shippingDetails?.apartment && <span className="block text-zinc-500 text-[10px] mt-0.5">{order.shippingDetails.apartment}</span>}
+                                    </p>
                                     <p className="font-bold mt-1 text-zinc-600 uppercase text-xs">{order.shippingDetails?.city || ''}, {order.shippingDetails?.postalCode || ''}</p>
                                 </div>
                             </div>
