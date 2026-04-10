@@ -97,7 +97,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-10">
       {/* Welcome Header */}
-      <div className="flex items-end justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
         <div>
            <div className="flex items-center gap-3 mb-1">
               <h1 className="text-4xl font-black uppercase tracking-tighter">Dashboard Overview</h1>
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
            </div>
            <p className="text-zinc-500 font-medium">Welcome back, here&apos;s what&apos;s happening today.</p>
         </div>
-        <Link href="/admin/products/new" className="btn-primary h-12 flex items-center gap-2 px-8">
+        <Link href="/admin/products/new" className="btn-primary h-12 flex items-center justify-center gap-2 px-8 w-full sm:w-auto flex-shrink-0">
             <PlusCircle className="w-5 h-5" /> ADD PRODUCT
         </Link>
       </div>
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Recent Orders Table */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-sm">
-           <div className="p-6 border-b border-zinc-100 flex items-center justify-between">
+           <div className="p-6 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                  <h3 className="font-black uppercase tracking-tight text-lg">Recent Orders</h3>
                  <span className="px-2 py-0.5 bg-zinc-100 text-zinc-500 text-[9px] font-black uppercase rounded">{allOrders.length} TOTAL</span>
