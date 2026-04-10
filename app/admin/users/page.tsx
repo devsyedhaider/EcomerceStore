@@ -102,14 +102,22 @@ export default function AdminCustomersPage() {
                             </td>
                             <td className="px-8 py-6">
                                 <div className="space-y-1">
-                                    <div className="flex items-center gap-2 text-xs font-medium text-zinc-600">
+                                    <a 
+                                        href={`mailto:${customer.email}`}
+                                        className="flex items-center gap-2 text-xs font-medium text-zinc-600 hover:text-accent transition-colors cursor-pointer"
+                                    >
                                         <Mail className="w-3.5 h-3.5 text-zinc-400" />
                                         {customer.email}
-                                    </div>
-                                    <div className="flex items-center gap-2 text-xs font-medium text-zinc-600">
+                                    </a>
+                                    <a 
+                                        href={`https://wa.me/${customer.phone.replace(/\D/g, '')}`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 text-xs font-medium text-zinc-600 hover:text-green-600 transition-colors cursor-pointer"
+                                    >
                                         <Phone className="w-3.5 h-3.5 text-zinc-400" />
                                         {customer.phone}
-                                    </div>
+                                    </a>
                                 </div>
                             </td>
                             <td className="px-8 py-6">
