@@ -170,9 +170,9 @@ export default function Navbar() {
                       { name: 'New Arrival', href: '/new-arrivals' },
                       { name: 'Trending', href: '/trending' },
                       { name: 'Shop All', href: '/products' },
+                      { name: 'Our Collection', href: '/categories' },
                       { name: 'About us', href: '/about' },
-                      { name: 'Contact us', href: '/contact' },
-                      { name: 'Our Collection', href: '/categories' }
+                      { name: 'Contact us', href: '/contact' }
                    ].map((tab) => (
                       <li key={tab.name} className="flex-shrink-0">
                          <Link 
