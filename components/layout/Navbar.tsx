@@ -131,7 +131,7 @@ export default function Navbar() {
                 aria-label="User Account"
               >
                 {showUser ? (
-                  <div className="w-8 h-8 bg-[#121212] text-accent rounded-full flex items-center justify-center text-[10px] font-black uppercase tracking-widest border border-accent/30">
+                  <div className="w-8 h-8 bg-white text-accent rounded-full flex items-center justify-center text-[10px] font-black uppercase tracking-widest border border-accent/30">
                     {user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}
                   </div>
                 ) : (
