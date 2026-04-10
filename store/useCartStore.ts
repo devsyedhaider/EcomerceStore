@@ -4,6 +4,7 @@ import { indexedDBStorage } from '@/lib/storage';
 
 export interface CartItem {
   id: string;
+  slug: string;
   name: string;
   price: number;
   image: string;
@@ -48,6 +49,7 @@ export const useCartStore = create<CartStore>()(
               ...items,
               {
                 id: product.id,
+                slug: product.slug || product.id,
                 name: product.name,
                 price: product.price,
                 image: product.images[0],

@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
-
 import { compressImage } from '@/lib/image-utils';
+import { generateSlug } from '@/lib/slug';
 
 export default function EditProductPage() {
   const { id } = useParams();
@@ -24,10 +24,12 @@ export default function EditProductPage() {
   
   // Form State
   const [name, setName] = useState('');
+  const [slug, setSlug] = useState('');
+  const [isAutoSlug, setIsAutoSlug] = useState(false);
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [stock, setStock] = useState('');
-  const [category, setCategory] = useState(categories[0]?.id || 'men');
+  const [category, setCategory] = useState('');
   const [materials, setMaterials] = useState('');
   const [warrantyPolicy, setWarrantyPolicy] = useState('');
   const [shippingReturns, setShippingReturns] = useState('');
@@ -39,12 +41,17 @@ export default function EditProductPage() {
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-
+  useEffect(() => {
+    if (isAutoSlug && name) {
+      setSlug(generateSlug(name));
+    }
+  }, [name, isAutoSlug]);
 
   useEffect(() => {
     setMounted(true);
     if (product) {
       setName(product.name);
+      setSlug(product.slug || generateSlug(product.name));
       setDescription(product.description);
       setPrice(product.price.toString());
       setStock(product.stock.toString());
@@ -90,14 +97,13 @@ export default function EditProductPage() {
     }
   };
 
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     const updatedData = {
         name,
+        slug: slug || generateSlug(name),
         description,
         price: Number(price),
         category: category.toLowerCase(),
@@ -115,12 +121,12 @@ export default function EditProductPage() {
     };
 
     try {
-        await updateProduct(product.id, updatedData);
+        await updateProduct(product.id, updatedData as any);
         setIsLoading(false);
         router.push('/admin/products');
     } catch (error) {
         console.error('Failed to update product:', error);
-        alert('Failed to update product. Even with our new optimized storage, something went wrong. Please try using fewer images or direct URLs.');
+        alert('Failed to update product. Please try again.');
         setIsLoading(false);
     }
   };
@@ -150,6 +156,28 @@ export default function EditProductPage() {
                         onChange={e => setName(e.target.value)}
                         className="input-field h-14 bg-zinc-50 border-none px-6 w-full rounded-xl outline-none focus:ring-2 focus:ring-black transition-all" 
                         placeholder="e.g. Aura Air Max 2026" 
+                    />
+                </div>
+                <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400">URL Slug</label>
+                        <button 
+                          type="button"
+                          onClick={() => setIsAutoSlug(!isAutoSlug)}
+                          className={cn("text-[9px] font-bold uppercase tracking-widest", isAutoSlug ? "text-accent" : "text-zinc-400")}
+                        >
+                          {isAutoSlug ? "Auto-generating" : "Manual override"}
+                        </button>
+                    </div>
+                    <input 
+                        required 
+                        value={slug}
+                        onChange={e => {
+                          setSlug(e.target.value);
+                          setIsAutoSlug(false);
+                        }}
+                        className="input-field h-14 bg-zinc-50 border-none px-6 w-full rounded-xl outline-none focus:ring-2 focus:ring-black transition-all font-mono text-sm" 
+                        placeholder="product-slug" 
                     />
                 </div>
                 <div className="space-y-2">

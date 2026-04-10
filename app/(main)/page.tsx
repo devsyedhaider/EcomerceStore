@@ -9,6 +9,7 @@ import { useCategoryStore } from '@/store/useCategoryStore';
 import { useHeroStore } from '@/store/useHeroStore';
 import { usePromoStore } from '@/store/usePromoStore';
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import ProductCard from '@/components/product/ProductCard';
 
 export default function Home() {
@@ -57,18 +58,21 @@ export default function Home() {
       {/* 1. Full-width Hero Banner — Minimalists Premium */}
       <section className="relative h-[60vh] md:h-[80vh] min-h-[500px] w-full flex items-center justify-center overflow-hidden bg-zinc-950">
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src={hero.backgroundImage}
-            alt="The Elva Edit Boutique"
-            className="w-full h-full object-cover object-center opacity-60"
+            alt="Handcrafted Jewelry and Premium Watches Pakistan - The Elva Edit"
+            fill
+            priority
+            className="object-cover object-center opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
         </div>
 
         <div className="relative z-10 text-center text-white px-6 w-full max-w-[1400px] mx-auto pt-20">
           <div className="flex flex-col items-center">
-            {/* 2. Premium Typographic Stack — Unbreakable Single-Line Fluid Scale */}
+            {/* 2. Premium Typographic Stack — SEO Optimized H1 */}
             <h1 className="flex flex-col items-center text-center gap-2 md:gap-4">
+              <span className="sr-only">The Elva Edit - Best Jewelry and Watches in Pakistan</span>
               <div className="overflow-visible py-1 w-full flex justify-center">
                 <motion.span 
                   initial={{ opacity: 0, y: 120 }}
@@ -91,6 +95,9 @@ export default function Home() {
                 </motion.span>
               </div>
             </h1>
+            <p className="mt-8 text-white/70 text-[10px] md:text-sm uppercase tracking-[0.4em] font-light max-w-2xl px-4">
+              Discover the finest handcrafted jewelry and premium watches in Pakistan. <br className="hidden md:block"/> Elevate your style with Quiet Luxury.
+            </p>
           </div>
         </div>
       </section>
@@ -115,13 +122,13 @@ export default function Home() {
               <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-8">
                  <CheckCircle2 className="w-10 h-10 text-accent animate-bounce-subtle" />
               </div>
-              <h3 className="text-2xl font-black uppercase tracking-tighter mb-4 text-zinc-900">Code Copied!</h3>
+              <h3 className="text-2xl font-black uppercase tracking-tighter mb-4 text-zinc-900 text-[8px] md:text-sm uppercase tracking-[0.4em]">Code Copied!</h3>
               <p className="text-zinc-500 text-sm font-medium uppercase tracking-widest mb-10 leading-relaxed">
                 Use code <span className="text-black font-black">{promo.code}</span> at checkout to get <span className="text-accent underline">10% OFF</span> your first order.
               </p>
               <Link 
                 href="/products" 
-                className="w-full h-14 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center hover:bg-zinc-800 transition-all"
+                className="w-full h-14 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center hover:bg-zinc-800 transition-all font-lato"
                 onClick={() => setShowPromoModal(false)}
               >
                 GO TO PRODUCTS
@@ -139,6 +146,7 @@ export default function Home() {
 
       {/* 2. Boutique Collections Avatar Navigation - Full Screen Centered */}
       <section className="py-12 bg-white border-b border-zinc-50">
+        <h2 className="sr-only">Our Exclusive Collections - Handcrafted Jewelry</h2>
         <div className="max-w-[1700px] mx-auto px-6 md:px-12">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -462,7 +470,7 @@ export default function Home() {
             >
               <img 
                 src="/images/about/brand-story.png"
-                alt="Editeval Craftsmanship"
+                alt="Luxury Jewelry Store in Karachi, Lahore, and Islamabad - The Elva Edit"
                 className="w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/5" />
@@ -479,7 +487,7 @@ export default function Home() {
 
               {/* Branding name overlay (Subtle top left) */}
               <div className="absolute top-8 left-8">
-                 <span className="text-[9px] uppercase tracking-[0.3em] text-accent font-bold opacity-80">The Elva Edit</span>
+                 <span className="text-[9px] uppercase tracking-[0.3em] text-accent font-bold opacity-80">Handcrafted in Pakistan</span>
               </div>
             </motion.div>
 
@@ -491,25 +499,25 @@ export default function Home() {
               viewport={{ once: false }}
               className="md:col-span-8 flex flex-col justify-center p-10 md:p-14 lg:p-20"
             >
-              <h2 className="text-3xl md:text-4xl font-normal text-zinc-900 mb-8 font-sans tracking-tight">About us</h2>
+              <h2 className="text-3xl md:text-4xl font-normal text-zinc-900 mb-8 font-sans tracking-tight">Best Jewelry and Watches in Pakistan</h2>
               
               <div className="space-y-6 max-w-lg">
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
-                  The Elva Edit is a Pakistan based jewellery brand which was founded in 2026. Committed to create trendy, luxury and timeless pieces at an affordable price without compromising the quality or sustainability.
+                  The Elva Edit is a premier <strong className="text-zinc-900">luxury jewelry store in Pakistan</strong>, founded in 2026. We are committed to creating trendy, sustainable, and timeless pieces at an affordable price point.
                 </p>
                 
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
-                  We’ve got something to suit everyone. Each of our pieces has its own personality – just like our customers.
+                  Whether you are looking to <strong className="text-zinc-900">buy jewelry online in Pakistan</strong> or find the <strong className="text-zinc-900">best watches</strong>, we have something to suit every personality.
                 </p>
                 
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
-                  At The Elva Edit, we provide the highest quality jewelry. Every purchase is an experience, not just a transaction.
+                  Our craftsmanship ensures that every purchase is an experience. Discover why we are the preferred choice for discerning customers in Karachi, Lahore, and beyond.
                 </p>
               </div>
 
               <div className="mt-12">
-                <Link href="/products" className="inline-block px-10 py-3.5 border border-accent/40 text-[10px] font-bold uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-white transition-all duration-700">
-                  Shop Now
+                <Link href="/products" className="inline-block px-10 py-3.5 border border-accent/40 text-[10px] font-bold uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-white transition-all duration-700 font-lato">
+                  Explore Collection
                 </Link>
               </div>
             </motion.div>

@@ -60,7 +60,7 @@ export default function ProductCard({
   };
 
   const handleCardClick = () => {
-    router.push(`/products/${product.id}`);
+    router.push(`/products/${product.slug || product.id}`);
   };
 
   return (
@@ -128,7 +128,7 @@ export default function ProductCard({
             onClick={(e) => {
                e.preventDefault();
                e.stopPropagation();
-               router.push(`/products/${product.id}`);
+               router.push(`/products/${product.slug || product.id}`);
             }}
             className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-black rounded-full shadow-2xl hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
           >
@@ -194,7 +194,7 @@ export default function ProductCard({
         </div>
 
         <Link 
-          href={`/products/${product.id}`} 
+          href={`/products/${product.slug || product.id}`} 
           className="text-zinc-900 text-base md:text-lg font-bold leading-tight hover:text-accent transition-colors mb-3 block line-clamp-1"
         >
           {product.name}

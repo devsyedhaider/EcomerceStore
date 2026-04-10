@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
-
 import { compressImage } from '@/lib/image-utils';
+import { generateSlug } from '@/lib/slug';
 
 export default function NewProductPage() {
   const router = useRouter();
@@ -19,6 +19,8 @@ export default function NewProductPage() {
   
   // Form State
   const [name, setName] = useState('');
+  const [slug, setSlug] = useState('');
+  const [isAutoSlug, setIsAutoSlug] = useState(true);
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [stock, setStock] = useState('');
@@ -38,6 +40,12 @@ export default function NewProductPage() {
       setCategory(categories[0].id);
     }
   }, [categories]);
+
+  useEffect(() => {
+    if (isAutoSlug && name) {
+      setSlug(generateSlug(name));
+    }
+  }, [name, isAutoSlug]);
   
   const addProduct = useProductStore(state => state.addProduct);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -49,7 +57,6 @@ export default function NewProductPage() {
       reader.onloadend = async () => {
         const base64 = reader.result as string;
         try {
-          // Products often need smaller thumbs or reasonable size
           const compressed = await compressImage(base64, 1000, 1000, 0.7);
           setImages(prev => [...prev, compressed]);
         } catch (error) {
@@ -61,8 +68,6 @@ export default function NewProductPage() {
     }
   };
 
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -70,6 +75,7 @@ export default function NewProductPage() {
     const newProduct = {
         id: crypto.randomUUID(),
         name,
+        slug: slug || generateSlug(name),
         description,
         price: Number(price),
         rating: 0,
@@ -89,20 +95,22 @@ export default function NewProductPage() {
     };
 
     try {
-        await addProduct(newProduct);
+        await addProduct(newProduct as any);
         setIsLoading(false);
         router.push('/admin/products');
     } catch (error) {
         console.error('Failed to add product:', error);
-        alert('Failed to save product. Even with our new optimized storage, something went wrong. Please try using fewer images or direct URLs.');
+        alert('Failed to save product. Please try again.');
         setIsLoading(false);
     }
   };
 
+  if (!mounted) return null;
+
   return (
     <div className="space-y-10 pb-20">
       <div className="flex items-center gap-4">
-        <Link href="/admin" className="p-2 hover:bg-zinc-100 rounded-full transition-colors">
+        <Link href="/admin/products" className="p-2 hover:bg-zinc-100 rounded-full transition-colors">
             <ArrowLeft className="w-6 h-6" />
         </Link>
         <div>
@@ -124,6 +132,28 @@ export default function NewProductPage() {
                         onChange={e => setName(e.target.value)}
                         className="input-field h-14 bg-zinc-50 border-none px-6 w-full rounded-xl outline-none focus:ring-2 focus:ring-black transition-all" 
                         placeholder="e.g. Aura Air Max 2026" 
+                    />
+                </div>
+                <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400">URL Slug</label>
+                        <button 
+                          type="button"
+                          onClick={() => setIsAutoSlug(!isAutoSlug)}
+                          className={cn("text-[9px] font-bold uppercase tracking-widest", isAutoSlug ? "text-accent" : "text-zinc-400")}
+                        >
+                          {isAutoSlug ? "Auto-generating" : "Manual override"}
+                        </button>
+                    </div>
+                    <input 
+                        required 
+                        value={slug}
+                        onChange={e => {
+                          setSlug(e.target.value);
+                          setIsAutoSlug(false);
+                        }}
+                        className="input-field h-14 bg-zinc-50 border-none px-6 w-full rounded-xl outline-none focus:ring-2 focus:ring-black transition-all font-mono text-sm" 
+                        placeholder="product-slug" 
                     />
                 </div>
                 <div className="space-y-2">

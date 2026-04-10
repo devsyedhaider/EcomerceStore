@@ -73,7 +73,7 @@ export default function CartPage() {
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-premium group-hover:scale-105" />
                     </div>
                     <div className="flex flex-col justify-center">
-                      <Link href={`/products/${item.id}`} className="text-[12px] font-bold uppercase tracking-[0.1em] hover:text-gray-light transition-premium mb-2">
+                      <Link href={`/products/${item.slug || item.id}`} className="text-[12px] font-bold uppercase tracking-[0.1em] hover:text-gray-light transition-premium mb-2">
                         {item.name}
                       </Link>
                       <div className="flex flex-col gap-1">

@@ -13,11 +13,11 @@ const lato = Lato({
   variable: "--font-lato" 
 });
 
-export const metadata: Metadata = {
-  title: "The Elva Edit | Fine Collections",
-  description: "Exquisite designs and handcrafted elegance at The Elva Edit.",
-  keywords: ["jewelry", "luxury", "fine collections", "The Elva Edit"],
-};
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata();
+
+import { OrganizationJsonLd } from "@/components/SEO";
 
 export default function RootLayout({
   children,
@@ -27,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${inter.variable} ${lato.variable} font-lato min-h-screen flex flex-col transition-all duration-300`} suppressHydrationWarning>
+        <OrganizationJsonLd />
         <Suspense fallback={null}>
           <ScrollReset />
         </Suspense>

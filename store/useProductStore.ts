@@ -13,6 +13,7 @@ export interface Product {
   reviews: number;
   category: string;
   images: string[];
+  slug: string;
   sizes: string[];
   colors: { name: string; hex: string }[];
   stock: number;
@@ -55,6 +56,7 @@ export const useProductStore = create<ProductStore>()(
           if (data) {
             const mappedData: Product[] = data.map((p: any) => ({
               ...p,
+              slug: p.slug || p.id, // Fallback to ID if no slug exists yet
               isNew: p.is_new,
               isFeatured: p.is_featured,
               isTopInCategory: p.is_top_in_category,
@@ -76,6 +78,7 @@ export const useProductStore = create<ProductStore>()(
           if (supabase) {
             const dbProduct = {
               ...product,
+              slug: product.slug,
               is_new: product.isNew,
               is_featured: product.isFeatured,
               is_top_in_category: product.isTopInCategory,
@@ -115,6 +118,9 @@ export const useProductStore = create<ProductStore>()(
             if ('warrantyPolicy' in dbUpdate) { dbUpdate.warranty_policy = dbUpdate.warrantyPolicy; delete dbUpdate.warrantyPolicy; }
             if ('shippingReturns' in dbUpdate) { dbUpdate.shipping_returns = dbUpdate.shippingReturns; delete dbUpdate.shippingReturns; }
             if ('careInstructions' in dbUpdate) { dbUpdate.care_instructions = dbUpdate.careInstructions; delete dbUpdate.careInstructions; }
+            // Ensure slug is handled if present
+            if ('slug' in dbUpdate) { dbUpdate.slug = dbUpdate.slug; }
+            
             const { error } = await supabase.from('products').update(dbUpdate).eq('id', id);
             if (error) throw error;
           }

@@ -5,6 +5,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { ShoppingBag, Heart, Share2, ShieldCheck, Truck, RefreshCw, Star, ArrowLeft, ChevronRight, Check, Sparkles, Info } from 'lucide-react';
 import { useProductStore } from '@/store/useProductStore';
 import { useCategoryStore } from '@/store/useCategoryStore';
@@ -14,11 +15,11 @@ import ProductCard from '@/components/product/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWishlistStore } from '@/store/useWishlistStore';
 
-export default function ProductDetailPage() {
+export default function ProductClient() {
   const { categories } = useCategoryStore();
   const params = useParams();
   const router = useRouter();
-  const id = params.id as string;
+  const slug = params.slug as string;
   
   const storeProducts = useProductStore((state) => state.products);
   const [mounted, setMounted] = useState(false);
@@ -27,7 +28,7 @@ export default function ProductDetailPage() {
     setMounted(true);
   }, []);
 
-  const product = storeProducts.find((p) => p.id === id);
+  const product = storeProducts.find((p) => p.slug === slug || p.id === slug);
   const categoryName = mounted && product ? (categories.find(c => c.id === product.category)?.name || product.category) : product?.category;
   
   const addItem = useCartStore((state) => state.addItem);
@@ -110,15 +111,21 @@ export default function ProductDetailPage() {
 
             {/* Main Image */}
             <div className="flex-grow h-[30rem] overflow-hidden bg-gray-50 order-1 md:order-2 rounded-2xl shadow-sm border border-gray-100 relative">
-              <motion.img
-                key={selectedImage}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
+            <motion.div
+              key={selectedImage}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="relative w-full h-full"
+            >
+              <Image
                 src={product.images[selectedImage]}
                 alt={product.name}
-                className="w-full h-full object-cover bg-white lg:scale-105 transition-transform duration-1000" 
+                fill
+                priority
+                className="object-cover bg-white lg:scale-105 transition-transform duration-1000" 
               />
+            </motion.div>
 
             </div>
 
