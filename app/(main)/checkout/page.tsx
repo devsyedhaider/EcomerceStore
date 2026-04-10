@@ -176,9 +176,9 @@ export default function CheckoutPage() {
         <h1 className="text-5xl font-black uppercase tracking-tighter mb-4">Order Confirmed!</h1>
         <p className="text-zinc-500 mb-2 font-black uppercase tracking-widest text-sm">Order ID: #EE-928374</p>
             Thank you for shopping with The Elva Edit. Your order has been placed successfully and will be delivered within 2-3 business days.
-        <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/" className="btn-primary min-w-[200px]">BACK TO HOME</Link>
-            <Link href="/products" className="btn-outline min-w-[200px]">KEEP SHOPPING</Link>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+            <Link href="/" className="h-14 bg-zinc-900 text-white rounded-2xl flex items-center justify-center font-black text-xs uppercase tracking-[0.2em] min-w-[240px] hover:bg-accent transition-all duration-500">BACK TO HOME</Link>
+            <Link href="/products" className="h-14 border-2 border-zinc-900 text-zinc-900 rounded-2xl flex items-center justify-center font-black text-xs uppercase tracking-[0.2em] min-w-[240px] hover:bg-black hover:text-white transition-all duration-500">KEEP SHOPPING</Link>
         </div>
       </div>
     );
@@ -420,17 +420,17 @@ export default function CheckoutPage() {
                     </p>
                 </div>
 
-                <div className="flex gap-4 mt-12">
+                <div className="flex flex-col md:flex-row gap-4 mt-12">
                   <button 
                     type="button" 
                     onClick={() => setStep(1)}
-                    className="flex-grow h-16 border-2 border-accent rounded-2xl font-black text-sm text-accent hover:bg-accent hover:text-white transition-all uppercase tracking-[0.2em] cursor-pointer"
+                    className="w-full md:flex-grow h-16 border-2 border-accent rounded-2xl font-black text-sm text-accent hover:bg-accent hover:text-white transition-all uppercase tracking-[0.2em] cursor-pointer order-2 md:order-1"
                   >
                     Back
                   </button>
                   <button 
                     type="submit"
-                    className="flex-[2] h-16 bg-accent text-white rounded-2xl font-black text-sm hover:bg-black transition-all shadow-xl uppercase tracking-[0.2em] cursor-pointer"
+                    className="w-full md:flex-[2] h-16 bg-accent text-white rounded-2xl font-black text-sm hover:bg-black transition-all shadow-xl uppercase tracking-[0.2em] cursor-pointer order-1 md:order-2"
                   >
                     Place Your Order
                   </button>
