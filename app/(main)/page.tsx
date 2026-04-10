@@ -42,7 +42,7 @@ export default function Home() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % 3);
+      setActiveTestimonial((prev) => (prev + 1) % 6);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
@@ -85,7 +85,7 @@ export default function Home() {
                    initial={{ opacity: 0, y: 120 }}
                    animate={{ opacity: 1, y: 0 }}
                    transition={{ duration: 1.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                   className="block text-[clamp(1.8rem,9vw,120px)] font-lato font-black uppercase tracking-[-0.01em] leading-none text-[#2C3524] px-1 sm:px-4 whitespace-nowrap"
+                   className="block text-[clamp(1.8rem,9vw,120px)] font-lato font-black uppercase tracking-[-0.01em] leading-none text-white px-1 sm:px-4 whitespace-nowrap"
                 >
                    {hero.accentTitle}
                 </motion.span>
@@ -637,7 +637,7 @@ export default function Home() {
                 {
                   name: "Sarah Masood",
                   location: "Lahore, Pakistan",
-                  review: "The quality of the ring is absolutely stunning. It feels so premium and looks even better in person compared to the pictures. My new favorite shop!",
+                  review: "The quality of the jewellery is absolutely stunning. It feels so premium and looks even better in person compared to the pictures. My new favorite shop!",
                   stars: 5
                 },
                 {
@@ -650,6 +650,24 @@ export default function Home() {
                   name: "Zainab Rashid",
                   location: "Islamabad, Pakistan",
                   review: "I bought the frozen collection pieces and I'm obsessed. The aesthetic is so unique. Highly recommend for anyone looking for statement pieces!",
+                  stars: 5
+                },
+                {
+                  name: "Fatima Noor",
+                  location: "Rawalpindi, Pakistan",
+                  review: "Absolutely love the minimalist aesthetic. Every piece feels like a work of art. The packaging was also very elegant and felt like a truly premium experience!",
+                  stars: 5
+                },
+                {
+                  name: "Hina Khan",
+                  location: "Faisalabad, Pakistan",
+                  review: "Superior quality and attention to detail. I've bought several items now and they never disappoint. The gold plating is exceptional and keeps its shine.",
+                  stars: 5
+                },
+                {
+                  name: "Sana Javed",
+                  location: "Peshawar, Pakistan",
+                  review: "The perfect blend of modern and traditional designs. These pieces are timeless and I wear them almost every day. Great value for money for such quality.",
                   stars: 5
                 }
               ].map((testimonial, i) => i === activeTestimonial && (
@@ -686,7 +704,7 @@ export default function Home() {
 
             {/* Pagination Dots */}
             <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 flex gap-3">
-               {[0, 1, 2].map((i) => (
+               {[0, 1, 2, 3, 4, 5].map((i) => (
                  <button 
                   key={i}
                   onClick={() => setActiveTestimonial(i)}
