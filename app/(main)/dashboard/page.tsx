@@ -109,7 +109,7 @@ export default function DashboardPage() {
                       userOrders.map((order) => (
                           <div key={order.id} className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden group">
                               <div className="p-8 border-b border-zinc-50 flex flex-wrap items-center justify-between gap-8 bg-zinc-50/30">
-                                  <div className="flex gap-10">
+                                  <div className="grid grid-cols-2 md:flex md:gap-10 gap-x-6 gap-y-6">
                                       <div>
                                           <p className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-300 mb-2">Reference</p>
                                           <p className="text-xs font-black uppercase tracking-widest">#{order.id.slice(0, 8)}</p>
@@ -118,7 +118,7 @@ export default function DashboardPage() {
                                           <p className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-300 mb-2">Order Date</p>
                                           <p className="text-xs font-bold uppercase tracking-widest">{new Date(order.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
                                       </div>
-                                      <div>
+                                      <div className="col-span-2 md:col-span-1">
                                           <p className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-300 mb-2">Amount</p>
                                           <p className="text-xs font-black text-accent tracking-widest">{formatPrice(order.total)}</p>
                                       </div>
