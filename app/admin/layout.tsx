@@ -74,7 +74,7 @@ export default function AdminLayout({
       <aside className="w-72 bg-white border-r border-zinc-200 flex flex-col fixed inset-y-0 z-50">
         <div className="p-8">
           <Link href="/admin" className="text-2xl font-black tracking-tighter flex items-center gap-2">
-            <span className="bg-black text-white px-2 py-0.5 rounded">EDITEVAL</span>
+            <span className="bg-black text-white px-2 py-0.5 rounded">THE ELVA EDIT</span>
             <span className="text-accent underline decoration-2 underline-offset-4">ADMIN</span>
           </Link>
         </div>
