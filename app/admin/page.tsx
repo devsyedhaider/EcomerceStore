@@ -17,6 +17,7 @@ import { useOrderStore } from '@/store/useOrderStore';
 import { useProductStore } from '@/store/useProductStore';
 import { useMemo, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useCategoryStore } from '@/store/useCategoryStore';
 
 export default function AdminDashboard() {
   const allOrders = useOrderStore((state) => state.orders);
@@ -48,44 +49,46 @@ export default function AdminDashboard() {
   }, [allOrders]);
 
   const analyticsData = useMemo(() => {
-    const categoryRevenue: Record<string, number> = {
-      men: 0,
-      women: 0,
-      kids: 0,
-      sports: 0,
-    };
+    const categoryRevenue: Record<string, number> = {};
+    
+    // Initialize with real categories
+    useCategoryStore.getState().categories.forEach(cat => {
+      categoryRevenue[cat.id] = 0;
+    });
 
     allOrders.forEach(order => {
       order.items.forEach(item => {
         const product = allProducts.find(p => p.id === item.id);
-        const category = product?.category.toLowerCase() || 'other';
+        const categoryId = product?.category || 'other';
         const itemTotal = (item.price || 0) * (item.quantity || 0);
         
-        if (categoryRevenue[category] !== undefined) {
-          categoryRevenue[category] += itemTotal;
+        if (categoryRevenue[categoryId] !== undefined) {
+          categoryRevenue[categoryId] += itemTotal;
         } else {
-          categoryRevenue[category] = (categoryRevenue[category] || 0) + itemTotal;
+          categoryRevenue[categoryId] = (categoryRevenue[categoryId] || 0) + itemTotal;
         }
       });
     });
 
     const totalRevenue = Object.values(categoryRevenue).reduce((a, b) => a + b, 0);
-    const goal = 2000000; // 2M goal
+    const goal = 2000000; // 2M target
     const progress = totalRevenue > 0 ? Math.min(Math.round((totalRevenue / goal) * 100), 100) : 0;
+
+    const colors = ['bg-accent', 'bg-blue-500', 'bg-purple-500', 'bg-green-500', 'bg-orange-500', 'bg-pink-500'];
 
     return {
       totalRevenue,
       progress,
       goal,
-      categories: [
-        { name: 'Men Category', value: categoryRevenue.men, color: 'bg-accent' },
-        { name: 'Women Category', value: categoryRevenue.women, color: 'bg-blue-500' },
-        { name: 'Kids Category', value: categoryRevenue.kids, color: 'bg-purple-500' },
-        { name: 'Sports Category', value: categoryRevenue.sports, color: 'bg-green-500' },
-      ].map(cat => ({
-        ...cat,
-        percentage: totalRevenue > 0 ? Math.round((cat.value / totalRevenue) * 100) : 0
-      }))
+      categories: useCategoryStore.getState().categories.slice(0, 5).map((cat, i) => {
+        const value = categoryRevenue[cat.id] || 0;
+        return {
+          name: cat.name,
+          value,
+          percentage: totalRevenue > 0 ? Math.round((value / totalRevenue) * 100) : 0,
+          color: colors[i % colors.length]
+        };
+      })
     };
   }, [allOrders, allProducts]);
 
