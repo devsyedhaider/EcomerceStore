@@ -350,7 +350,7 @@ export default function Navbar() {
               {/* Sidebar Bottom Fine Print */}
               <div className="p-10 md:p-12 border-t border-zinc-50 bg-zinc-50/30">
                   <div className="flex items-center gap-10 mb-10">
-                      <a href="https://www.instagram.com/glamhubbyalina?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-accent transition-colors"><Instagram className="w-5 h-5" /></a>
+                      <a href="https://www.instagram.com/theelvaedit?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-accent transition-colors"><Instagram className="w-5 h-5" /></a>
                       <a href="https://www.facebook.com/share/1DdFEa73UF/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-accent transition-colors"><Facebook className="w-5 h-5" /></a>
                       <Link href="#" className="text-zinc-400 hover:text-accent transition-colors font-bold text-sm">𝕏</Link>
                   </div>

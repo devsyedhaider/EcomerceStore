@@ -153,7 +153,7 @@ export default function Footer() {
                 <a href="https://www.facebook.com/share/1DdFEa73UF/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-accent transition-all">
                   <Facebook className="w-5 h-5 stroke-1" />
                 </a>
-                <a href="https://www.instagram.com/glamhubbyalina?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-accent transition-all">
+                <a href="https://www.instagram.com/theelvaedit?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-accent transition-all">
                   <Instagram className="w-5 h-5 stroke-1" />
                 </a>
                 <a href="#" className="text-zinc-500 hover:text-white flex items-center gap-3">

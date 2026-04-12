@@ -28,7 +28,7 @@ export const OrganizationJsonLd = () => {
       "availableLanguage": "English"
     },
     "sameAs": [
-      "https://www.instagram.com/elvaedit"
+      "https://www.instagram.com/theelvaedit?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr"
     ]
   };
 

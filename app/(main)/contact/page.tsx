@@ -51,7 +51,7 @@ export default function ContactPage() {
               { icon: Phone, label: 'Artisan Hotline', value: '+92 312 6728122', sub: 'Availability: 09AM - 08PM PKT', href: 'tel:+923126728122' },
               { icon: MessageCircle, label: 'Instant WhatsApp', value: '+92 312 6728122', sub: 'Chat with our designers directly', href: 'https://wa.me/923126728122' },
               { icon: MapPin, label: 'Design Studio', value: 'Lahore, Punjab, PK', sub: 'Bespoke Viewings by Appointment' },
-              { icon: Instagram, label: 'Visual Muse', value: '@glamhubbyalina', sub: 'Follow for the daily sparkle', href: 'https://www.instagram.com/glamhubbyalina?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr' },
+              { icon: Instagram, label: 'Visual Muse', value: '@theelvaedit', sub: 'Follow for the daily sparkle', href: 'https://www.instagram.com/theelvaedit?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr' },
               { icon: Facebook, label: 'Community Hub', value: 'The Elva Edit', sub: 'Join our Facebook community', href: 'https://www.facebook.com/share/1DdFEa73UF/?mibextid=wwXIfr' },
               { icon: Clock, label: 'Boutique Hours', value: 'Mon - Sat', sub: 'Excluding Public Holidays' }
             ].map((hub, i) => {
@@ -100,7 +100,7 @@ export default function ContactPage() {
            
            <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-12 pt-8">
               {[
-                { icon: Instagram, label: 'Instagram', sub: 'DM for assistance', href: 'https://www.instagram.com/glamhubbyalina?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr' },
+                { icon: Instagram, label: 'Instagram', sub: 'DM for assistance', href: 'https://www.instagram.com/theelvaedit?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr' },
                 { icon: MessageSquare, label: 'Facebook Messenger', sub: 'Connect with a specialist', href: 'https://www.facebook.com/share/1DdFEa73UF/?mibextid=wwXIfr' }
               ].map((btn, i) => (
                 <motion.a 

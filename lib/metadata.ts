@@ -17,7 +17,7 @@ export const siteConfig = {
     'Elva Edit Jewelry',
   ],
   links: {
-    instagram: 'https://instagram.com/elvaedit',
+    instagram: 'https://www.instagram.com/theelvaedit?igsh=MWxxanZzdWF4NmZ0eA%3D%3D&utm_source=qr',
   },
 };
 
@@ -66,7 +66,7 @@ export function constructMetadata({
       title,
       description,
       images: [image],
-      creator: '@elvaedit',
+      creator: '@theelvaedit',
     },
     icons,
     metadataBase: new URL(DOMAIN),
