@@ -4,16 +4,14 @@ const DOMAIN = process.env.NEXT_PUBLIC_SITE_URL || 'https://elva-edit.vercel.app
 
 export const siteConfig = {
   name: 'The Elva Edit',
-  description: 'Step into the world of Quiet Luxury. Handcrafted jewelry, premium watches, and exquisite accessories curated for the modern lifestyle in Pakistan.',
+  description: 'Step into the world of Quiet Luxury. Handcrafted jewelry and exquisite accessories curated for the modern lifestyle in Pakistan.',
   url: DOMAIN,
   ogImage: `${DOMAIN}/og-image.jpg`,
   keywords: [
     'Buy jewelry online in Pakistan',
-    'Best watches in Pakistan',
     'Luxury jewelry store Pakistan',
     'Handcrafted accessories Pakistan',
     'Quiet luxury fashion Pakistan',
-    'Premium watches online',
     'Elva Edit Jewelry',
   ],
   links: {

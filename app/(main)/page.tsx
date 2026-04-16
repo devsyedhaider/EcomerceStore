@@ -60,7 +60,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <Image
             src={hero.backgroundImage}
-            alt="Handcrafted Jewelry and Premium Watches Pakistan - The Elva Edit"
+            alt="Handcrafted Jewelry and Luxury Accessories Pakistan - The Elva Edit"
             fill
             priority
             className="object-cover object-center opacity-60"
@@ -72,7 +72,7 @@ export default function Home() {
           <div className="flex flex-col items-center">
             {/* 2. Premium Typographic Stack — SEO Optimized H1 */}
             <h1 className="flex flex-col items-center text-center gap-2 md:gap-4">
-              <span className="sr-only">The Elva Edit - Best Jewelry and Watches in Pakistan</span>
+              <span className="sr-only">The Elva Edit - Best Jewelry and Accessories in Pakistan</span>
               <div className="overflow-visible py-1 w-full flex justify-center">
                 <motion.span 
                   initial={{ opacity: 0, y: 120 }}
@@ -96,7 +96,7 @@ export default function Home() {
               </div>
             </h1>
             <p className="mt-8 text-white/70 text-[10px] md:text-sm uppercase tracking-[0.4em] font-light max-w-2xl px-4">
-              Discover the finest handcrafted jewelry and premium watches in Pakistan. <br className="hidden md:block"/> Elevate your style with Quiet Luxury.
+              Discover the finest handcrafted jewelry and luxury accessories in Pakistan. <br className="hidden md:block"/> Elevate your style with Quiet Luxury.
             </p>
           </div>
         </div>
@@ -499,7 +499,7 @@ export default function Home() {
               viewport={{ once: false }}
               className="md:col-span-8 flex flex-col justify-center p-10 md:p-14 lg:p-20"
             >
-              <h2 className="text-3xl md:text-4xl font-normal text-zinc-900 mb-8 font-sans tracking-tight">Best Jewelry and Watches in Pakistan</h2>
+              <h2 className="text-3xl md:text-4xl font-normal text-zinc-900 mb-8 font-sans tracking-tight">Best Jewelry and Accessories in Pakistan</h2>
               
               <div className="space-y-6 max-w-lg">
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
@@ -507,7 +507,7 @@ export default function Home() {
                 </p>
                 
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
-                  Whether you are looking to <strong className="text-zinc-900">buy jewelry online in Pakistan</strong> or find the <strong className="text-zinc-900">best watches</strong>, we have something to suit every personality.
+                  Whether you are looking to <strong className="text-zinc-900">buy jewelry online in Pakistan</strong> or find <strong className="text-zinc-900">exquisite accessories</strong>, we have something to suit every personality.
                 </p>
                 
                 <p className="text-[16px] leading-relaxed text-zinc-500 font-medium opacity-80">
