@@ -285,7 +285,7 @@ export default function ProductClient() {
           <span className="text-premium-subheading block mb-4">Complete the Look</span>
           <h2 className="text-xl sm:text-2xl md:text-4xl font-light uppercase tracking-[0.1em] md:tracking-[0.2em] whitespace-nowrap overflow-hidden text-ellipsis">Related Products</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-10 md:gap-y-20">
             {relatedProducts.map((p) => (
                 <ProductCard key={p.id} product={p} />
             ))}

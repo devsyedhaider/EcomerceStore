@@ -69,7 +69,7 @@ export default function ProductCard({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -8 }}
       transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-      className="group relative flex flex-col h-full bg-white rounded-3xl overflow-hidden transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] cursor-pointer border border-zinc-50"
+      className="group relative flex flex-col h-full bg-white rounded-[5px] md:rounded-3xl overflow-hidden transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.12)] cursor-pointer border border-zinc-50"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
@@ -85,7 +85,7 @@ export default function ProductCard({
         </button>
       )}
       {/* Image Container */}
-      <div className="block relative aspect-[4/3] md:aspect-square overflow-hidden bg-[#F8F8F8]">
+      <div className="block relative aspect-square overflow-hidden bg-[#F8F8F8]">
         {/* Main Image */}
         <img
           src={product.images[0]}
@@ -177,7 +177,7 @@ export default function ProductCard({
       </div>
 
       {/* Content Area */}
-      <div className="flex flex-col p-4 md:p-6 flex-grow" onClick={(e) => e.stopPropagation()}>
+      <div className="flex flex-col p-3 md:p-6 flex-grow" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-3">
           <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-bold">{categoryName}</span>
           <div className="flex items-center gap-0.5">
@@ -207,7 +207,7 @@ export default function ProductCard({
                 {formatPrice(product.price * 1.5)}
               </span>
             )}
-            <span className="text-black text-xl font-black tracking-tight">
+            <span className="text-black text-lg md:text-xl font-black tracking-tight">
               {formatPrice(product.price)}
             </span>
           </div>
@@ -216,7 +216,7 @@ export default function ProductCard({
             onClick={handleAddToCart}
             className="group/btn flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-accent transition-colors duration-300 cursor-pointer"
           >
-            Add
+            <span className="hidden sm:inline">Add</span>
             <div className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center transition-all duration-500 group-hover/btn:bg-black group-hover/btn:scale-110 shadow-lg shadow-accent/20">
               <Plus size={14} />
             </div>
