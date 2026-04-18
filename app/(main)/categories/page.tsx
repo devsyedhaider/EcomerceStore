@@ -7,7 +7,7 @@ import { ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function CategoriesPage() {
-  const categories = useCategoryStore((state) => state.categories);
+  const { categories, isLoading } = useCategoryStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -15,48 +15,107 @@ export default function CategoriesPage() {
   if (!mounted) return null;
 
   return (
-    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-24 pb-24">
-      <div className="text-center mb-20">
-        <h1 className="text-4xl md:text-6xl font-light uppercase tracking-[0.3em] mb-6">Our Collections</h1>
-        <p className="text-[11px] uppercase tracking-[0.2em] text-gray-light max-w-xl mx-auto leading-relaxed">
-          Explore our range of premium footwear, from performance sports gear to elegant formal classics.
-        </p>
+    <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-32 pb-24">
+      {/* Header Section */}
+      <div className="flex flex-col items-center text-center mb-16 md:mb-24">
+        <motion.span 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-premium-subheading mb-4"
+        >
+          Curated Selection
+        </motion.span>
+        
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-3xl sm:text-4xl md:text-6xl font-semibold uppercase tracking-[0.2em] md:tracking-[0.3em] mb-8"
+        >
+          Our <span className="text-accent font-bold">Collections</span>
+        </motion.h1>
+
+        <motion.div 
+          initial={{ width: 0 }}
+          animate={{ width: "80px" }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="h-px bg-accent/30 mb-8"
+        />
+
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-gray-light max-w-lg mx-auto leading-relaxed px-4"
+        >
+          Discover a world of craftsmanship and style. From timeless classics to contemporary icons, find the perfect pair for every journey.
+        </motion.p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {/* Grid Section */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-10">
         {categories.map((category, index) => (
           <motion.div
             key={category.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: index * 0.1 }}
           >
             <Link 
               href={`/products?category=${category.id}`}
-              className="group relative h-[500px] overflow-hidden flex flex-col justify-end p-12 bg-gray-50"
+              className="group relative h-[220px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden flex flex-col justify-end p-4 sm:p-10 md:p-12 bg-zinc-100"
             >
+              {/* Background Image with Zoom */}
               <img 
                 src={category.image} 
                 alt={category.name} 
-                className="absolute inset-0 w-full h-full object-cover transition-premium group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition-premium group-hover:scale-110 duration-1000"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent group-hover:from-black/80 transition-premium" />
               
-              <div className="relative z-10">
-                <h2 className="text-4xl font-light text-white uppercase tracking-[0.2em] mb-4">
+              {/* Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent transition-premium group-hover:via-black/40" />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              {/* Decorative Border */}
+              <div className="absolute inset-4 sm:inset-6 border border-white/0 group-hover:border-white/20 transition-premium duration-700 pointer-events-none" />
+
+              {/* Content */}
+              <div className="relative z-10 transform transition-transform duration-700 group-hover:-translate-y-2">
+                <span className="text-white/60 text-[7px] sm:text-[9px] uppercase tracking-[0.3em] mb-2 sm:mb-3 block">
+                  Archive 2024
+                </span>
+                <h2 className="text-base sm:text-2xl md:text-3xl lg:text-4xl font-light text-white uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-3 sm:mb-6 leading-tight">
                   {category.name}
                 </h2>
-                <div className="flex items-center gap-4 group/btn">
-                  <span className="text-white text-[10px] uppercase tracking-[0.3em] font-bold border-b border-white pb-1 group-hover/btn:pr-4 transition-all duration-500">
-                    Discover Collection
+                
+                <div className="flex items-center gap-2 sm:gap-4 group/btn">
+                  <span className="text-white text-[7px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-medium border-b border-white/30 pb-0.5 sm:pb-1 group-hover/btn:border-white group-hover/btn:pr-4 sm:group-hover/btn:pr-6 transition-all duration-500">
+                    Discover
                   </span>
-                  <ChevronRight className="w-4 h-4 text-white transition-premium group-hover/btn:translate-x-2" />
+                  <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-full border border-white/20 flex items-center justify-center -translate-x-1 sm:-translate-x-2 opacity-0 group-hover/btn:translate-x-0 group-hover/btn:opacity-100 transition-premium">
+                    <ChevronRight className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-white" />
+                  </div>
                 </div>
               </div>
+
+              {/* Hover Glow */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-30 bg-[radial-gradient(circle_at_center,_var(--color-accent)_0%,_transparent_70%)] transition-opacity duration-1000 pointer-events-none" />
             </Link>
           </motion.div>
         ))}
       </div>
+
+      {/* Footer Note */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        className="mt-20 text-center"
+      >
+        <p className="text-[10px] uppercase tracking-[0.4em] text-gray-light">
+          Quality Guaranteed &bull; Fast Delivery &bull; Premium Experience
+        </p>
+      </motion.div>
     </div>
   );
 }
