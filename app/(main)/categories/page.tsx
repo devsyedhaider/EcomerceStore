@@ -53,7 +53,7 @@ export default function CategoriesPage() {
       </div>
 
       {/* Grid Section */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-10">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
         {categories.map((category, index) => (
           <motion.div
             key={category.id}
@@ -64,7 +64,7 @@ export default function CategoriesPage() {
           >
             <Link 
               href={`/products?category=${category.id}`}
-              className="group relative h-[220px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden flex flex-col justify-end p-4 sm:p-10 md:p-12 bg-zinc-100"
+              className="group relative h-[180px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden flex flex-col justify-end p-4 sm:p-8 md:p-10 bg-zinc-100"
             >
               {/* Background Image with Zoom */}
               <img 
@@ -81,20 +81,20 @@ export default function CategoriesPage() {
               <div className="absolute inset-4 sm:inset-6 border border-white/0 group-hover:border-white/20 transition-premium duration-700 pointer-events-none" />
 
               {/* Content */}
-              <div className="relative z-10 transform transition-transform duration-700 group-hover:-translate-y-2">
-                <span className="text-white/60 text-[7px] sm:text-[9px] uppercase tracking-[0.3em] mb-2 sm:mb-3 block">
-                  Archive 2024
+              <div className="relative z-10 transform transition-transform duration-700 group-hover:-translate-y-1">
+                <span className="text-white/60 text-[6px] sm:text-[9px] uppercase tracking-[0.3em] mb-1 sm:mb-2 block">
+                  Fine Piece
                 </span>
-                <h2 className="text-base sm:text-2xl md:text-3xl lg:text-4xl font-light text-white uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-3 sm:mb-6 leading-tight">
+                <h2 className="text-sm sm:text-xl md:text-xl lg:text-2xl font-light text-white uppercase tracking-[0.1em] sm:tracking-[0.2em] mb-2 sm:mb-4 leading-tight">
                   {category.name}
                 </h2>
                 
                 <div className="flex items-center gap-2 sm:gap-4 group/btn">
-                  <span className="text-white text-[7px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-medium border-b border-white/30 pb-0.5 sm:pb-1 group-hover/btn:border-white group-hover/btn:pr-4 sm:group-hover/btn:pr-6 transition-all duration-500">
-                    Discover
+                  <span className="text-white text-[6px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-medium border-b border-white/30 pb-0.5 sm:pb-1 group-hover/btn:border-white group-hover/btn:pr-3 sm:group-hover/btn:pr-6 transition-all duration-500">
+                    Explore
                   </span>
-                  <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-full border border-white/20 flex items-center justify-center -translate-x-1 sm:-translate-x-2 opacity-0 group-hover/btn:translate-x-0 group-hover/btn:opacity-100 transition-premium">
-                    <ChevronRight className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-white" />
+                  <div className="w-4 h-4 sm:w-8 sm:h-8 rounded-full border border-white/20 flex items-center justify-center -translate-x-1 sm:-translate-x-2 opacity-0 group-hover/btn:translate-x-0 group-hover/btn:opacity-100 transition-premium">
+                    <ChevronRight className="w-2 h-2 sm:w-3.5 sm:h-3.5 text-white" />
                   </div>
                 </div>
               </div>
