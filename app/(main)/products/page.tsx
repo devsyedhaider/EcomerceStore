@@ -89,20 +89,20 @@ function ProductsContent() {
 
         {/* Heading: One line on mobile */}
         <div className="flex items-center justify-between border-b border-zinc-100 pb-8">
-           <h1 className="text-2xl md:text-6xl font-light uppercase tracking-[0.1em] md:tracking-[0.2em] text-zinc-900 leading-tight">
+           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light uppercase tracking-[0.1em] md:tracking-[0.2em] text-zinc-900 leading-tight">
              {isNewParam ? 'New Arrivals' : isTrendingParam ? 'Trending Now' : selectedCategory === 'all' ? 'All Pieces' : `${categories.find(c => c.id === selectedCategory)?.name || selectedCategory}`}
            </h1>
            
            <button 
               onClick={() => setIsDesktopFilterOpen(!isDesktopFilterOpen)}
-              className="hidden md:flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-black hover:text-accent transition-all bg-zinc-50 px-6 py-2 rounded-full border border-zinc-100"
+              className="hidden lg:flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-black hover:text-accent transition-all bg-zinc-50 px-6 py-2 rounded-full border border-zinc-100"
             >
               <FilterIcon className="w-4 h-4" /> {isDesktopFilterOpen ? 'Hide' : 'Filter'}
             </button>
         </div>
 
         {/* 2. Mobile Discovery Tool-bar */}
-        <div className="flex md:hidden items-center justify-between py-5 border-b border-zinc-50 mb-10">
+        <div className="flex lg:hidden items-center justify-between py-5 border-b border-zinc-50 mb-10">
            <button 
              onClick={() => setIsMobileFilterOpen(true)}
              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-900"
@@ -115,7 +115,7 @@ function ProductsContent() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-16 relative">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 relative">
         
         {/* 3. Filter Hub (Desktop Sidebar & Mobile Drawer) */}
         <AnimatePresence>
@@ -127,14 +127,14 @@ function ProductsContent() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] md:hidden"
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] lg:hidden"
               />
               <motion.div 
                 initial={{ x: '-100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed top-0 left-0 bottom-0 w-[85%] bg-white z-[101] p-10 overflow-y-auto md:hidden shadow-2xl"
+                className="fixed top-0 left-0 bottom-0 w-[85%] bg-white z-[101] p-10 overflow-y-auto lg:hidden shadow-2xl"
               >
                   <div className="flex items-center justify-between mb-12">
                      <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-accent">Boutique Filters</h2>
@@ -183,8 +183,8 @@ function ProductsContent() {
         <div className="flex-grow">
           {filteredProducts.length > 0 ? (
             <div className={cn(
-              "grid gap-x-4 gap-y-10 md:gap-x-10 md:gap-y-20",
-              (isDesktopFilterOpen) ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3" : "grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              "grid gap-x-4 gap-y-10 md:gap-x-10 md:gap-y-20 grid-cols-2 sm:grid-cols-2",
+              isDesktopFilterOpen ? "lg:grid-cols-2 xl:grid-cols-3" : "lg:grid-cols-3 xl:grid-cols-4"
             )}>
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />

@@ -365,7 +365,7 @@ export default function Navbar() {
       </AnimatePresence>
       <div className={cn(
         "transition-all duration-500",
-        isAuthPage ? "h-[80px]" : "h-[90px] md:h-[110px]"
+        isAuthPage ? "h-[80px]" : "h-[145px] md:h-[170px]"
       )} /> {/* Proper spacer for fixed header */}
     </>
   );
