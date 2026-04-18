@@ -167,8 +167,8 @@ function TrendingContent() {
         {/* 4. Product Grid */}
         <div className="flex-grow">
           <div className={cn(
-            "grid gap-x-6 gap-y-12 md:gap-x-10 md:gap-y-20",
-            (isDesktopFilterOpen) ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            "grid gap-x-4 gap-y-12 md:gap-x-10 md:gap-y-20",
+            (isDesktopFilterOpen) ? "grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3" : "grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           )}>
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} showNewBadge={false} />
