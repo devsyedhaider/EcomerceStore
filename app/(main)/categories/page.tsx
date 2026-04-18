@@ -53,18 +53,18 @@ export default function CategoriesPage() {
       </div>
 
       {/* Grid Section */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
         {categories.map((category, index) => (
           <motion.div
             key={category.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: index * 0.1 }}
+            transition={{ duration: 0.6, delay: index * 0.05 }}
           >
             <Link 
               href={`/products?category=${category.id}`}
-              className="group relative h-[180px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden flex flex-col justify-end p-4 sm:p-8 md:p-10 bg-zinc-100"
+              className="group relative h-[210px] sm:h-[320px] md:h-[380px] lg:h-[420px] xl:h-[450px] overflow-hidden flex flex-col justify-end p-5 sm:p-8 md:p-10 bg-zinc-100 rounded-[8px]"
             >
               {/* Background Image with Zoom */}
               <img 

@@ -220,11 +220,19 @@ function NewArrivalsContent() {
         {/* 4. Product Grid */}
         <div className="flex-grow">
           <div className={cn(
-            "grid gap-x-4 gap-y-12 md:gap-x-10 md:gap-y-20 grid-cols-2 sm:grid-cols-2",
-            (isFilterOpen || (mounted && window.innerWidth >= 1280)) ? "xl:grid-cols-2 2xl:grid-cols-3" : "xl:grid-cols-3 2xl:grid-cols-4"
+            "grid gap-x-4 gap-y-10 md:gap-x-10 md:gap-y-20 grid-cols-2 sm:grid-cols-3 md:grid-cols-4",
+            (isFilterOpen || (mounted && window.innerWidth >= 1280)) ? "xl:grid-cols-4 2xl:grid-cols-5" : "xl:grid-cols-5 2xl:grid-cols-6"
           )}>
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {filteredProducts.map((product, idx) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: (idx % 4) * 0.1, duration: 0.6 }}
+                viewport={{ once: false }}
+              >
+                <ProductCard product={product} showSaleBadge={false} />
+              </motion.div>
             ))}
           </div>
 
