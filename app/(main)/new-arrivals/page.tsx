@@ -78,14 +78,14 @@ function NewArrivalsContent() {
           {/* Desktop Filter Toggle */}
           <button 
             onClick={() => setIsFilterOpen(!isFilterOpen)}
-            className="hidden lg:flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-black hover:text-accent transition-all bg-zinc-50 px-6 py-2 rounded-full border border-zinc-100"
+            className="hidden xl:flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-black hover:text-accent transition-all bg-zinc-50 px-6 py-2 rounded-full border border-zinc-100"
           >
             <FilterIcon className="w-4 h-4" /> {isFilterOpen ? 'Hide' : 'Filter'}
           </button>
         </div>
 
         {/* 2. Mobile Specific Sub-heading bar */}
-        <div className="flex lg:hidden items-center justify-between py-5 border-b border-zinc-50 mb-10">
+        <div className="flex xl:hidden items-center justify-between py-5 border-b border-zinc-50 mb-10">
            <button 
              onClick={() => setIsFilterOpen(true)}
              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-900"
@@ -98,12 +98,12 @@ function NewArrivalsContent() {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 relative">
+      <div className="flex flex-col xl:flex-row gap-8 xl:gap-16 relative">
         
         {/* 3. Universal Filter Bar (Desktop Sidebar & Mobile Drawer) */}
         <AnimatePresence>
           {/* Desktop Sidebar OR Mobile Drawer */}
-          {(isFilterOpen || (mounted && window.innerWidth >= 1024)) && (
+          {(isFilterOpen || (mounted && window.innerWidth >= 1280)) && (
             <>
               {/* Mobile Overlay */}
               <motion.div 
@@ -111,7 +111,7 @@ function NewArrivalsContent() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsFilterOpen(false)}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] lg:hidden"
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] xl:hidden"
               />
 
               {/* Filter Content */}
@@ -123,11 +123,11 @@ function NewArrivalsContent() {
                 className={cn(
                   "flex-shrink-0 z-[101]",
                   "fixed top-0 left-0 bottom-0 w-80 bg-white p-10 overflow-y-auto", // Mobile Drawer
-                  "lg:relative lg:inset-auto lg:w-64 lg:bg-transparent lg:p-0 lg:z-0 lg:block" // Desktop Sidebar
+                  "xl:relative xl:inset-auto xl:w-64 xl:bg-transparent xl:p-0 xl:z-0 xl:block" // Desktop Sidebar
                 )}
               >
                 {/* Mobile Header for Filter Drawer */}
-                <div className="flex items-center justify-between lg:hidden mb-12">
+                <div className="flex items-center justify-between xl:hidden mb-12">
                    <h2 className="text-sm font-black uppercase tracking-[0.3em]">Discovery Filters</h2>
                    <button onClick={() => setIsFilterOpen(false)} className="p-2 -mr-2">
                       <X className="w-5 h-5 text-zinc-400" />
@@ -221,7 +221,7 @@ function NewArrivalsContent() {
         <div className="flex-grow">
           <div className={cn(
             "grid gap-x-4 gap-y-12 md:gap-x-10 md:gap-y-20 grid-cols-2 sm:grid-cols-2",
-            (isFilterOpen || (mounted && window.innerWidth >= 1024)) ? "lg:grid-cols-2 xl:grid-cols-3" : "lg:grid-cols-3 xl:grid-cols-4"
+            (isFilterOpen || (mounted && window.innerWidth >= 1280)) ? "xl:grid-cols-2 2xl:grid-cols-3" : "xl:grid-cols-3 2xl:grid-cols-4"
           )}>
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />

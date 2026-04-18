@@ -95,14 +95,14 @@ function ProductsContent() {
            
            <button 
               onClick={() => setIsDesktopFilterOpen(!isDesktopFilterOpen)}
-              className="hidden lg:flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-black hover:text-accent transition-all bg-zinc-50 px-6 py-2 rounded-full border border-zinc-100"
+              className="hidden xl:flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-black hover:text-accent transition-all bg-zinc-50 px-6 py-2 rounded-full border border-zinc-100"
             >
               <FilterIcon className="w-4 h-4" /> {isDesktopFilterOpen ? 'Hide' : 'Filter'}
             </button>
         </div>
 
         {/* 2. Mobile Discovery Tool-bar */}
-        <div className="flex lg:hidden items-center justify-between py-5 border-b border-zinc-50 mb-10">
+        <div className="flex xl:hidden items-center justify-between py-5 border-b border-zinc-50 mb-10">
            <button 
              onClick={() => setIsMobileFilterOpen(true)}
              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-900"
@@ -115,7 +115,7 @@ function ProductsContent() {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 relative">
+      <div className="flex flex-col xl:flex-row gap-8 xl:gap-16 relative">
         
         {/* 3. Filter Hub (Desktop Sidebar & Mobile Drawer) */}
         <AnimatePresence>
@@ -127,14 +127,14 @@ function ProductsContent() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] lg:hidden"
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] xl:hidden"
               />
               <motion.div 
                 initial={{ x: '-100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed top-0 left-0 bottom-0 w-[85%] bg-white z-[101] p-10 overflow-y-auto lg:hidden shadow-2xl"
+                className="fixed top-0 left-0 bottom-0 w-[85%] bg-white z-[101] p-10 overflow-y-auto xl:hidden shadow-2xl"
               >
                   <div className="flex items-center justify-between mb-12">
                      <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-accent">Boutique Filters</h2>
@@ -162,7 +162,7 @@ function ProductsContent() {
 
         {/* Desktop Sidebar */}
         <div className={cn(
-          "hidden md:block flex-shrink-0 transition-all duration-500 overflow-hidden",
+          "hidden xl:block flex-shrink-0 transition-all duration-500 overflow-hidden",
           isDesktopFilterOpen ? "w-64 opacity-100" : "w-0 opacity-0 pointer-events-none"
         )}>
           <div className="w-64 space-y-12 sticky top-32">
@@ -184,7 +184,7 @@ function ProductsContent() {
           {filteredProducts.length > 0 ? (
             <div className={cn(
               "grid gap-x-4 gap-y-10 md:gap-x-10 md:gap-y-20 grid-cols-2 sm:grid-cols-2",
-              isDesktopFilterOpen ? "lg:grid-cols-2 xl:grid-cols-3" : "lg:grid-cols-3 xl:grid-cols-4"
+              isDesktopFilterOpen ? "xl:grid-cols-2 2xl:grid-cols-3" : "xl:grid-cols-3 2xl:grid-cols-4"
             )}>
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
