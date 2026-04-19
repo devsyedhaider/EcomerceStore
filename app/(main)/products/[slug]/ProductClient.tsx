@@ -110,7 +110,7 @@ export default function ProductClient() {
             </div>
 
             {/* Main Image */}
-            <div className="flex-grow h-[30rem] overflow-hidden bg-gray-50 order-1 md:order-2 rounded-2xl shadow-sm border border-gray-100 relative">
+            <div className="flex-grow h-[20rem] md:h-[30rem] overflow-hidden bg-gray-50 order-1 md:order-2 rounded-2xl shadow-sm border border-gray-100 relative">
             <motion.div
               key={selectedImage}
               initial={{ opacity: 0 }}
@@ -150,17 +150,17 @@ export default function ProductClient() {
           <div className="lg:col-span-5 flex flex-col pt-4">
             <div className="mb-10">
               <span className="text-premium-subheading block mb-4">{categoryName}</span>
-              <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-8 leading-tight">
+              <h1 className="text-2xl md:text-5xl font-black uppercase tracking-tight mb-4 md:mb-8 leading-tight">
                 {product.name}
               </h1>
               
               {/* Price Section as per screenshot */}
               <div className="space-y-6 mb-8">
-                <div className="flex items-center gap-4">
-                  <span className="text-4xl font-black text-accent tracking-tighter">
+                <div className="flex items-center gap-3 md:gap-4">
+                  <span className="text-2xl md:text-4xl font-black text-accent tracking-tighter">
                    Rs.{product.price.toLocaleString()}
                   </span>
-                  <span className="text-xl text-zinc-400 line-through font-medium">
+                  <span className="text-sm md:text-xl text-zinc-400 line-through font-medium">
                     Rs.{(product.price * 2).toLocaleString()}
                   </span>
                   <span className="bg-accent text-white text-[10px] font-black px-3 py-1 rounded-full uppercase shadow-sm">
@@ -175,19 +175,19 @@ export default function ProductClient() {
                   In stock
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Quantity</p>
-                  <div className="flex items-center bg-zinc-100 w-32 justify-between rounded-lg px-2 py-1 border border-zinc-200">
+                  <div className="flex items-center bg-zinc-100 w-28 md:w-32 justify-between rounded-lg px-2 py-1 border border-zinc-200">
                     <button 
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-10 h-10 flex items-center justify-center text-xl hover:bg-white rounded-md transition-all font-light"
+                      className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-lg hover:bg-white rounded-md transition-all font-light"
                     >
                       -
                     </button>
-                    <span className="font-bold text-lg">{quantity}</span>
+                    <span className="font-bold text-base md:text-lg">{quantity}</span>
                     <button 
                       onClick={() => setQuantity(quantity + 1)}
-                      className="w-10 h-10 flex items-center justify-center text-xl hover:bg-white rounded-md transition-all font-light"
+                      className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-lg hover:bg-white rounded-md transition-all font-light"
                     >
                       +
                     </button>
@@ -197,12 +197,12 @@ export default function ProductClient() {
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col gap-3 mb-12">
+            <div className="flex flex-col gap-3 mb-8 md:mb-12">
               <button 
                 onClick={handleAddToCart}
                 disabled={isAdded}
                 className={cn(
-                  "w-full h-16 bg-white border-2 border-zinc-200 text-black font-black uppercase tracking-widest hover:border-black transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer",
+                  "w-full h-12 md:h-16 bg-white border-2 border-zinc-200 text-black font-black text-[10px] md:text-xs uppercase tracking-widest hover:border-black transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer",
                   isAdded && "bg-gray-200 border-gray-200 text-gray-500 hover:bg-gray-200 hover:text-gray-500 cursor-default"
                 )}
               >
@@ -215,7 +215,7 @@ export default function ProductClient() {
               
               <button 
                 onClick={handleBuyNow}
-                className="w-full h-16 bg-accent text-white font-black uppercase tracking-widest hover:bg-accent-dark transition-all duration-300 transform active:scale-95 shadow-xl cursor-pointer"
+                className="w-full h-12 md:h-16 bg-accent text-white font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-accent-dark transition-all duration-300 transform active:scale-95 shadow-xl cursor-pointer"
               >
                 Buy Now
               </button>
@@ -233,7 +233,7 @@ export default function ProductClient() {
                   { id: 'shipping', title: 'Shipping & Returns', content: product.shippingReturns, icon: <Truck className="w-4 h-4" /> },
                   { id: 'care', title: 'Care Instructions', content: product.careInstructions, icon: <Info className="w-4 h-4" /> }
                 ].map((item) => item.content && (
-                  <div key={item.id} className="border-b border-gray-100 py-6">
+                  <div key={item.id} className="border-b border-gray-100 py-4 md:py-6">
                     <button 
                       onClick={() => {
                         const el = document.getElementById(`content-${item.id}`);
@@ -259,7 +259,7 @@ export default function ProductClient() {
             </div>
 
             {/* Trust Features */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-10 border-t border-gray-100">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 py-6 md:py-10 border-t border-gray-100">
                 <div className="flex items-start gap-4">
                     <Truck className="w-5 h-5 stroke-[1.2]" />
                     <div>
